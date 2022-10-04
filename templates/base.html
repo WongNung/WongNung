@@ -1,0 +1,16 @@
+{% load static %}
+{% load tailwind_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% tailwind_css %}
+    <meta charset="utf-8">
+    <title>{% block title %}{% endblock %}</title>
+  </head>
+
+  <body>
+    {% block content %}{% endblock %}
+    <script type="text/javascript" src="{% static 'js/htmx.min.js' %}"></script>
+  </body>
+</html>

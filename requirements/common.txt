@@ -1,0 +1,5 @@
+Django>=4.0,==4.0.*
+python-decouple>=3.6
+django-tailwind>=3.4.0
+django-htmx>=1.12.2
+django-types~=0.16.0
