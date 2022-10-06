@@ -88,25 +88,16 @@ WSGI_APPLICATION = "pdtx.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
-if config("LOCAL_DB", default=True, cast=bool):
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.sqlite3",
-            "NAME": BASE_DIR / "db.sqlite3",
-        }
+DATABASES = {
+    "default": {
+        "ENGINE": f"django.db.backends.postgresql",
+        "NAME": config("DATABASE_NAME", default="wongnung"),
+        "USER": config("DATABASE_USERNAME", default="wongnung"),
+        "PASSWORD": config("DATABASE_PASSWORD", default="password"),
+        "HOST": config("DATABASE_HOST", default="localhost"),
+        "PORT": config("DATABASE_PORT", default="5432"),
     }
-else:
-    DATABASE_PROVIDER = config("DATABASE_PROVIDER", default="postgresql")
-    DATABASES = {
-        "default": {
-            "ENGINE": f"django.db.backends.{DATABASE_PROVIDER}",
-            "NAME": config("DATABASE_NAME", default="pdtx-db"),
-            "USER": config("DATABASE_USERNAME", default="pdtx"),
-            "PASSWORD": config("DATABASE_PASSWORD", default="password"),
-            "HOST": config("DATABASE_HOST", default="localhost"),
-            "PORT": config("DATABASE_PORT", default="5432"),
-        }
-    }
+}
 
 
 # Password validation
