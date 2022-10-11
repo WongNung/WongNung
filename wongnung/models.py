@@ -1,4 +1,5 @@
 from django.db import models
+from datetime import datetime
 
 
 class Film(models.Model):
@@ -32,9 +33,13 @@ class Film(models.Model):
         return [star.strip() for star in
                 self.stars.split(",")]
 
+    def get_rating(self):
+        return str(self.rating)
+
 
 class Review(models.Model):
     film = models.ForeignKey(Film, on_delete=models.CASCADE)
+    pub_date = models.DateTimeField(default=datetime.now())
     content = models.TextField()
     # comment_set is auto-generated from Comment class, no need to include in the code.
 
