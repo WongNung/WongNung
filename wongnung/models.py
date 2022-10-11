@@ -1,5 +1,8 @@
 from django.db import models
 from datetime import datetime
+from decouple import config
+# read API Key from .env file
+API_KEY = config("API_KEY")
 
 
 class Film(models.Model):
