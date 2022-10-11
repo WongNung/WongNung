@@ -36,6 +36,7 @@ ALLOWED_HOSTS = config(
 
 # Application definition
 INSTALLED_APPS = [
+    "wongnung.apps.WongnungConfig",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
