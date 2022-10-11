@@ -7,12 +7,12 @@ API_KEY = config("API_KEY")
 
 class Film(models.Model):
     filmId = models.IntegerField(primary_key=True)
-    title = models.CharField(max_length=64)
+    title = models.CharField(max_length=128)
     year_released = models.IntegerField()
-    director = models.TextField()
-    genres = models.TextField()
+    director = models.CharField(max_length=128, blank=True)
+    genres = models.CharField(max_length=128, blank=True)
     summary = models.TextField()
-    stars = models.TextField()  # names of actors
+    stars = models.CharField(max_length=196, blank=True)  # names of actors
     rating = models.FloatField(null=True, blank=True, default=None)
 
     def get_title(self):
