@@ -1,16 +1,15 @@
 from django.db import models
-import tmdbsimple as tmdb
-tmdb.API_KEY = '38fd39622b140bf1b42859a8de0c60f2'
 
 
 class Film(models.Model):
     filmId = models.IntegerField(primary_key=True)
     title = models.CharField(max_length=64)
     year_released = models.IntegerField()
-    director = models.CharField(max_length=255)
-    genres = models.CharField(max_length=255)
+    director = models.TextField()
+    genres = models.TextField()
     summary = models.TextField()
-    stars = models.FloatField()
+    stars = models.TextField()  # names of actors
+    rating = models.FloatField(null=True, blank=True, default=None)
 
     def get_title(self):
         return self.title
