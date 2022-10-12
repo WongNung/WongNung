@@ -42,11 +42,25 @@ class Film(models.Model):
             return film
         except cls.DoesNotExist:
             # tmdbsimple: get movie from movie id
-            response = tmdb.Movies(film_id).info()
-            title = response['title']
-            year_released = response['release_date'].split('-')[0]
+            response_info = tmdb.Movies(film_id).info()
+            response_credits = tmdb.Movies(film_id).credits()
+
+            title = response_info['title']
+            year_released = response_info['release_date'].split('-')[0]
             film = cls.objects.create(filmId=film_id, title=title, year_released=year_released)
-            # TODO: set director, genres, stars attribute in Film object ex. film.set_director()
+
+            # get the list of the name of all directors
+            directors = [director['name'] for director in response_credits['crew'] if director['job'] == 'Director']
+            film.set_director(directors)
+
+            # get the list of genres of the film
+            genres_lst = [genres['name'] for genres in response_info['genres']]
+            film.set_genres(genres_lst)
+
+            # get the list of the name of all stars
+            stars = [star['name'] for star in response_credits['cast']]
+            film.set_stars(stars)
+
             return film
 
 
