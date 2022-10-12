@@ -47,7 +47,8 @@ class Film(models.Model):
 
             title = response_info['title']
             year_released = response_info['release_date'].split('-')[0]
-            film = cls.objects.create(filmId=film_id, title=title, year_released=year_released)
+            summary = response_info['overview']
+            film = cls.objects.create(filmId=film_id, title=title, year_released=year_released, summary=summary)
 
             # get the list of the name of all directors
             directors = [director['name'] for director in response_credits['crew'] if director['job'] == 'Director']
