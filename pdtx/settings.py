@@ -14,6 +14,10 @@ import os
 from pathlib import Path
 from decouple import Csv, config
 from . import typings
+import tmdbsimple as tmdb
+
+API_KEY = config("API_KEY")
+tmdb.API_KEY = API_KEY
 
 typings.setup()
 
