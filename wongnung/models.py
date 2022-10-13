@@ -93,7 +93,7 @@ class Film(models.Model):
 
         try:
             film = cls.objects.get(pk=film_id)
-            return film
+
         except cls.DoesNotExist:
             # tmdbsimple: get movie from movie id
             response_info = tmdb.Movies(film_id).info()
@@ -116,7 +116,7 @@ class Film(models.Model):
             stars = [star['name'] for star in response_credits['cast']]
             film.set_stars(stars)
 
-            return film
+        return film
 
 
 class Review(models.Model):
