@@ -14,6 +14,10 @@ import os
 from pathlib import Path
 from decouple import Csv, config
 from . import typings
+import tmdbsimple as tmdb
+
+TMDB_API_KEY = config("TMDB_API_KEY")
+tmdb.API_KEY = TMDB_API_KEY
 
 typings.setup()
 
@@ -36,6 +40,7 @@ ALLOWED_HOSTS = config(
 
 # Application definition
 INSTALLED_APPS = [
+    "wongnung.apps.WongnungConfig",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
