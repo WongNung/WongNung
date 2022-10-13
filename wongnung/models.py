@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from typing import List
 
 from django.db import models
@@ -24,37 +26,34 @@ class Film(models.Model):
     :param stars: The stars(actors and actresses) of the film
     :type stars: str
     """
-    filmId = models.IntegerField(primary_key=True)  # Required
-    title = models.CharField(max_length=256)  # Required
-    year_released = models.IntegerField()  # Required
+    filmId = models.IntegerField(primary_key=True)
+    title = models.CharField(max_length=256)
+    year_released = models.IntegerField()
     director = models.CharField(max_length=512, blank=True)
     genres = models.CharField(max_length=512, blank=True)
     summary = models.CharField(max_length=1000, blank=True)
-    stars = models.CharField(max_length=1000, blank=True)  # names of
+    stars = models.CharField(max_length=1000, blank=True)
 
-    def get_director(self):
+    def get_director(self) -> List[str]:
         """Get a list contain the name of the director(s) of the film
 
         :return: A list containing the string representing the name of the director(s) of the film
-        :rtype: list
         """
         return [director.strip() for director in
                 self.director.split(",")]
 
-    def get_genres(self):
+    def get_genres(self) -> List[str]:
         """Get a list contain the genres of the film
 
         :return: A list containing the string representing the genres of the film
-        :rtype: list
         """
         return [genre.strip() for genre in
                 self.genres.split(",")]
 
-    def get_stars(self):
+    def get_stars(self) -> List[str]:
         """Get a list contain the genres of the film
 
         :return: A list containing the string representing name of the stars of the film
-        :rtype: list
         """
         return [star.strip() for star in
                 self.stars.split(",")]
@@ -83,13 +82,12 @@ class Film(models.Model):
         self.stars = ", ".join(stars)
 
     @classmethod
-    def get_film(cls, film_id):
+    def get_film(cls, film_id: int) -> Film:
         """Create and return Film object
 
         :param film_id: The ID of a specific film.
         :type film_id: int
         :return: film object
-        :rtype: Film
         """
         try:
             film = cls.objects.get(pk=film_id)
@@ -133,4 +131,3 @@ class Review(models.Model):
     film = models.ForeignKey(Film, on_delete=models.CASCADE)
     pub_date = models.DateTimeField(default=datetime.now())
     content = models.CharField(max_length=1000)
-    # comment_set is auto-generated from Comment class, no need to include in the code.
