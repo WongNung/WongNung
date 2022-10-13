@@ -16,8 +16,8 @@ from decouple import Csv, config
 from . import typings
 import tmdbsimple as tmdb
 
-API_KEY = config("API_KEY")
-tmdb.API_KEY = API_KEY
+TMDB_API_KEY = config("TMDB_API_KEY")
+tmdb.API_KEY = TMDB_API_KEY
 
 typings.setup()
 
