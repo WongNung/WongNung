@@ -95,7 +95,7 @@ WSGI_APPLICATION = "pdtx.wsgi.application"
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 DATABASES = {
     "default": {
-        "ENGINE": f"django.db.backends.postgresql",
+        "ENGINE": "django.db.backends.postgresql",
         "NAME": config("DATABASE_NAME", default="wongnung"),
         "USER": config("DATABASE_USERNAME", default="wongnung"),
         "PASSWORD": config("DATABASE_PASSWORD", default="password"),
