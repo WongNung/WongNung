@@ -26,6 +26,7 @@ class Film(models.Model):
     :param stars: The stars(actors and actresses) of the film
     :type stars: str
     """
+
     filmId = models.IntegerField(primary_key=True)
     title = models.CharField(max_length=256)
     year_released = models.IntegerField()
@@ -34,29 +35,29 @@ class Film(models.Model):
     summary = models.CharField(max_length=1000, blank=True)
     stars = models.CharField(max_length=1000, blank=True)
 
+    def __str__(self) -> str:
+        return f"{self.title (self.year_released)}"
+
     def get_director(self) -> List[str]:
         """Get a list contain the name of the director(s) of the film
 
         :return: A list containing the string representing the name of the director(s) of the film
         """
-        return [director.strip() for director in
-                self.director.split(",")]
+        return [director.strip() for director in self.director.split(",")]
 
     def get_genres(self) -> List[str]:
         """Get a list contain the genres of the film
 
         :return: A list containing the string representing the genres of the film
         """
-        return [genre.strip() for genre in
-                self.genres.split(",")]
+        return [genre.strip() for genre in self.genres.split(",")]
 
     def get_stars(self) -> List[str]:
         """Get a list contain the genres of the film
 
         :return: A list containing the string representing name of the stars of the film
         """
-        return [star.strip() for star in
-                self.stars.split(",")]
+        return [star.strip() for star in self.stars.split(",")]
 
     def set_director(self, directors: List[str]):
         """Get a list containing the name of the director(s) of the film and set it to
@@ -93,27 +94,35 @@ class Film(models.Model):
 
         try:
             film = cls.objects.get(pk=film_id)
-
         except cls.DoesNotExist:
             # tmdbsimple: get movie from movie id
             response_info = tmdb.Movies(film_id).info()
             response_credits = tmdb.Movies(film_id).credits()
 
-            title = response_info['title']
-            year_released = response_info['release_date'].split('-')[0]
-            summary = response_info['overview']
-            film = cls.objects.create(filmId=film_id, title=title, year_released=year_released, summary=summary)
+            title = response_info["title"]
+            year_released = response_info["release_date"].split("-")[0]
+            summary = response_info["overview"]
+            film = cls.objects.create(
+                filmId=film_id,
+                title=title,
+                year_released=year_released,
+                summary=summary,
+            )
 
             # get the list of the name of all directors
-            directors = [director['name'] for director in response_credits['crew'] if director['job'] == 'Director']
+            directors = [
+                director["name"]
+                for director in response_credits["crew"]
+                if director["job"] == "Director"
+            ]
             film.set_director(directors)
 
             # get the list of genres of the film
-            genres_lst = [genres['name'] for genres in response_info['genres']]
+            genres_lst = [genres["name"] for genres in response_info["genres"]]
             film.set_genres(genres_lst)
 
             # get the list of the name of all stars
-            stars = [star['name'] for star in response_credits['cast']]
+            stars = [star["name"] for star in response_credits["cast"]]
             film.set_stars(stars)
 
         return film
@@ -130,6 +139,10 @@ class Review(models.Model):
     :param content: A string representation of the content of this Review
     :type content: str
     """
+
     film = models.ForeignKey(Film, on_delete=models.CASCADE)
     pub_date = models.DateTimeField(default=datetime.now())
     content = models.CharField(max_length=1000)
+
+    def __str__(self) -> str:
+        return f"Review for {self.film} @ {self.pub_date}"
