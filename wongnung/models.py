@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import List
 
 from django.db import models
-from datetime import datetime
+from django.utils import timezone
 import tmdbsimple as tmdb
 
 
@@ -36,7 +36,7 @@ class Film(models.Model):
     stars = models.CharField(max_length=1000, blank=True)
 
     def __str__(self) -> str:
-        return f"{self.title (self.year_released)}"
+        return f"{self.title} ({self.year_released})"
 
     def get_director(self) -> List[str]:
         """Get a list contain the name of the director(s) of the film
@@ -90,20 +90,20 @@ class Film(models.Model):
         :type film_id: str
         :return: film object
         """
-        film_id = int(film_id)
+        num_id = int(film_id)
 
         try:
             film = cls.objects.get(pk=film_id)
         except cls.DoesNotExist:
             # tmdbsimple: get movie from movie id
-            response_info = tmdb.Movies(film_id).info()
-            response_credits = tmdb.Movies(film_id).credits()
+            response_info = tmdb.Movies(num_id).info()
+            response_credits = tmdb.Movies(num_id).credits()
 
             title = response_info["title"]
             year_released = response_info["release_date"].split("-")[0]
             summary = response_info["overview"]
             film = cls.objects.create(
-                filmId=film_id,
+                filmId=num_id,
                 title=title,
                 year_released=year_released,
                 summary=summary,
@@ -141,7 +141,7 @@ class Review(models.Model):
     """
 
     film = models.ForeignKey(Film, on_delete=models.CASCADE)
-    pub_date = models.DateTimeField(default=datetime.now())
+    pub_date = models.DateTimeField(default=timezone.now())
     content = models.CharField(max_length=1000)
 
     def __str__(self) -> str:
