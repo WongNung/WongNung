@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import List
 
 from django.db import models
-from datetime import datetime
+from django.utils import timezone
 import tmdbsimple as tmdb
 
 
@@ -141,7 +141,7 @@ class Review(models.Model):
     """
 
     film = models.ForeignKey(Film, on_delete=models.CASCADE)
-    pub_date = models.DateTimeField(default=datetime.now())
+    pub_date = models.DateTimeField(default=timezone.now())
     content = models.CharField(max_length=1000)
 
     def __str__(self) -> str:
