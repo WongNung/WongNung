@@ -47,6 +47,15 @@ module.exports = {
             fontFamily: {
                 'primary': ['Rubik', ...defaultTheme.fontFamily.sans],
                 'body': ['"Noto Sans"', ...defaultTheme.fontFamily.sans],
+            },
+            colors: {
+                'feed-grey': "#696969",
+                'back-grey': "#292929",
+                'header-grey': "#464646",
+                'user-grey': "#898989",
+                "regis-grey": "#A0A0A0",
+                'tag-yellow': "#FDC500",
+                'component-red': "#B12025"
             }
         },
     },
