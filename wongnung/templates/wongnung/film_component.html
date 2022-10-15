@@ -1,0 +1,55 @@
+{% load static %}
+{% load tailwind_tags %}
+{% tailwind_css %}
+
+<div class="flex bg-feed-grey">
+    <div class="p-2 flex flex-row">
+        <div class="flex">
+            <img class="object-contain relative" src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/62HCnUTziyWcpDaBO2i1DX17ljH.jpg">
+        </div>
+        <div class="px-5">
+            <div class="font-primary text-5xl drop-shadow-2xl text-neutral-50">
+                {{ film.title }}
+            </div>
+            <div class="flex flex-row text-tag-yellow pt-2.5">
+                <div class="text-2xl font-body pr-2">
+                    {{ film.year_released }} | Genres: 
+                </div>
+                {% for genre in film.get_genres %}
+                    <div class="rounded-full bg-transparent border-2 border-tag-yellow h-7 w-24 text-center">
+                        {{ genre }}
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="pt-5 divide-y">
+                <div class="text-neutral-50 font-body pb-1">
+                    {{ film.summary }}
+                </div>
+                <div class="flex flex-row pt-1.5 pb-1.5">
+                    <div class="text-tag-yellow pr-2">
+                        Director(s): 
+                    </div>
+                    {% for director in film.get_director %}
+                        <div class="text-neutral-50">
+                            {{ director }} 
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="flex flex-row pt-1.5 pb-1.5">
+                    <div class="text-tag-yellow pr-2">
+                        Stars: 
+                    </div>
+                    {% for star in film.get_stars %}
+                        <div class="text-neutral-50">
+                            {{ star }} |&nbsp;
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="flex flex-row pt-1.5 pb-1.5 font-primary text-neutral-50 drop-shadow-xl text-4xl">
+                    Reviews:
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
