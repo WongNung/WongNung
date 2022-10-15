@@ -1,4 +1,3 @@
-from importlib.resources import path
 from .views import show_film_component
 from django.urls import path
 
