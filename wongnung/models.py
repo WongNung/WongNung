@@ -115,7 +115,7 @@ class Film(models.Model):
                 director["name"]
                 for director in response_credits["crew"]
                 if director["job"] == "Director"
-            ]
+            ][:5]
             film.set_director(directors)
 
             # get the list of genres of the film
@@ -123,8 +123,9 @@ class Film(models.Model):
             film.set_genres(genres_lst)
 
             # get the list of the name of all stars
-            stars = [star["name"] for star in response_credits["cast"]]
+            stars = [star["name"] for star in response_credits["cast"]][:5]
             film.set_stars(stars)
+            film.save()
 
         return film
 
