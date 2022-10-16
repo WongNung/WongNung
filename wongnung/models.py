@@ -4,6 +4,7 @@ from typing import List
 
 from django.db import models
 from django.utils import timezone
+from django.contrib.auth.models import User
 import tmdbsimple as tmdb
 
 
@@ -138,11 +139,17 @@ class Review(models.Model):
     :type pub_date: Datetime
     :param content: A string representation of the content of this Review
     :type content: str
+    :param author: User who created the Review
+    :type author: User
     """
 
     film = models.ForeignKey(Film, on_delete=models.CASCADE)
     pub_date = models.DateTimeField(default=timezone.now())
     content = models.CharField(max_length=1000)
+    author = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
 
     def __str__(self) -> str:
-        return f"Review for {self.film} @ {self.pub_date}"
+        string = f"Review for {self.film} @ {self.pub_date}"
+        if self.author:
+            return string + f" by {self.author}"
+        return string + " by anonymous"
