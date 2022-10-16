@@ -150,6 +150,6 @@ class Review(models.Model):
 
     def __str__(self) -> str:
         string = f"Review for {self.film} @ {self.pub_date}"
-        if owner:
+        if self.author:
             return string + f" by {self.author}"
         return string + " by anonymous"
