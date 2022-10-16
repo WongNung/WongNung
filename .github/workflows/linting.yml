@@ -19,6 +19,12 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
           pip install flake8 flake8-django
+      - name: Checkout ci-utils
+        uses: actions/checkout@v3
+        with:
+          repository: WongNung/ci-utils
+          path: "./ci-utils"
       - name: Lint with flake8
         run: |
-          flake8 . --statistics
+          cp ./ci-utils/flake8-summarize .
+          ./flake8-summarize >> $GITHUB_STEP_SUMMARY
