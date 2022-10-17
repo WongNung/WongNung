@@ -32,10 +32,11 @@ def search(request: HttpRequest):
                 res = res[:5]
             for film in res:
                 year = film["release_date"].split("-")[0]
-                results_html += f"""<span class="{" ".join(result_cls)}">
-                <a href="/show_film_component/{film["id"]}"
-                class="hover:underline">{film["title"]} ({year})</a>
-                </span>"""
+                if year:
+                    results_html += f"""<span class="{" ".join(result_cls)}">
+                    <a href="/show_film_component/{film["id"]}"
+                    class="hover:underline">{film["title"]} ({year})</a>
+                    </span>"""
 
     container_cls = [
         "mx-6",
