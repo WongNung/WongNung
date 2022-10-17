@@ -4,7 +4,7 @@
 
 <div class="bg-slate-100 rounded-xl h-96 w-[1000px]">
     <div class="pt-3 flex flex-row items-center">
-        <div class="bg-user-grey rounded-3xl h-10 w-48 flex items-center ml-3">
+        <div class="bg-user-grey rounded-3xl h-10 w-48 flex items-center ml-5">
             <div class="rounded-full bg-post-grey h-8 w-8 text-center ml-1.5">
                 {{ fst_char }}
             </div>
@@ -15,7 +15,7 @@
         <div class="font-body text-black text-xl pl-5">
             {{ review.pub_date|date:"🗓️ N d, Y 🕑 g:i a" }}
         </div>
-        <div class="space-x-3 flex flex-row pl-[310px]">
+        <div class="space-x-3 flex flex-row pl-[300px]">
             <label>
                 <input class="sr-only peer" name="watchlist" type="checkbox" value="keep" />
                 <div class="text-post-grey peer-checked:text-component-red hover:drop-shadow-lg">
@@ -54,5 +54,8 @@
                 </div>
             </label>
         </div>
+    </div>
+    <div class="pl-5 pt-6 text-component-red text-xl">
+        Movie: <a class="text-black"  href="{% url 'wongnung:film-component' film.filmId %}">{{ film.title }}</a>
     </div>
 </div>

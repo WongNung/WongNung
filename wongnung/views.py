@@ -13,6 +13,7 @@ def show_review_component(request, pk):
     review = Review.objects.get(pk=pk)
     context = {
         'review': review,
-        'fst_char': review.author.username[0]
+        'fst_char': review.author.username[0],
+        'film': review.film
     }
     return render(request, 'wongnung/review_componet.html', context)
