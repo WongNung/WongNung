@@ -3,8 +3,6 @@ from django.http import HttpResponse, HttpRequest
 from .models import Film
 import tmdbsimple as tmdb
 
-__all__ = ["show_film_component", "test_page", "search"]
-
 
 def test_page(request):
     return render(request, "wongnung/test_page.html")
@@ -57,5 +55,5 @@ def search(request: HttpRequest):
 
     html = f'<div class="{" ".join(container_cls)}" id="search-results">'
     html += results_html
-    html += f"</div>"
+    html += "</div>"
     return HttpResponse(html)

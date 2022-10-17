@@ -1,4 +1,4 @@
-from .views import *
+from .views import show_film_component, test_page, search
 from django.urls import path
 
 app_name = "wongnung"
