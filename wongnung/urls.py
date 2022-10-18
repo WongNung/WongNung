@@ -12,6 +12,6 @@ urlpatterns = [
     path(
         "show_review_component/<int:pk>",
         show_review_component,
-        name="review-component",)
+        name="review-component",),
     path("search", search, name="search"),
 ]
