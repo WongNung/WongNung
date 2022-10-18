@@ -5,14 +5,16 @@
         </div>
         <div class="flex basis-1/2 items-center">
             <span class="flex-1">
+                <!-- Magnifying Glass Icon -->
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="absolute my-2 mx-3 w-6 h-6 z-10 stroke-back-grey">
                     <path stroke-linecap="round" stroke-linejoin="round"
                         d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                 </svg>
+                <!-- Searchbox -->
                 <input
                     class="z-0 w-full px-12 rounded-full text-black placeholder:text-back-grey focus:border-tag-yellow focus:ring-tag-yellow focus:ring-1"
-                    type="text" id="queryfield" name="query" autocomplete="off" placeholder="Search WongNung..."
+                    type="text" id="queryfield" name="query" autocomplete="off" placeholder="Search films..."
                     maxlength="80" hx-trigger="keyup changed delay:250ms, input changed delay:250ms" hx-swap="outerHTML"
                     hx-target="#search-results" hx-get="/search" />
                 <div class="hidden" id="search-results">
