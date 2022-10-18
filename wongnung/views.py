@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpRequest
-from .models import Film
+from .models import Film, Review
 import tmdbsimple as tmdb
 
 
@@ -58,3 +58,13 @@ def search(request: HttpRequest):
     html += results_html
     html += "</div>"
     return HttpResponse(html)
+
+
+def show_review_component(request, pk):
+    review = Review.objects.get(pk=pk)
+    context = {
+        'review': review,
+        'fst_char': review.author.username[0],
+        'film': review.film
+    }
+    return render(request, 'wongnung/review_componet.html', context)
