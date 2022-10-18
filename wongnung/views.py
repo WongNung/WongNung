@@ -9,6 +9,7 @@ def show_film_component(request, filmid):
     }
     return render(request, 'wongnung/film_component.html', context)
 
+
 def show_review_component(request, pk):
     review = Review.objects.get(pk=pk)
     context = {
