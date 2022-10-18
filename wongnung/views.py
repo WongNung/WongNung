@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Film
+from .models import Film, Review
 
 
 def show_film_component(request, filmid):
@@ -8,3 +8,13 @@ def show_film_component(request, filmid):
         'film': film
     }
     return render(request, 'wongnung/film_component.html', context)
+
+
+def show_review_component(request, pk):
+    review = Review.objects.get(pk=pk)
+    context = {
+        'review': review,
+        'fst_char': review.author.username[0],
+        'film': review.film
+    }
+    return render(request, 'wongnung/review_componet.html', context)
