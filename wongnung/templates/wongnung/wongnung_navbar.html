@@ -13,8 +13,8 @@
                 <input
                     class="z-0 w-full px-12 rounded-full text-black placeholder:text-back-grey focus:border-tag-yellow focus:ring-tag-yellow focus:ring-1"
                     type="text" id="queryfield" name="query" autocomplete="off" placeholder="Search WongNung..."
-                    maxlength="80" hx-trigger="keyup paste input changed delay:0.5s" hx-swap="outerHTML"
-                    hx-target="#search-results" hx-get="/search">
+                    maxlength="80" hx-trigger="keyup changed delay:250ms, input changed delay:250ms" hx-swap="outerHTML"
+                    hx-target="#search-results" hx-get="/search" />
                 <div class="hidden" id="search-results">
                 </div>
             </span>
