@@ -63,19 +63,18 @@
     <div class="pl-5 pt-5 text-component-red text-xl">
         Movie: <a class="text-black"  href="{% url 'wongnung:film-component' film.filmId %}">{{ film.title }}</a>
     </div>
-    <!--Genre-->
+    <!--Genres-->
     <div class="pt-1.5 flex flex-row items-center">
         <div class="pl-5 text-component-red text-xl">
             Genre:
         </div>
         {% for genre in review.film.get_genres %}
-            <div class="rounded-3xl bg-transparent border-2 border-red-600 h-7
-                text-center text-component-red px-2 mx-1">
+            <div class="rounded-3xl bg-transparent border-2 border-component-red h-7 text-center text-component-red px-2 mx-1">
                 {{ genre }}
             </div>
         {% endfor %}
         </div>
-    <!--Summary-->
+    <!--Review content-->
     <div class="flow-root px-5 pt-5 divide-y flex flex-col">
         <div class="text-justify text-black font-body pb-1">
             {{ review.content }}
