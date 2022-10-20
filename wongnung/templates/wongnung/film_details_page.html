@@ -1,0 +1,7 @@
+{% extends 'wongnung/wongnung_page.html' %}
+{% block t %}{{ film.title }}{% endblock %}
+{% block c %}
+<div>
+    {% include 'wongnung/film_component.html' %}
+</div>
+{% endblock %}

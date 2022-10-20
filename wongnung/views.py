@@ -7,6 +7,11 @@ import tmdbsimple as tmdb
 def test_page(request):
     return render(request, "wongnung/test_page.html")
 
+def film_details_page(request, filmid):
+    film = Film.get_film(film_id=filmid)
+    context = {"film": film}
+    return render(request, "wongnung/film_details_page.html", context)
+
 
 def show_film_component(request, filmid):
     film = Film.get_film(film_id=filmid)
@@ -34,7 +39,7 @@ def search(request: HttpRequest):
                 year = film["release_date"].split("-")[0]
                 if year:
                     results_html += f"""<span class="{" ".join(result_cls)}">
-                    <a href="/show_film_component/{film["id"]}"
+                    <a href="/details_page/{film["id"]}"
                     class="hover:underline">{film["title"]} ({year})</a>
                     </span>"""
 

@@ -1,7 +1,3 @@
-{% load static %}
-{% load tailwind_tags %}
-{% tailwind_css %}
-
 <div class="flex flex-auto bg-feed-grey h-screen">
     <div class="p-4 flex flex-row gap-x-3">
         <div class="flex flex-none bg-white w-96 h-full">
@@ -18,7 +14,7 @@
                     {{ film.year_released }} | Genres: 
                 </div>
                 {% for genre in film.get_genres %}
-                    <div class="rounded-full bg-transparent border-2 border-tag-yellow h-7 text-center px-2 mx-1">
+                    <div class="rounded-3xl bg-transparent border-2 border-tag-yellow h-full text-center text-tag-yellow px-2 mx-1">
                         {{ genre }}
                     </div>
                 {% endfor %}
