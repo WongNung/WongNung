@@ -7,6 +7,7 @@ import tmdbsimple as tmdb
 def test_page(request):
     return render(request, "wongnung/test_page.html")
 
+
 def film_details_page(request, filmid):
     film = Film.get_film(film_id=filmid)
     context = {"film": film}
