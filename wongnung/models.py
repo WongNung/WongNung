@@ -35,6 +35,7 @@ class Film(models.Model):
     genres = models.CharField(max_length=512, blank=True)
     summary = models.CharField(max_length=1000, blank=True)
     stars = models.CharField(max_length=1000, blank=True)
+    poster = models.CharField(max_length=265, blank=True)
 
     def __str__(self) -> str:
         return f"{self.title} ({self.year_released})"
@@ -99,15 +100,17 @@ class Film(models.Model):
             # tmdbsimple: get movie from movie id
             response_info = tmdb.Movies(num_id).info()
             response_credits = tmdb.Movies(num_id).credits()
-
             title = response_info["title"]
             year_released = response_info["release_date"].split("-")[0]
             summary = response_info["overview"]
+            poster = f"https://image.tmdb.org/t/p/w600_and_h900_bestv2{response_info['poster_path']}"
+
             film = cls.objects.create(
                 filmId=num_id,
                 title=title,
                 year_released=year_released,
                 summary=summary,
+                poster=poster
             )
 
             # get the list of the name of all directors
