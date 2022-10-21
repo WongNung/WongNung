@@ -55,7 +55,7 @@ def search(request: HttpRequest):
         "flex-col",
         "bg-white",
         "rounded-md",
-        "drop-shadow-lg",
+        "shadow-lg",
         f"{'' if len(query) >= 3 and results_html else 'hidden'}",
     ]
 
