@@ -103,16 +103,16 @@ class Film(models.Model):
             title = response_info["title"]
 
             summary = response_info["overview"]
-            if summary == '':
+            if not summary:
                 summary = "The summary of this film is unknown or not translated to English."
 
             year_released = response_info["release_date"].split("-")[0]
-            if year_released == '':
+            if not year_released:
                 year_released = None
 
             # get film poster path
             path = response_info['poster_path']
-            if path is None:
+            if not path:
                 poster = "https://i.ibb.co/2Kxk7XZ/no-poster.jpg"
             else:
                 poster = f"https://image.tmdb.org/t/p/w600_and_h900_bestv2{path}"
