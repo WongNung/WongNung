@@ -30,7 +30,7 @@ class Film(models.Model):
 
     filmId = models.IntegerField(primary_key=True)
     title = models.CharField(max_length=256)
-    year_released = models.IntegerField()
+    year_released = models.IntegerField(null=True)
     director = models.CharField(max_length=512, blank=True)
     genres = models.CharField(max_length=512, blank=True)
     summary = models.CharField(max_length=1000, blank=True)
@@ -101,9 +101,21 @@ class Film(models.Model):
             response_info = tmdb.Movies(num_id).info()
             response_credits = tmdb.Movies(num_id).credits()
             title = response_info["title"]
-            year_released = response_info["release_date"].split("-")[0]
+
             summary = response_info["overview"]
-            poster = f"https://image.tmdb.org/t/p/w600_and_h900_bestv2{response_info['poster_path']}"
+            if summary == '':
+                summary = "The summary of this film is unknown or not translated to English."
+
+            year_released = response_info["release_date"].split("-")[0]
+            if year_released == '':
+                year_released = None
+
+            # get film poster path
+            path = response_info['poster_path']
+            if path is None:
+                poster = "https://i.ibb.co/2Kxk7XZ/no-poster.jpg"
+            else:
+                poster = f"https://image.tmdb.org/t/p/w600_and_h900_bestv2{path}"
 
             film = cls.objects.create(
                 filmId=num_id,
