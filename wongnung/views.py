@@ -12,6 +12,9 @@ def film_details_page(request, filmid):
     context = {"filmid": filmid}
     return render(request, "wongnung/film_details_page.html", context)
 
+def review_page(request):
+    return render(request, "wongnung/post_review_page.html")
+
 
 def show_film_component(request, filmid):
     film = Film.get_film(film_id=filmid)
