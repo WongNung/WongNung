@@ -1,3 +1,4 @@
+<title>{{ film.title }}</title>
 <div class="flex flex-auto bg-feed-grey h-screen">
     <div class="p-4 flex flex-row gap-x-3">
         <div class="flex flex-none bg-white w-96 h-full">
@@ -11,12 +12,13 @@
             </div>
             <div class="flex flex-row text-tag-yellow pt-2.5 items-center">
                 <div class="text-2xl font-body pr-2">
-                    {{ film.year_released }} | Genres: 
+                    {{ film.year_released }} | Genres:
                 </div>
                 {% for genre in film.get_genres %}
-                    <div class="rounded-3xl bg-transparent border-2 border-tag-yellow h-full text-center text-tag-yellow px-2 mx-1">
-                        {{ genre }}
-                    </div>
+                <div
+                    class="rounded-3xl bg-transparent border-2 border-tag-yellow h-full text-center text-tag-yellow px-2 mx-1">
+                    {{ genre }}
+                </div>
                 {% endfor %}
             </div>
             <div class="pt-5 divide-y flex flex-col">
@@ -25,22 +27,22 @@
                 </div>
                 <div class="flex flex-row pt-1.5 pb-1.5">
                     <div class="text-tag-yellow pr-2">
-                        Director(s): 
+                        Director(s):
                     </div>
                     {% for director in film.get_director %}
-                        <div class="text-neutral-50">
-                            {{ director }} 
-                        </div>
+                    <div class="text-neutral-50">
+                        {{ director }}
+                    </div>
                     {% endfor %}
                 </div>
                 <div class="flex flex-row pt-1.5 pb-1.5">
                     <div class="text-tag-yellow pr-2">
-                        Stars: 
+                        Stars:
                     </div>
                     {% for star in film.get_stars %}
-                        <div class="text-neutral-50">
-                            {{ star }} |&nbsp;
-                        </div>
+                    <div class="text-neutral-50">
+                        {{ star }} |&nbsp;
+                    </div>
                     {% endfor %}
                 </div>
                 <div class="flex flex-row pt-1.5 pb-1.5 font-primary text-neutral-50 drop-shadow-xl text-4xl">

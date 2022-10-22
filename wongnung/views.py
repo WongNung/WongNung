@@ -9,8 +9,7 @@ def test_page(request):
 
 
 def film_details_page(request, filmid):
-    film = Film.get_film(film_id=filmid)
-    context = {"film": film}
+    context = {"filmid": filmid}
     return render(request, "wongnung/film_details_page.html", context)
 
 
@@ -40,7 +39,7 @@ def search(request: HttpRequest):
                 year = film["release_date"].split("-")[0]
                 if year:
                     results_html += f"""<span class="{" ".join(result_cls)}">
-                    <a href="/details_page/{film["id"]}"
+                    <a href="/film/{film["id"]}"
                     class="hover:underline">{film["title"]} ({year})</a>
                     </span>"""
 
@@ -69,8 +68,8 @@ def search(request: HttpRequest):
 def show_review_component(request, pk):
     review = Review.objects.get(pk=pk)
     context = {
-        'review': review,
-        'fst_char': review.author.username[0],
-        'film': review.film
+        "review": review,
+        "fst_char": review.author.username[0],
+        "film": review.film,
     }
-    return render(request, 'wongnung/review_componet.html', context)
+    return render(request, "wongnung/review_componet.html", context)

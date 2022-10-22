@@ -18,6 +18,7 @@ import tmdbsimple as tmdb
 
 TMDB_API_KEY = config("TMDB_API_KEY")
 tmdb.API_KEY = TMDB_API_KEY
+tmdb.REQUESTS_TIMEOUT = (2, 5)
 
 typings.setup()
 
