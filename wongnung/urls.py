@@ -4,6 +4,7 @@ from .views import (
     test_page,
     search,
     film_details_page,
+    review_page
 )
 from django.urls import path
 
@@ -12,6 +13,7 @@ app_name = "wongnung"
 urlpatterns = [
     path("test", test_page, name="test"),
     path("film/<str:filmid>", film_details_page, name="film-details"),
+    path("new_review", review_page, name="")
 ]
 
 # Use this array to store paths that should be called using htmx
