@@ -10,7 +10,11 @@
                 {{ fst_char }}
             </div>
             <div class="pl-3 font-body text-white text-xl">
-                {{ review.author }}
+                {% if review.author %}
+                    {{ review.author }}
+                {% else %}
+                    Anonymous
+                {% endif %}
             </div>
         </div>
         <div class="font-body text-black text-xl pl-5">
