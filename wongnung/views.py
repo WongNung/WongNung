@@ -12,6 +12,7 @@ def film_details_page(request, filmid):
     context = {"filmid": filmid}
     return render(request, "wongnung/film_details_page.html", context)
 
+
 def post_review_page(request):
     return render(request, "wongnung/post_review_page.html")
 
