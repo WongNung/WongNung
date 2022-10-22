@@ -106,8 +106,11 @@ class Film(models.Model):
             if not summary:
                 summary = "The summary of this film is unknown or not translated to English."
 
-            year_released = response_info["release_date"].split("-")[0]
-            if not year_released:
+            try:
+                year_released = response_info["release_date"].split("-")[0]
+                if not year_released:
+                    year_released = None
+            except KeyError:
                 year_released = None
 
             # get film poster path
