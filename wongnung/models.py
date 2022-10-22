@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import List
+from typing import List, Optional
 
 from django.db import models
 from django.utils import timezone
@@ -40,26 +40,38 @@ class Film(models.Model):
     def __str__(self) -> str:
         return f"{self.title} ({self.year_released})"
 
-    def get_director(self) -> List[str]:
+    def get_director(self) -> Optional[List[str]]:
         """Get a list contain the name of the director(s) of the film
 
         :return: A list containing the string representing the name of the director(s) of the film
         """
-        return [director.strip() for director in self.director.split(",")]
+        return (
+            [director.strip() for director in self.director.split(",")]
+            if self.director
+            else None
+        )
 
-    def get_genres(self) -> List[str]:
+    def get_genres(self) -> Optional[List[str]]:
         """Get a list contain the genres of the film
 
         :return: A list containing the string representing the genres of the film
         """
-        return [genre.strip() for genre in self.genres.split(",")]
+        return (
+            [genre.strip() for genre in self.genres.split(",")]
+            if self.genres
+            else None
+        )
 
-    def get_stars(self) -> List[str]:
+    def get_stars(self) -> Optional[List[str]]:
         """Get a list contain the genres of the film
 
         :return: A list containing the string representing name of the stars of the film
         """
-        return [star.strip() for star in self.stars.split(",")]
+        return (
+            [star.strip() for star in self.stars.split(",")]
+            if self.stars
+            else None
+        )
 
     def set_director(self, directors: List[str]):
         """Get a list containing the name of the director(s) of the film and set it to
@@ -114,18 +126,20 @@ class Film(models.Model):
                 year_released = None
 
             # get film poster path
-            path = response_info['poster_path']
+            path = response_info["poster_path"]
             if not path:
                 poster = "https://i.ibb.co/2Kxk7XZ/no-poster.jpg"
             else:
-                poster = f"https://image.tmdb.org/t/p/w600_and_h900_bestv2{path}"
+                poster = (
+                    f"https://image.tmdb.org/t/p/w600_and_h900_bestv2{path}"
+                )
 
             film = cls.objects.create(
                 filmId=num_id,
                 title=title,
                 year_released=year_released,
                 summary=summary,
-                poster=poster
+                poster=poster,
             )
 
             # get the list of the name of all directors
