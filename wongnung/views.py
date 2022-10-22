@@ -8,6 +8,11 @@ def test_page(request):
     return render(request, "wongnung/test_page.html")
 
 
+def film_details_page(request, filmid):
+    context = {"filmid": filmid}
+    return render(request, "wongnung/film_details_page.html", context)
+
+
 def show_film_component(request, filmid):
     film = Film.get_film(film_id=filmid)
     context = {"film": film}
@@ -34,7 +39,7 @@ def search(request: HttpRequest):
                 year = film["release_date"].split("-")[0]
                 if year:
                     results_html += f"""<span class="{" ".join(result_cls)}">
-                    <a href="/show_film_component/{film["id"]}"
+                    <a href="/film/{film["id"]}"
                     class="hover:underline">{film["title"]} ({year})</a>
                     </span>"""
 
@@ -50,7 +55,7 @@ def search(request: HttpRequest):
         "flex-col",
         "bg-white",
         "rounded-md",
-        "drop-shadow-lg",
+        "shadow-lg",
         f"{'' if len(query) >= 3 and results_html else 'hidden'}",
     ]
 
@@ -63,8 +68,8 @@ def search(request: HttpRequest):
 def show_review_component(request, pk):
     review = Review.objects.get(pk=pk)
     context = {
-        'review': review,
-        'fst_char': review.author.username[0],
-        'film': review.film
+        "review": review,
+        "fst_char": review.author.username[0],
+        "film": review.film,
     }
-    return render(request, 'wongnung/review_componet.html', context)
+    return render(request, "wongnung/review_componet.html", context)
