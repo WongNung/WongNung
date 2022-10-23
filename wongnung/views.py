@@ -14,6 +14,7 @@ def film_details_page(request, filmid):
     return render(request, "wongnung/film_details_page.html", context)
 
 
+@login_required
 def post_review_page(request, filmid):
     film = Film.get_film(film_id=filmid)
     context = {"film": film}
@@ -76,18 +77,18 @@ def show_review_component(request, pk):
     review = Review.objects.get(pk=pk)
     context = {
         "review": review,
-        "fst_char": review.author.username[0] if review.author else 'a',
+        "fst_char": review.author.username[0] if review.author else "a",
         "film": review.film,
     }
     return render(request, "wongnung/review_componet.html", context)
 
 
 def post_review(request, filmid):
-    # user = request.user
+    author = request.user
     film = Film.get_film(filmid)
-    content = request.POST['content'].strip()
+    content = request.POST["content"].strip()
     print(content)
     if not content:
-        return redirect('wongnung:new-review', filmid=filmid)
-    review = Review.objects.create(film=film, content=content)
-    return redirect('wongnung:review-component', pk=review.id)
+        return redirect("wongnung:new-review", filmid=filmid)
+    review = Review.objects.create(film=film, content=content, author=author)
+    return redirect("wongnung:review-component", pk=review.id)
