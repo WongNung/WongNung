@@ -1,0 +1,57 @@
+<title>{{ film.title }}</title>
+<div class="flex flex-auto bg-feed-grey h-screen">
+  <div class="p-4 flex flex-row gap-x-3">
+    <div class="flex flex-none bg-white h-full">
+      <!-- Image size: w600, h900 -->
+      <img class="object-contain" src="{{ film.poster }}" />
+    </div>
+    <div class="flex grow flex-col">
+      <div class="font-primary text-5xl text-neutral-50">{{ film.title }}</div>
+      <div class="flex flex-row text-tag-yellow pt-2.5 items-center">
+        <div class="text-2xl font-body pr-2">
+          {{ film.year_released }} | Genres:
+        </div>
+        {% if film.get_genres %} {% for genre in film.get_genres %}
+        <div
+          class="rounded-3xl bg-transparent border-2 border-tag-yellow h-full text-center text-tag-yellow px-2 mx-1"
+        >
+          {{ genre }}
+        </div>
+        {% endfor %} {% else %}
+        <span class="text-2xl">-</span>
+        {% endif %}
+      </div>
+      <div class="pt-5 divide-y flex flex-col">
+        <div class="text-neutral-50 font-body pb-1">{{ film.summary }}</div>
+        <div class="flex flex-row pt-1.5 pb-1.5">
+          <div class="text-tag-yellow pr-2">Director(s):</div>
+          {% if film.get_director %} {% for director in film.get_director %}
+          <div class="text-neutral-50">{{ director }} &nbsp;</div>
+          {% endfor %} {% else %}
+          <div class="text-neutral-50">-</div>
+          {% endif %}
+        </div>
+        <div class="flex flex-row pt-1.5 pb-1.5">
+          <div class="text-tag-yellow pr-2">Stars:</div>
+          {% if film.get_stars %}
+          <div class="text-neutral-50">
+            {% for star in film.get_stars %} {{ star }} &nbsp;{% endfor %}
+          </div>
+          {% else %}
+          <div class="text-neutral-50">-</div>
+          {% endif %}
+        </div>
+        <div
+          class="flex flex-row pt-1.5 pb-1.5 font-primary text-neutral-50 drop-shadow-xl text-4xl"
+        >
+          Reviews:
+        </div>
+      </div>
+      <div
+        class="flex flex-col bg-post-grey w-full h-full rounded-md text-center self-center"
+      >
+        Wait for review component
+      </div>
+    </div>
+  </div>
+</div>

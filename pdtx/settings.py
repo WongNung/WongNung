@@ -14,6 +14,11 @@ import os
 from pathlib import Path
 from decouple import Csv, config
 from . import typings
+import tmdbsimple as tmdb
+
+TMDB_API_KEY = config("TMDB_API_KEY")
+tmdb.API_KEY = TMDB_API_KEY
+tmdb.REQUESTS_TIMEOUT = (2, 5)
 
 typings.setup()
 
@@ -36,6 +41,7 @@ ALLOWED_HOSTS = config(
 
 # Application definition
 INSTALLED_APPS = [
+    "wongnung.apps.WongnungConfig",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -90,7 +96,7 @@ WSGI_APPLICATION = "pdtx.wsgi.application"
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 DATABASES = {
     "default": {
-        "ENGINE": f"django.db.backends.postgresql",
+        "ENGINE": "django.db.backends.postgresql",
         "NAME": config("DATABASE_NAME", default="wongnung"),
         "USER": config("DATABASE_USERNAME", default="wongnung"),
         "PASSWORD": config("DATABASE_PASSWORD", default="password"),
@@ -99,6 +105,7 @@ DATABASES = {
     }
 }
 
+LOGIN_REDIRECT_URL = "/"
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
