@@ -1,0 +1,38 @@
+services:
+  db:
+    image: postgres:14
+    restart: always
+    environment:
+      POSTGRES_USER: "${DATABASE_USERNAME?:DATABASE_USERNAME not set in env}"
+      POSTGRES_PASSWORD: "${DATABASE_PASSWORD?:DATABASE_PASSWORD not set in env}"
+      POSTGRES_DB: "${DATABASE_NAME?:DATABASE_NAME not set in env}"
+    volumes:
+      - db:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+  app:
+    build: .
+    command: bash -c "
+      python3 manage.py migrate 
+      && python3 manage.py runserver
+      "
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DEBUG: "false"
+      ALLOWED_HOSTS: app
+      DATABASE_HOST: db
+    links:
+      - db
+    ports:
+      - '8080:8080'
+
+
+volumes:
+  db:
