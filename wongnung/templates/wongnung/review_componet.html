@@ -9,7 +9,7 @@
             </div>
             <div class="pl-3 font-body text-white text-xl">
                 {% if review.author %}
-                    {{ review.author }}
+                    {{ review.author }}````
                 {% else %}
                     Anonymous
                 {% endif %}
@@ -38,6 +38,9 @@
                     </svg>
                 </div>
             </label>
+            <div class="px-3 text-2xl text-center ">
+                {{ votes }}
+            </div>
             <!--Downvote button-->
             <label>
                 <input class="sr-only peer" name="downvote" type="checkbox" value="down" />

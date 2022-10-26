@@ -180,9 +180,34 @@ class Review(models.Model):
     pub_date = models.DateTimeField(default=timezone.now)
     content = models.CharField(max_length=1000)
     author = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
+    upvotes = models.ManyToManyField(
+        User, related_name='upvotes', blank=True, default=None)
+    downvotes = models.ManyToManyField(
+        User, related_name='downvotes', blank=True, default=None)
 
     def __str__(self) -> str:
         string = f"Review for {self.film} @ {self.pub_date}"
         if self.author:
             return string + f" by {self.author}"
         return string + " by anonymous"
+
+    def get_votes(self) -> int:
+        return self.get_upvotes()-self.get_downvotes()
+
+    def get_upvotes(self) -> int:
+        return self.upvotes.through.objects.count()
+
+    def get_downvotes(self) -> int:
+        return self.downvotes.through.objects.count()
+
+    def add_upvotes(self, user: User):
+        self.upvotes.add(user)
+
+    def remove_upvotes(self, user: User):
+        self.upvotes.remove(user)
+
+    def add_downvotes(self, user: User):
+        self.downvotes.add(user)
+
+    def remove_downvotes(self, user: User):
+        self.downvotes.remove(user)

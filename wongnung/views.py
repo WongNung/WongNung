@@ -79,6 +79,7 @@ def show_review_component(request, pk):
         "review": review,
         "fst_char": review.author.username[0] if review.author else "a",
         "film": review.film,
+        "votes": review.get_votes()
     }
     return render(request, "wongnung/review_componet.html", context)
 
