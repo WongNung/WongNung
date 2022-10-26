@@ -192,22 +192,36 @@ class Review(models.Model):
         return string + " by anonymous"
 
     def get_votes(self) -> int:
+        """Get number of upvotes minus downvotes."""
         return self.get_upvotes()-self.get_downvotes()
 
     def get_upvotes(self) -> int:
+        """Get number of upvotes."""
         return self.upvotes.through.objects.count()
 
     def get_downvotes(self) -> int:
+        """Get number of downvotes."""
         return self.downvotes.through.objects.count()
 
     def add_upvotes(self, user: User):
+        """Add User to upvotes."""
         self.upvotes.add(user)
 
     def remove_upvotes(self, user: User):
+        """Remove User from upvotes."""
         self.upvotes.remove(user)
 
     def add_downvotes(self, user: User):
+        """Add User to downvotes."""
         self.downvotes.add(user)
 
     def remove_downvotes(self, user: User):
+        """Remove User from downvotes."""
         self.downvotes.remove(user)
+
+
+class Report(models.Model):
+    review = models.ForeignKey(Review, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    report_date = models.DateTimeField(default=timezone.now)
+    content = models.CharField(max_length=1000, blank=False, null=False, default=None)
