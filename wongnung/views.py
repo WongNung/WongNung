@@ -76,11 +76,20 @@ def search(request: HttpRequest):
 
 def show_review_component(request, pk):
     review = Review.objects.get(pk=pk)
+    user = request.user
+    try:
+        upvote = review.upvotes.filter(id=user.id).exists()
+        downvote = review.downvotes.filter(id=user.id).exists()
+    except Exception:
+        upvote = False
+        downvote = False
     context = {
         "review": review,
         "fst_char": review.author.username[0] if review.author else "a",
         "film": review.film,
-        "votes": review.get_votes()
+        "votes": review.get_votes(),
+        "upvote": upvote,
+        "downvote": downvote
     }
     return render(request, "wongnung/review_componet.html", context)
 
