@@ -180,10 +180,8 @@ class Review(models.Model):
     pub_date = models.DateTimeField(default=timezone.now)
     content = models.CharField(max_length=1000)
     author = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
-    upvotes = models.ManyToManyField(
-        User, related_name='upvotes', blank=True, default=None)
-    downvotes = models.ManyToManyField(
-        User, related_name='downvotes', blank=True, default=None)
+    upvotes = models.ManyToManyField(User, related_name='upvotes')
+    downvotes = models.ManyToManyField(User, related_name='downvotes')
 
     def __str__(self) -> str:
         string = f"Review for {self.film} @ {self.pub_date}"
