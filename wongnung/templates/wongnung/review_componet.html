@@ -33,7 +33,7 @@
                 {% csrf_token %}
                 <fieldset class="flex flex-row">
                     <!--Upvote button-->
-                    <button type="submit" name="up" value="up">
+                    <button type="submit" name="up" value="up" class="peer">
                         <div class="text-post-grey peer-checked:text-component-red hover:drop-shadow-lg">
                             <svg class="h-8 relative" viewBox="0 0 512 502" fill="currentColor"
                                 xmlns="http://www.w3.org/2000/svg">
@@ -48,7 +48,7 @@
                         {{ votes }}
                     </div>
                     <!--Downvote button-->
-                    <button type="submit" name="down" value="down">
+                    <button type="submit" name="down" value="down" class="peer">
                         <div class="text-post-grey peer-checked:text-component-red hover:drop-shadow-lg">
                             <svg class="h-8 relative" viewBox="0 0 238 232" fill="currentColor"
                                 xmlns="http://www.w3.org/2000/svg">
