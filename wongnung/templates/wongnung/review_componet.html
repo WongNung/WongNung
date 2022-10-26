@@ -34,6 +34,7 @@
                 <fieldset class="flex flex-row">
                     <!--Upvote button-->
                     <button type="submit" name="up" value="up">
+                        <!--if user has been upvote review upvote button will be red-->
                         {% if upvote %}
                         <div class="text-component-red hover:drop-shadow-lg">
                         {% else %}
@@ -53,6 +54,7 @@
                     </div>
                     <!--Downvote button-->
                     <button type="submit" name="down" value="down">
+                        <!--if user has been downvote review downvote button will be red-->
                         {% if downvote %}
                         <div class="text-component-red hover:drop-shadow-lg">
                         {% else %}
