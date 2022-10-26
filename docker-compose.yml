@@ -11,28 +11,53 @@ services:
     ports:
       - '5432:5432'
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready"]
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -d ${DATABASE_NAME?:DATABASE_NAME not set in env} -U ${DATABASE_USERNAME?:DATABASE_USERNAME not set in env}"
+        ]
       interval: 5s
       timeout: 5s
       retries: 5
-  app:
+  tailwind:
     build: .
-    command: bash -c "
-      python3 manage.py migrate 
-      && python3 manage.py runserver
-      "
+    image: app
+    command:
+      - /bin/bash
+      - -c
+      - |
+        python3 manage.py tailwind build
+    env_file:
+      - .env
+    environment:
+      NPM_BIN_PATH: /usr/bin/npm
+    volumes:
+      - .:/app
+  app:
+    image: app
+    command:
+      - /bin/bash
+      - -c
+      - |
+        python3 manage.py collectstatic --noinput
+        python3 manage.py migrate 
+        python3 manage.py runserver 0.0.0.0:8000
     depends_on:
       db:
         condition: service_healthy
+      tailwind:
+        condition: service_completed_successfully
+    env_file:
+      - .env
     environment:
       DEBUG: "false"
-      ALLOWED_HOSTS: app
       DATABASE_HOST: db
     links:
       - db
     ports:
-      - '8080:8080'
-
+      - '8000:8000'
+    volumes:
+      - .:/app
 
 volumes:
   db:

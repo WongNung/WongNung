@@ -28,6 +28,5 @@ COPY . .
 WORKDIR /app/theme/static_src
 RUN npm install
 
-# Build Tailwind for production
+# End job
 WORKDIR /app
-RUN python3 manage.py tailwind build
