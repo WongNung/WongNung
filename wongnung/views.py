@@ -87,7 +87,7 @@ def show_review_component(request, pk):
         "upvote": upvote,
         "downvote": downvote
     }
-    return render(request, "wongnung/review_componet.html", context)
+    return render(request, "wongnung/review_component.html", context)
 
 
 def post_review(request, filmid):
