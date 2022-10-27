@@ -21,7 +21,7 @@ services:
       retries: 5
   tailwind:
     build: .
-    image: app
+    image: wongnung
     command:
       - /bin/bash
       - -c
@@ -30,11 +30,11 @@ services:
     env_file:
       - .env
     environment:
-      NPM_BIN_PATH: /usr/bin/npm
+      NPM_BIN_PATH: "/usr/bin/npm"
     volumes:
       - .:/app
   app:
-    image: app
+    image: wongnung
     command:
       - /bin/bash
       - -c
