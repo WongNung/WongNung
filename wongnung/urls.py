@@ -5,7 +5,7 @@ from .views import (
     search,
     film_details_page,
     post_review_page,
-    post_review
+    post_review,
 )
 from django.urls import path
 

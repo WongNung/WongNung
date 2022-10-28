@@ -44,11 +44,16 @@ def search(request: HttpRequest):
             if len(res) > 5:
                 res = res[:5]
             for film in res:
-                year = film["release_date"].split("-")[0]
-                if year:
+                if "release_date" in film.keys():
+                    year = film["release_date"].split("-")[0]
                     results_html += f"""<span class="{" ".join(result_cls)}">
                     <a href="/film/{film["id"]}"
                     class="hover:underline">{film["title"]} ({year})</a>
+                    </span>"""
+                else:
+                    results_html += f"""<span class="{" ".join(result_cls)}">
+                    <a href="/film/{film["id"]}"
+                    class="hover:underline">{film["title"]}</a>
                     </span>"""
 
     container_cls = [
