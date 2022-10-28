@@ -39,8 +39,8 @@ def search(request: HttpRequest):
         print("Calling TMDB API")
         search = tmdb.Search()
         res = search.movie(query=query)["results"]
-        SEARCH_CACHE.set(query, res, 300) 
-    
+        SEARCH_CACHE.set(query, res, 300)
+
     results = SEARCH_CACHE.get(query)
     if not results:
         return HttpResponse(construct_results_container())
