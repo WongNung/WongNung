@@ -1,18 +1,18 @@
 from .views import (
     show_film_component,
     show_review_component,
-    test_page,
     search,
     film_details_page,
     post_review_page,
     post_review,
+    feed,
 )
 from django.urls import path
 
 
 app_name = "wongnung"
 urlpatterns = [
-    path("test", test_page, name="test"),
+    path("", feed, name="feed"),
     path("film/<str:filmid>", film_details_page, name="film-details"),
     path("new_review/<str:filmid>", post_review_page, name="new-review"),
     path("post_review/<str:filmid>", post_review, name="post-review"),

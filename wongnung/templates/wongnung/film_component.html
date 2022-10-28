@@ -1,5 +1,5 @@
 <title>{{ film.title }}</title>
-<div class="flex flex-auto bg-feed-grey h-screen">
+<div class="flex flex-auto bg-feed-grey h-screen overflow-hidden">
   <div class="p-4 flex flex-row gap-x-3">
     <div class="flex flex-none bg-white h-full">
       <!-- Image size: w600, h900 -->
@@ -13,7 +13,7 @@
         </div>
         {% if film.get_genres %} {% for genre in film.get_genres %}
         <div
-          class="rounded-3xl bg-transparent border-2 border-tag-yellow h-full text-center text-tag-yellow px-2 mx-1"
+          class="rounded-3xl bg-transparent border-2 border-tag-yellow text-center text-tag-yellow px-2 mx-1"
         >
           {{ genre }}
         </div>
@@ -48,9 +48,18 @@
         </div>
       </div>
       <div
-        class="flex flex-col bg-post-grey w-full h-full rounded-md text-center self-center"
+        class="flex flex-col flex-auto bg-post-grey w-full h-full rounded-md self-center p-4 overflow-auto scrollbar"
       >
-        Wait for review component
+        {% if reviews %}
+          <div class="flex flex-col sticky space-y-4">
+          {% for review in reviews %}
+            <div hx-get="/show_review_component/{{ review.id }}" hx-target="this" hx-swap="outerHTML" hx-trigger="revealed once">
+            </div>
+          {% endfor %}
+          </div>
+        {% else %}
+        Nothing here yet...
+        {% endif %}
       </div>
     </div>
   </div>

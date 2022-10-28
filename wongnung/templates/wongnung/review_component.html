@@ -1,24 +1,27 @@
 {% load static %} {% load tailwind_tags %} {% tailwind_css %}
 
-<div class="bg-slate-100 rounded-xl h-96 w-[1000px]">
-    <div class="pt-3 flex flex-row items-center">
+<span class="bg-slate-100 rounded-xl py-6 px-2">
+    <div class="flex flex-row items-center justify-between mx-5">
         <!--User profile box-->
-        <div class="bg-user-grey rounded-3xl h-10 w-48 flex items-center ml-5 hover:bg-feed-grey">
-            <div class="rounded-full bg-post-grey h-8 w-8 text-center ml-1.5">
-                {{ fst_char }}
+        <div class="flex flex-row items-center">
+            <div class="bg-user-grey rounded-3xl pr-5 py-1 flex items-center hover:bg-feed-grey">
+                <div class="rounded-full bg-post-grey h-8 w-8 text-center ml-1.5">
+                    {{ fst_char }}
+                </div>
+                <div class="pl-3 font-body text-white text-xl">
+                    {% if review.author %}
+                        {{ review.author }}
+                    {% else %}
+                        Anonymous
+                    {% endif %}
+                </div>
             </div>
-            <div class="pl-3 font-body text-white text-xl">
-                {% if review.author %}
-                    {{ review.author }}
-                {% else %}
-                    Anonymous
-                {% endif %}
+            <div class="font-body text-black text-xl px-3">
+                {{ review.pub_date|date:"🗓️ N d, Y 🕑 g:i a" }}
             </div>
         </div>
-        <div class="font-body text-black text-xl pl-5">
-            {{ review.pub_date|date:"🗓️ N d, Y 🕑 g:i a" }}
-        </div>
-        <div class="space-x-3 flex flex-row pl-[300px]">
+        
+        <div class="space-x-3 flex flex-row">
             <!--Add to watch list button-->
             <label>
                 <input class="sr-only peer" name="watchlist" type="checkbox" value="keep" />
@@ -78,9 +81,9 @@
         {% endfor %}
         </div>
     <!--Review content-->
-    <div class="flow-root px-5 pt-5 divide-y flex flex-col">
+    <div class="px-5 pt-5 divide-y flex flex-col">
         <div class="text-justify text-black font-body pb-1">
             {{ review.content }}
         </div>
     </div>
-</div>
+</span>

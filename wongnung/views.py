@@ -7,8 +7,8 @@ import tmdbsimple as tmdb
 from django.contrib.auth.decorators import login_required
 
 
-def test_page(request):
-    return render(request, "wongnung/test_page.html")
+def feed(request):
+    return render(request, "wongnung/feed.html")
 
 
 def film_details_page(request, filmid):
@@ -25,7 +25,8 @@ def post_review_page(request, filmid):
 
 def show_film_component(request, filmid):
     film = Film.get_film(film_id=filmid)
-    context = {"film": film}
+    reviews = Review.objects.filter(film=film)
+    context = {"film": film, "reviews": reviews}
     return render(request, "wongnung/film_component.html", context)
 
 
@@ -101,7 +102,7 @@ def show_review_component(request, pk):
         "fst_char": review.author.username[0] if review.author else "a",
         "film": review.film,
     }
-    return render(request, "wongnung/review_componet.html", context)
+    return render(request, "wongnung/review_component.html", context)
 
 
 def post_review(request, filmid):
