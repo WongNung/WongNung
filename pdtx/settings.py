@@ -53,6 +53,8 @@ INSTALLED_APPS = [
     "django_browser_reload",
 ]
 
+
+
 # Tailwind configuration
 TAILWIND_APP_NAME = "theme"
 INTERNAL_IPS = ["127.0.0.1"]
@@ -103,6 +105,18 @@ DATABASES = {
         "HOST": config("DATABASE_HOST", default="localhost"),
         "PORT": config("DATABASE_PORT", default="5432"),
     }
+}
+
+# Caching
+CACHES = {
+    "default": {
+        "BACKEND": "pdtx.UnsafeKeyDatabaseCache",
+        "LOCATION": "wongnung_cache",
+    },
+    "searches": {
+        "BACKEND": "pdtx.UnsafeKeyDatabaseCache",
+        "LOCATION": "wongnung_search_cache",
+    },
 }
 
 LOGIN_REDIRECT_URL = "/"

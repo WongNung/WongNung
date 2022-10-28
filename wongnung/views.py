@@ -1,5 +1,7 @@
+from typing import Optional, Mapping, Collection
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpRequest
+from .globals import SEARCH_CACHE
 from .models import Film, Review
 import tmdbsimple as tmdb
 from django.contrib.auth.decorators import login_required
@@ -28,34 +30,29 @@ def show_film_component(request, filmid):
 
 
 def search(request: HttpRequest):
-    query = request.GET.get("query")
+    query = str(request.GET.get("query")).lower()
 
-    result_cls = [
-        "m-1",
-        "text-black",
-        "hover:text-component-red",
-    ]
+    if len(query) < 3:
+        return HttpResponse(construct_results_container())
 
-    results_html = ""
-    if len(query) >= 3:
+    if not SEARCH_CACHE.get(query):
+        print("Calling TMDB API")
         search = tmdb.Search()
         res = search.movie(query=query)["results"]
-        if res:
-            if len(res) > 5:
-                res = res[:5]
-            for film in res:
-                if "release_date" in film.keys():
-                    year = film["release_date"].split("-")[0]
-                    results_html += f"""<span class="{" ".join(result_cls)}">
-                    <a href="/film/{film["id"]}"
-                    class="hover:underline">{film["title"]} ({year})</a>
-                    </span>"""
-                else:
-                    results_html += f"""<span class="{" ".join(result_cls)}">
-                    <a href="/film/{film["id"]}"
-                    class="hover:underline">{film["title"]}</a>
-                    </span>"""
+        SEARCH_CACHE.set(query, res, 300) 
+    
+    results = SEARCH_CACHE.get(query)
+    if not results:
+        return HttpResponse(construct_results_container())
+    if len(results) > 5:
+        results = results[:5]
 
+    return HttpResponse(construct_results_container(results))
+
+
+def construct_results_container(
+    search_results: Optional[Collection] = None,
+) -> str:
     container_cls = [
         "mx-6",
         "my-4",
@@ -69,13 +66,32 @@ def search(request: HttpRequest):
         "bg-white",
         "rounded-md",
         "shadow-lg",
-        f"{'' if len(query) >= 3 and results_html else 'hidden'}",
     ]
+    if not search_results or len(search_results) <= 0:
+        container_cls += ["hidden"]
+        return f'<div class="{" ".join(container_cls)}" id="search-results"></div>'
+    entries_html = "\n".join(
+        construct_result_entry_span(film) for film in search_results
+    )
+    return f"""<div class="{" ".join(container_cls)}" id="search-results">
+    {entries_html}
+    </div>"""
 
-    html = f'<div class="{" ".join(container_cls)}" id="search-results">'
-    html += results_html
-    html += "</div>"
-    return HttpResponse(html)
+
+def construct_result_entry_span(film: Mapping) -> str:
+    result_cls = [
+        "m-1",
+        "text-black",
+        "hover:text-component-red",
+    ]
+    text = film["title"]
+    if "release_date" in film.keys():
+        year = film["release_date"].split("-")[0]
+        text = f"{text} ({year})"
+    return f"""<span class="{" ".join(result_cls)}">
+    <a href="/film/{film["id"]}"
+    class="hover:underline">{text}</a>
+    </span>"""
 
 
 def show_review_component(request, pk):
