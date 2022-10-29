@@ -102,8 +102,8 @@ def post_review(request, filmid):
 
 
 @login_required
-def vote(request, review_id):
-    review = get_object_or_404(Review, pk=review_id)
+def vote(request, pk):
+    review = get_object_or_404(Review, pk=pk)
     user = request.user
     if request.method == "POST":
         if request.POST.get('up'):

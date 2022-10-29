@@ -1,6 +1,6 @@
 {% load static %} {% load tailwind_tags %} {% tailwind_css %}
 
-<div class="bg-slate-100 rounded-xl h-96 w-[1000px]">
+<div class="bg-slate-100 rounded-xl h-96 w-[1000px] review{{review.id}}">
     <div class="pt-3 flex flex-row items-center">
         <!--User profile box-->
         <div class="bg-user-grey rounded-3xl h-10 w-48 flex items-center ml-5 hover:bg-feed-grey">
@@ -33,7 +33,8 @@
                 {% csrf_token %}
                 <fieldset class="flex flex-row">
                     <!--Upvote button-->
-                    <button type="submit" name="up" value="up">
+                    <button hx-post="{% url 'wongnung:vote' review.id %}" hx-target=".review{{review.id}}" hx-swap="outerHTML"
+                            type="submit" name="up" value="up">
                         <!--if user has been upvote review upvote button will be red-->
                         {% if upvote %}
                         <div class="text-component-red hover:drop-shadow-lg">
@@ -53,7 +54,8 @@
                         {{ votes }}
                     </div>
                     <!--Downvote button-->
-                    <button type="submit" name="down" value="down">
+                    <button hx-post="{% url 'wongnung:vote' review.id %}" hx-target=".review{{review.id}}" hx-swap="outerHTML"
+                            type="submit" name="down" value="down">
                         <!--if user has been downvote review downvote button will be red-->
                         {% if downvote %}
                         <div class="text-component-red hover:drop-shadow-lg">
