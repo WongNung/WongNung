@@ -125,6 +125,7 @@ def post_review(request, filmid):
 
 @login_required
 def vote(request, pk):
+    """Since votes should now be HTMX requests, we need to use HTMX"""
     review = get_object_or_404(Review, pk=pk)
     user = request.user
     if request.method == "POST":
@@ -142,5 +143,5 @@ def vote(request, pk):
                 review.remove_upvotes(request.user)
     review.save()
     return HttpResponseRedirect(
-        reverse("wongnung:review-component", args=(review.id,))
+        reverse("wongnung:review-component", args=(review.id,)),
     )

@@ -1,4 +1,4 @@
-<span class="bg-slate-100 rounded-xl py-6 px-2">
+<span class="bg-slate-100 rounded-xl py-6 px-2 review{{review.id}}">
     <div class="flex flex-row items-center justify-between mx-5">
         <!--User profile box-->
         <div class="flex flex-row items-center">
@@ -29,12 +29,12 @@
                     </svg>
                 </div>
             </label>
-            <form action="{% url 'wongnung:vote' review.id %}" method="post">
+            <form action="{% url 'wongnung:vote' review.id %}" method="post" hx-boost="true" hx-target=".review{{review.id}}" hx-swap="outerHTML"
+            hx-push-url="false" hx-replace-url="false">
                 {% csrf_token %}
                 <fieldset class="flex flex-row">
                     <!--Upvote button-->
-                    <button hx-post="{% url 'wongnung:vote' review.id %}" hx-target=".review{{review.id}}" hx-swap="outerHTML"
-                            type="submit" name="up" value="up">
+                    <button type="submit" name="up" value="up">
                         <!--if user has been upvote review upvote button will be red-->
                         {% if upvote %}
                         <div class="text-component-red hover:drop-shadow-lg">
@@ -54,8 +54,7 @@
                         {{ votes }}
                     </div>
                     <!--Downvote button-->
-                    <button hx-post="{% url 'wongnung:vote' review.id %}" hx-target=".review{{review.id}}" hx-swap="outerHTML"
-                            type="submit" name="down" value="down">
+                    <button type="submit" name="down" value="down">
                         <!--if user has been downvote review downvote button will be red-->
                         {% if downvote %}
                         <div class="text-component-red hover:drop-shadow-lg">
