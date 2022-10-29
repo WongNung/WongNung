@@ -1,15 +1,16 @@
 # syntax=docker/dockerfile:1
 
-FROM python:3.10
+FROM python:3.10-slim
 ENV DEBIAN_FRONTEND=noninteractive
 ENV NPM_BIN_PATH=/usr/bin/npm
 
 WORKDIR /app
 
 # Install packages & remove apt cache
-RUN curl -fsSL https://deb.nodesource.com/setup_current.x | bash - \
-    && apt-get update \
-    && apt-get install -y nodejs \
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends curl \
+    && curl -fsSL https://deb.nodesource.com/setup_current.x | bash - \
+    && apt-get install -y --no-install-recommends nodejs \
     gcc \
     python3-dev \
     libpq-dev
