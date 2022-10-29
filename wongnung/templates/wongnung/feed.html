@@ -2,7 +2,8 @@
 {% block t %}Feed{% endblock %}
 {% block c %}
 <div class="">
-    <div class="flex flex-col bg-feed-grey mx-20">
+    <div class="flex flex-col min-h-screen space-y-4 bg-feed-grey mx-20 p-10 overflow-y-auto">
+        <div hx-get="/get_feed" hx-trigger="intersect threshold:0.5 once" hx-target="this" hx-swap="outerHTML"></div>
     </div>
 </div>
 {% endblock %}

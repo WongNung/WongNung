@@ -108,3 +108,6 @@
         </div>
     </div>
 </span>
+{% if feed %}
+<div hx-get="/get_feed" hx-trigger="intersect threshold:0.1 once" hx-target="this" hx-swap="outerHTML"></div>
+{% endif %}

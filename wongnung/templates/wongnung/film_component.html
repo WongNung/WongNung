@@ -1,12 +1,12 @@
 <title>{{ film.title }}</title>
 <div class="flex flex-auto bg-feed-grey h-screen overflow-hidden">
   <div class="p-4 flex flex-row gap-x-3">
-    <div class="flex flex-none bg-white h-full">
+    <div class="flex flex-none h-full">
       <!-- Image size: w600, h900 -->
-      <img class="object-contain" src="{{ film.poster }}" />
+      <img class="object-contain md:w-64 lg:w-96 2xl:w-full" src="{{ film.poster }}" />
     </div>
     <div class="flex grow flex-col">
-      <div class="font-primary text-5xl text-neutral-50">{{ film.title }}</div>
+      <div class="font-primary text-5xl text-neutral-50 drop-shadow-xl">{{ film.title }}</div>
       <div class="flex flex-row text-tag-yellow pt-2.5 items-center">
         <div class="text-2xl font-body pr-2">
           {{ film.year_released }} | Genres:

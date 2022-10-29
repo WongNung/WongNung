@@ -1,3 +1,4 @@
+from re import M
 from typing import Collection, Mapping, Optional
 
 import tmdbsimple as tmdb
@@ -8,10 +9,32 @@ from django.urls import reverse
 
 from .globals import SEARCH_CACHE
 from .models import Film, Review
+from .feed import FeedManager, FeedSession
+
+feed_manager = FeedManager()
 
 
-def feed(request):
+@login_required
+def feed(request: HttpRequest):
+    user_id = request.user.pk
+    feed_manager.get_feed_session(user_id)
     return render(request, "wongnung/feed.html")
+
+
+@login_required
+def get_feed(request: HttpRequest):
+    user_id = request.user.pk
+    feed: FeedSession = feed_manager.get_feed_session(user_id)
+    try:
+        review = feed.pop()
+    except TypeError:
+        return HttpResponse(
+            """<span class="text-center text-white text-xl">The end.</span>"""
+        )
+    feed.save(feed_manager)
+    return HttpResponseRedirect(
+        reverse("wongnung:review-component", args=(review.pk,)) + "?feed=true"
+    )
 
 
 def film_details_page(request, filmid):
@@ -73,6 +96,7 @@ def construct_results_container(
         "bg-white",
         "rounded-md",
         "shadow-lg",
+        "z-10",
         "scrollbar",
     ]
     if not search_results or len(search_results) <= 0:
@@ -102,11 +126,11 @@ def construct_result_entry_span(film: Mapping) -> str:
     </span>"""
 
 
-def show_review_component(request, pk):
+def show_review_component(request: HttpRequest, pk):
     review = Review.objects.get(pk=pk)
     user = request.user
-    upvote = review.upvotes.filter(id=user.id).exists()
-    downvote = review.downvotes.filter(id=user.id).exists()
+    upvote = review.upvotes.filter(id=user.pk).exists()
+    downvote = review.downvotes.filter(id=user.pk).exists()
     context = {
         "review": review,
         "fst_char": review.author.username[0] if review.author else "a",
@@ -115,6 +139,8 @@ def show_review_component(request, pk):
         "upvote": upvote,
         "downvote": downvote,
     }
+    if request.GET.get("feed"):
+        context["feed"] = "true"
     return render(request, "wongnung/review_component.html", context)
 
 
@@ -126,7 +152,7 @@ def post_review(request, filmid):
     if not content:
         return redirect("wongnung:new-review", filmid=filmid)
     review = Review.objects.create(film=film, content=content, author=author)
-    return redirect("wongnung:review-component", pk=review.id)
+    return redirect("wongnung:review-component", pk=review.pk)
 
 
 @login_required
@@ -149,5 +175,5 @@ def vote(request, pk):
                 review.remove_upvotes(request.user)
     review.save()
     return HttpResponseRedirect(
-        reverse("wongnung:review-component", args=(review.id,)),
+        reverse("wongnung:review-component", args=(review.pk,)),
     )

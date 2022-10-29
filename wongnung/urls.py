@@ -4,6 +4,7 @@ from .views import (
     cancel_search,
     feed,
     film_details_page,
+    get_feed,
     post_review,
     post_review_page,
     search,
@@ -32,9 +33,10 @@ htmx_paths = [
         show_review_component,
         name="review-component",
     ),
+    path("show_review_component/<int:pk>/vote", vote, name="vote"),
     path("search", search, name="search"),
     path("cancel_search", cancel_search),
-    path("show_review_component/<int:pk>/vote", vote, name="vote"),
+    path("get_feed", get_feed),
 ]
 
 urlpatterns += htmx_paths
