@@ -195,11 +195,11 @@ class Review(models.Model):
 
     def get_upvotes(self) -> int:
         """Get number of upvotes."""
-        return self.upvotes.through.objects.count()
+        return self.upvotes.all().count()
 
     def get_downvotes(self) -> int:
         """Get number of downvotes."""
-        return self.downvotes.through.objects.count()
+        return self.downvotes.all().count()
 
     def add_upvotes(self, user: User):
         """Add User to upvotes."""
