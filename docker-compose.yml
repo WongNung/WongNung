@@ -8,8 +8,6 @@ services:
       POSTGRES_DB: "${DATABASE_NAME?:DATABASE_NAME not set in env}"
     volumes:
       - db:/var/lib/postgresql/data
-    ports:
-      - '5432:5432'
     healthcheck:
       test:
         [
@@ -19,21 +17,8 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
-  tailwind:
-    build: .
-    image: wongnung
-    command:
-      - /bin/bash
-      - -c
-      - |
-        python3 manage.py tailwind build
-    env_file:
-      - .env
-    environment:
-      NPM_BIN_PATH: "/usr/bin/npm"
-    volumes:
-      - .:/app
   app:
+    build: .
     image: wongnung
     command:
       - /bin/bash
@@ -45,8 +30,6 @@ services:
     depends_on:
       db:
         condition: service_healthy
-      tailwind:
-        condition: service_completed_successfully
     env_file:
       - .env
     environment:
