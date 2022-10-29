@@ -6,6 +6,7 @@ from .views import (
     post_review_page,
     post_review,
     feed,
+    vote,
 )
 from django.urls import path
 
@@ -31,6 +32,7 @@ htmx_paths = [
         name="review-component",
     ),
     path("search", search, name="search"),
+    path("show_review_component/<int:pk>/vote", vote, name="vote"),
 ]
 
 urlpatterns += htmx_paths
