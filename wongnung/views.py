@@ -38,7 +38,6 @@ def search(request: HttpRequest):
         return HttpResponse(construct_results_container())
 
     if not SEARCH_CACHE.get(query):
-        print("Calling TMDB API")
         search = tmdb.Search()
         res = search.movie(query=query)["results"]
         SEARCH_CACHE.set(query, res, 300)
@@ -46,10 +45,12 @@ def search(request: HttpRequest):
     results = SEARCH_CACHE.get(query)
     if not results:
         return HttpResponse(construct_results_container())
-    if len(results) > 5:
-        results = results[:5]
 
     return HttpResponse(construct_results_container(results))
+
+
+def cancel_search(request: HttpRequest):
+    return HttpResponse(construct_results_container())
 
 
 def construct_results_container(
@@ -61,13 +62,16 @@ def construct_results_container(
         "px-5",
         "py-4",
         "absolute",
-        "overflow-x-hidden",
-        "max-w-3xl",
+        "overflow-x-clip",
+        "overflow-y-auto",
+        "min-w-80",
+        "max-h-80",
         "flex",
         "flex-col",
         "bg-white",
         "rounded-md",
         "shadow-lg",
+        "scrollbar",
     ]
     if not search_results or len(search_results) <= 0:
         container_cls += ["hidden"]

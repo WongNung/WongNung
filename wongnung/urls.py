@@ -2,6 +2,7 @@ from .views import (
     show_film_component,
     show_review_component,
     search,
+    cancel_search,
     film_details_page,
     post_review_page,
     post_review,
@@ -32,6 +33,7 @@ htmx_paths = [
         name="review-component",
     ),
     path("search", search, name="search"),
+    path("cancel_search", cancel_search),
     path("show_review_component/<int:pk>/vote", vote, name="vote"),
 ]
 
