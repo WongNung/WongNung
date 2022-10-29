@@ -1,4 +1,3 @@
-from re import M
 from typing import Collection, Mapping, Optional
 
 import tmdbsimple as tmdb
@@ -7,9 +6,9 @@ from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 
+from .feed import FeedManager, FeedSession
 from .globals import SEARCH_CACHE
 from .models import Film, Review
-from .feed import FeedManager, FeedSession
 
 feed_manager = FeedManager()
 

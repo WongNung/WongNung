@@ -3,6 +3,7 @@ from typing import List, Optional
 
 from django.contrib.auth.models import User
 from django.utils import timezone
+
 from .models import Review
 
 
@@ -25,7 +26,7 @@ class FeedSession:
         """
         try:
             pk = self.stack.pop(0)
-        except:
+        except IndexError:
             return None
 
         return Review.objects.get(pk=pk)
