@@ -17,10 +17,12 @@ class FilmModelTests(TestCase):
 
     def test_get_director(self):
         """
-        get_director() returns a list of strings representing the director's name for a specific film.
+        get_director() returns a list of strings representing the director's
+        name for a specific film.
         """
 
-        self.assertListEqual(['Lilly Wachowski', 'Lana Wachowski'], self.film.get_director())
+        self.assertListEqual(['Lilly Wachowski', 'Lana Wachowski'],
+                             self.film.get_director())
 
     def test_get_genres(self):
         """
@@ -31,11 +33,18 @@ class FilmModelTests(TestCase):
 
     def test_get_stars(self):
         """
-        get_director() returns a list of strings representing the name of the star for a specific film.
+        get_director() returns a list of strings representing the
+        name of the star for a specific film.
         """
 
         self.assertListEqual(
-            ['Keanu Reeves', 'Laurence Fishburne', 'Carrie-Anne Moss', 'Hugo Weaving', 'Joe Pantoliano'],
+            [
+                'Keanu Reeves',
+                'Laurence Fishburne',
+                'Carrie-Anne Moss',
+                'Hugo Weaving',
+                'Joe Pantoliano'
+            ],
             self.film.get_stars()
         )
 
