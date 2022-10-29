@@ -1,16 +1,16 @@
-from .views import (
-    show_film_component,
-    show_review_component,
-    search,
-    cancel_search,
-    film_details_page,
-    post_review_page,
-    post_review,
-    feed,
-    vote,
-)
 from django.urls import path
 
+from .views import (
+    cancel_search,
+    feed,
+    film_details_page,
+    post_review,
+    post_review_page,
+    search,
+    show_film_component,
+    show_review_component,
+    vote,
+)
 
 app_name = "wongnung"
 urlpatterns = [

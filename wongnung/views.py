@@ -1,11 +1,13 @@
-from typing import Optional, Mapping, Collection
-from .globals import SEARCH_CACHE
-from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse, HttpRequest, HttpResponseRedirect
-from django.urls import reverse
-from .models import Film, Review
+from typing import Collection, Mapping, Optional
+
 import tmdbsimple as tmdb
 from django.contrib.auth.decorators import login_required
+from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
+from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse
+
+from .globals import SEARCH_CACHE
+from .models import Film, Review
 
 
 def feed(request):

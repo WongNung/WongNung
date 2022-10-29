@@ -12,9 +12,11 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 import os
 from pathlib import Path
-from decouple import Csv, config
-from . import typings
+
 import tmdbsimple as tmdb
+from decouple import Csv, config
+
+from . import typings
 
 TMDB_API_KEY = config("TMDB_API_KEY")
 tmdb.API_KEY = TMDB_API_KEY

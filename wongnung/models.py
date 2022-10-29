@@ -2,10 +2,10 @@ from __future__ import annotations
 
 from typing import List, Optional
 
+import tmdbsimple as tmdb
+from django.contrib.auth.models import User
 from django.db import models
 from django.utils import timezone
-from django.contrib.auth.models import User
-import tmdbsimple as tmdb
 
 
 class Film(models.Model):
