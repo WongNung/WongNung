@@ -119,7 +119,7 @@
             <div class="font-primary text-tag-yellow text-2xl py-3">
                 Report to review {{ review.id }}
             </div>
-            <form action="{% url 'wongnung:report' review.id %}" method="post" hx-boost="true" hx-target=".review{{review.id}}" hx-swap="outerHTML" hx-push-url="false" hx-replace-url="false">
+            <form action="{% url 'wongnung:report' review.id %}" method="post">
                 {% csrf_token %}
                 <!--Content area-->
                 <div class="font-body text-white py-3">
@@ -131,12 +131,12 @@
                 </div>
                 <!--Cancle & submit button-->
                 <div class="flex flex-row py-3 justify-center w-full">
-                    <button class="rounded-lg bg-component-red" data-modal-toggle="ReportModal" type="button">
+                    <button hx-post="{% url 'wongnung:report' review.id %}" hx-target=".review{{review.id}}" hx-swap="outerHTML" class="rounded-lg bg-component-red" data-modal-toggle="ReportModal" type="button">
                         <div class="text-white text-lg px-3">
                             Cancel
                         </div>
                     </button>
-                    <button class="ml-5 rounded-lg bg-tag-yellow" data-modal-toggle="ReportModal" type="submit">
+                    <button hx-post="{% url 'wongnung:report' review.id %}" hx-target=".review{{review.id}}" hx-swap="outerHTML" class="ml-5 rounded-lg bg-tag-yellow" data-modal-toggle="ReportModal" type="submit">
                         <div class="text-nlack text-lg px-3">
                             Report
                         </div>

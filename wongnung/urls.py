@@ -17,7 +17,7 @@ urlpatterns = [
     path("test", test_page, name="test"),
     path("film/<str:filmid>", film_details_page, name="film-details"),
     path("new_review/<str:filmid>", post_review_page, name="new-review"),
-    path("post_review/<str:filmid>", post_review, name="post-review"),
+    path("post_review/<str:filmid>", post_review, name="post-review")
 ]
 
 # Use this array to store paths that should be called using htmx
@@ -34,7 +34,7 @@ htmx_paths = [
     ),
     path("search", search, name="search"),
     path("show_review_component/<int:pk>/vote", vote, name='vote'),
-    path("show_review_component/<int:pk>/report", report, name="report"),
+    path("show_review_component/<int:pk>/report", report, name="report")
 ]
 
 urlpatterns += htmx_paths

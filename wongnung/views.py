@@ -130,6 +130,7 @@ def report(request, pk):
         if not content:
             messages.error(request, "Please type your reason")
             return redirect("wongnung:review-component", pk=pk)
-        report = Report.objects.create(review=review, user=request.user, content=content)
+        report = Report.objects.create(
+            review=review, user=request.user, content=content)
         report.save()
     return HttpResponseRedirect(reverse('wongnung:review-component', args=(review.id,)))
