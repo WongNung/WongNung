@@ -12,9 +12,11 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 import os
 from pathlib import Path
-from decouple import Csv, config
-from . import typings
+
 import tmdbsimple as tmdb
+from decouple import Csv, config
+
+from . import typings
 
 TMDB_API_KEY = config("TMDB_API_KEY")
 tmdb.API_KEY = TMDB_API_KEY
@@ -52,6 +54,7 @@ INSTALLED_APPS = [
     "theme",
     "django_browser_reload",
 ]
+
 
 # Tailwind configuration
 TAILWIND_APP_NAME = "theme"
@@ -103,6 +106,18 @@ DATABASES = {
         "HOST": config("DATABASE_HOST", default="localhost"),
         "PORT": config("DATABASE_PORT", default="5432"),
     }
+}
+
+# Caching
+CACHES = {
+    "default": {
+        "BACKEND": "pdtx.UnsafeKeyDatabaseCache",
+        "LOCATION": "wongnung_cache",
+    },
+    "searches": {
+        "BACKEND": "pdtx.UnsafeKeyDatabaseCache",
+        "LOCATION": "wongnung_search_cache",
+    },
 }
 
 LOGIN_REDIRECT_URL = "/"

@@ -1,19 +1,21 @@
-from .views import (
-    show_film_component,
-    show_review_component,
-    test_page,
-    search,
-    film_details_page,
-    post_review_page,
-    post_review,
-    vote
-)
 from django.urls import path
 
+from .views import (
+    cancel_search,
+    feed,
+    film_details_page,
+    get_feed,
+    post_review,
+    post_review_page,
+    search,
+    show_film_component,
+    show_review_component,
+    vote,
+)
 
 app_name = "wongnung"
 urlpatterns = [
-    path("test", test_page, name="test"),
+    path("", feed, name="feed"),
     path("film/<str:filmid>", film_details_page, name="film-details"),
     path("new_review/<str:filmid>", post_review_page, name="new-review"),
     path("post_review/<str:filmid>", post_review, name="post-review"),
@@ -31,8 +33,10 @@ htmx_paths = [
         show_review_component,
         name="review-component",
     ),
+    path("show_review_component/<int:pk>/vote", vote, name="vote"),
     path("search", search, name="search"),
-    path("show_review_component/<int:pk>/vote", vote, name='vote'),
+    path("cancel_search", cancel_search),
+    path("get_feed", get_feed),
 ]
 
 urlpatterns += htmx_paths

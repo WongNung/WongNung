@@ -2,5 +2,5 @@ from django.apps import AppConfig
 
 
 class WongnungConfig(AppConfig):
-    default_auto_field = 'django.db.models.BigAutoField'
-    name = 'wongnung'
+    default_auto_field = "django.db.models.BigAutoField"
+    name = "wongnung"

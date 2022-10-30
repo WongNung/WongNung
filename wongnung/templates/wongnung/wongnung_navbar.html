@@ -16,7 +16,7 @@
               </svg>
           </div>
         </a>
-        <div class="flex basis-1/2 items-center">
+        <div class="flex flex-1 px-96 items-center">
             <span class="flex-1">
                 <!-- Magnifying Glass Icon -->
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -28,14 +28,14 @@
                 <input
                     class="z-0 w-full px-12 rounded-full text-black placeholder:text-back-grey focus:border-tag-yellow focus:ring-tag-yellow focus:ring-1"
                     type="text" id="queryfield" name="query" autocomplete="off" placeholder="Search films..."
-                    maxlength="80" hx-trigger="keyup delay:250ms, input changed delay:250ms" hx-swap="outerHTML"
+                    maxlength="80" hx-trigger="click, keyup delay:250ms, input changed delay:250ms" hx-swap="outerHTML"
                     hx-target="#search-results" hx-get="/search" />
                 <div class="hidden" id="search-results">
                 </div>
             </span>
         </div>
         <div class="flex text-white">
-            <h1>Profile</h1>
+            <h1>{{ user.username }}</h1>
         </div>
     </div>
 </nav>

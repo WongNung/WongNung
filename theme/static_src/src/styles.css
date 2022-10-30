@@ -9,7 +9,34 @@
   html {
     @apply font-body;
   }
-  h1, h2, h3, h4, h5, h6 {
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     @apply font-primary;
+  }
+}
+
+@layer utilities {
+  .scrollbar::-webkit-scrollbar {
+    width: 0.5rem;
+    height: 0.5rem;
+  }
+
+  .scrollbar::-webkit-scrollbar-track {
+    border-radius: 100vh;
+    background: rgba(0, 0, 0, 0);
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb {
+    background: #B12025;
+    border-radius: 100vh;
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #81171B;
   }
 }

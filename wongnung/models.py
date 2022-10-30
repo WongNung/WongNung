@@ -2,10 +2,10 @@ from __future__ import annotations
 
 from typing import List, Optional
 
+import tmdbsimple as tmdb
+from django.contrib.auth.models import User
 from django.db import models
 from django.utils import timezone
-from django.contrib.auth.models import User
-import tmdbsimple as tmdb
 
 
 class Film(models.Model):
@@ -180,8 +180,8 @@ class Review(models.Model):
     pub_date = models.DateTimeField(default=timezone.now)
     content = models.CharField(max_length=1000)
     author = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
-    upvotes = models.ManyToManyField(User, related_name='upvotes')
-    downvotes = models.ManyToManyField(User, related_name='downvotes')
+    upvotes = models.ManyToManyField(User, related_name="upvotes")
+    downvotes = models.ManyToManyField(User, related_name="downvotes")
 
     def __str__(self) -> str:
         string = f"Review for {self.film} @ {self.pub_date}"
@@ -191,7 +191,7 @@ class Review(models.Model):
 
     def get_votes(self) -> int:
         """Get number of upvotes minus downvotes."""
-        return self.get_upvotes()-self.get_downvotes()
+        return self.get_upvotes() - self.get_downvotes()
 
     def get_upvotes(self) -> int:
         """Get number of upvotes."""
