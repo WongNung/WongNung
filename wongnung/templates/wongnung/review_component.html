@@ -119,15 +119,13 @@
             <div class="font-primary text-tag-yellow text-2xl py-3">
                 Report to review {{ review.id }}
             </div>
-            <form action="{% url 'wongnung:report' review.id %}" method="post">
+            <form action="{% url 'wongnung:report' review.id %}" method="post" hx-boost="true" hx-target=".review{{review.id}}" hx-swap="outerHTML" hx-push-url="false" hx-replace-url="false">
                 {% csrf_token %}
                 <!--Content area-->
                 <div class="font-body text-white py-3">
-                    {% for message in messages %}
-                    <div class="font-body text-red-700 text-lg pb-1">
-                    {{ message }}
+                    <div class="font-body text-white text-lg pb-1">
+                        Please type your reason here
                     </div>
-                    {% endfor %}
                     <textarea required name="report-content" class="resize-none w-full h-28 focus:ring-1 focus:ring-tag-yellow focus:border-tag-yellow text-black text-lg">
                     </textarea>
                 </div>

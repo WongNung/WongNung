@@ -128,7 +128,7 @@ def report(request, pk):
     if request.method == "POST":
         content = request.POST["report-content"].strip()
         if not content:
-            messages.error(request, "Please type your reason here")
+            messages.error(request, "Please type your reason")
             return redirect("wongnung:review-component", pk=pk)
         report = Report.objects.create(review=review, user=request.user, content=content)
         report.save()
