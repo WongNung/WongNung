@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpRequest, HttpResponseRedirect
 from django.urls import reverse
-from .models import Film, Review
+from .models import Film, Review, Report
 import tmdbsimple as tmdb
 from django.contrib.auth.decorators import login_required
 
@@ -94,7 +94,6 @@ def post_review(request, filmid):
     author = request.user
     film = Film.get_film(filmid)
     content = request.POST["content"].strip()
-    print(content)
     if not content:
         return redirect("wongnung:new-review", filmid=filmid)
     review = Review.objects.create(film=film, content=content, author=author)
@@ -119,4 +118,13 @@ def vote(request, pk):
                 review.add_downvotes(request.user)
                 review.remove_upvotes(request.user)
     review.save()
+    return HttpResponseRedirect(reverse('wongnung:review-component', args=(review.id,)))
+
+
+@login_required
+def report(request, pk):
+    review = get_object_or_404(Review, pk=pk)
+    content = request.POST["report-content"].strip()
+    report = Report.objects.create(review=review, user=request.user, content=content)
+    report.save()
     return HttpResponseRedirect(reverse('wongnung:review-component', args=(review.id,)))

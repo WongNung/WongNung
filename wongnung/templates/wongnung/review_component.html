@@ -1,6 +1,4 @@
-{% extends 'base.html' %}
-{% block title %}{% block t %}Review: {{ film.title }}{% endblock %}{% endblock %}
-{% block content %}{% block c %}
+{% load static %} {% load tailwind_tags %} {% tailwind_css %}
 <div class="bg-slate-100 rounded-xl h-96 w-[1000px] review{{review.id}}">
     <div class="pt-3 flex flex-row items-center">
         <!--User profile box-->
@@ -34,8 +32,7 @@
                 {% csrf_token %}
                 <fieldset class="flex flex-row">
                     <!--Upvote button-->
-                    <button hx-post="{% url 'wongnung:vote' review.id %}" hx-target=".review{{review.id}}" hx-swap="outerHTML"
-                            type="submit" name="up" value="up">
+                    <button hx-post="{% url 'wongnung:vote' review.id %}" hx-target=".review{{review.id}}" hx-swap="outerHTML" type="submit" name="up" value="up">
                         <!--if user has been upvote review upvote button will be red-->
                         {% if upvote %}
                         <div class="text-component-red hover:drop-shadow-lg">
@@ -55,8 +52,7 @@
                         {{ votes }}
                     </div>
                     <!--Downvote button-->
-                    <button hx-post="{% url 'wongnung:vote' review.id %}" hx-target=".review{{review.id}}" hx-swap="outerHTML"
-                            type="submit" name="down" value="down">
+                    <button hx-post="{% url 'wongnung:vote' review.id %}" hx-target=".review{{review.id}}" hx-swap="outerHTML" type="submit" name="down" value="down">
                         <!--if user has been downvote review downvote button will be red-->
                         {% if downvote %}
                         <div class="text-component-red hover:drop-shadow-lg">
@@ -80,10 +76,8 @@
             <!--Report button-->
             <button class="block" type="button" data-modal-toggle="ReportModal">
                 <div class="text-component-red hover:drop-shadow-lg">
-                    <svg class="h-8 relative" viewBox="0 0 486 442" fill="currentColor"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd"
-                            d="M476.099 331.968L305.899 37.168C278.099 -11.532 207.799 -11.532 180.099 37.168L9.799 331.968C-18.001 380.668 16.599 441.168 72.699 441.168H412.599C468.699 441.168 503.899 380.068 476.099 331.968ZM242.899 375.768C228.099 375.768 215.799 363.468 215.799 348.668C215.799 333.868 228.099 321.568 242.899 321.568C257.699 321.568 269.999 333.868 269.399 349.368C270.099 363.468 257.099 375.768 242.899 375.768ZM267.599 200.568C266.399 221.568 265.099 242.468 263.899 263.468C263.299 270.268 263.299 276.468 263.299 283.168C262.699 294.268 253.999 302.868 242.899 302.868C231.799 302.868 223.199 294.868 222.499 283.768C220.699 251.068 218.799 218.968 216.999 186.268C216.399 177.668 215.799 168.968 215.099 160.368C215.099 146.168 223.099 134.468 236.099 130.768C249.099 127.668 261.999 133.868 267.599 146.168C269.499 150.468 270.099 154.768 270.099 159.768C269.499 173.468 268.199 187.068 267.599 200.568Z" />
+                    <svg class="h-8 relative" viewBox="0 0 486 442" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M476.099 331.968L305.899 37.168C278.099 -11.532 207.799 -11.532 180.099 37.168L9.799 331.968C-18.001 380.668 16.599 441.168 72.699 441.168H412.599C468.699 441.168 503.899 380.068 476.099 331.968ZM242.899 375.768C228.099 375.768 215.799 363.468 215.799 348.668C215.799 333.868 228.099 321.568 242.899 321.568C257.699 321.568 269.999 333.868 269.399 349.368C270.099 363.468 257.099 375.768 242.899 375.768ZM267.599 200.568C266.399 221.568 265.099 242.468 263.899 263.468C263.299 270.268 263.299 276.468 263.299 283.168C262.699 294.268 253.999 302.868 242.899 302.868C231.799 302.868 223.199 294.868 222.499 283.768C220.699 251.068 218.799 218.968 216.999 186.268C216.399 177.668 215.799 168.968 215.099 160.368C215.099 146.168 223.099 134.468 236.099 130.768C249.099 127.668 261.999 133.868 267.599 146.168C269.499 150.468 270.099 154.768 270.099 159.768C269.499 173.468 268.199 187.068 267.599 200.568Z" />
                     </svg>
                 </div>
             </button>
@@ -114,34 +108,36 @@
 </div>
 
 <!--Report Modal-->
-<div id="ReportModal" aria-hidden="true" class="hidden overflow-x-hidden overflow-y-auto fixed h-modal top-5 left-0 right-0 z-50 justify-center items-center">
+<div id="ReportModal" tabindex="-1" aria-hidden="true" class="hidden overflow-x-hidden overflow-y-auto fixed h-modal top-5 left-0 right-0 z-50 justify-center items-center">
     <div class="bg-user-grey relative w-full max-w-2xl px-4 h-full rounded-lg">
         <div class="flex flex-col divide-y">
             <!--Modal header-->
             <div class="font-primary text-tag-yellow text-2xl py-3">
                 Report to review {{ review.id }}
             </div>
-            <!--Content area-->
-            <div class="font-body text-white py-3">
-                <textarea class="resize-none w-full h-28 focus:ring-1 focus:ring-tag-yellow focus:border-tag-yellow text-black text-lg">
-                </textarea>
-            </div>
-            <!--Cancle & submit button-->
-            <div class="flex flex-row py-3 justify-center w-full">
-                <button class="rounded-lg bg-component-red" data-modal-toggle="ReportModal">
-                    <div class="text-white text-lg px-3">
-                        Cancle
-                    </div>
-                </button>
-                <button class="ml-5 rounded-lg bg-tag-yellow" data-modal-toggle="ReportModal" type="submit" name="report" value="report">
-                    <div class="text-nlack text-lg px-3">
-                        Report
-                    </div>
-                </button>
-            </div>
+            <form action="{% url 'wongnung:report' review.id %}" method="post">
+                {% csrf_token %}
+                <!--Content area-->
+                <div class="font-body text-white py-3">
+                    <textarea name="report-content" class="resize-none w-full h-28 focus:ring-1 focus:ring-tag-yellow focus:border-tag-yellow text-black text-lg">
+                    </textarea>
+                </div>
+                <!--Cancle & submit button-->
+                <div class="flex flex-row py-3 justify-center w-full">
+                    <button class="rounded-lg bg-component-red" data-modal-toggle="ReportModal">
+                        <div class="text-white text-lg px-3">
+                            Cancel
+                        </div>
+                    </button>
+                    <button class="ml-5 rounded-lg bg-tag-yellow" data-modal-toggle="ReportModal" type="submit">
+                        <div class="text-nlack text-lg px-3">
+                            Report
+                        </div>
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
 
 <script src="https://unpkg.com/flowbite@1.4.4/dist/flowbite.js"></script>
-{% endblock %}{% endblock %}
