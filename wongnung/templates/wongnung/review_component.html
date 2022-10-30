@@ -108,7 +108,11 @@
 </div>
 
 <!--Report Modal-->
+{% if messages %}
+<div id="ReportModal" data-modal-show="true" tabindex="-1" aria-hidden="true" class="hidden overflow-x-hidden overflow-y-auto fixed h-modal top-5 left-0 right-0 z-50 justify-center items-center">
+{% else %}
 <div id="ReportModal" tabindex="-1" aria-hidden="true" class="hidden overflow-x-hidden overflow-y-auto fixed h-modal top-5 left-0 right-0 z-50 justify-center items-center">
+{% endif %}    
     <div class="bg-user-grey relative w-full max-w-2xl px-4 h-full rounded-lg">
         <div class="flex flex-col divide-y">
             <!--Modal header-->
@@ -119,12 +123,17 @@
                 {% csrf_token %}
                 <!--Content area-->
                 <div class="font-body text-white py-3">
-                    <textarea name="report-content" class="resize-none w-full h-28 focus:ring-1 focus:ring-tag-yellow focus:border-tag-yellow text-black text-lg">
+                    {% for message in messages %}
+                    <div class="font-body text-red-700 text-lg pb-1">
+                    {{ message }}
+                    </div>
+                    {% endfor %}
+                    <textarea required name="report-content" class="resize-none w-full h-28 focus:ring-1 focus:ring-tag-yellow focus:border-tag-yellow text-black text-lg">
                     </textarea>
                 </div>
                 <!--Cancle & submit button-->
                 <div class="flex flex-row py-3 justify-center w-full">
-                    <button class="rounded-lg bg-component-red" data-modal-toggle="ReportModal">
+                    <button class="rounded-lg bg-component-red" data-modal-toggle="ReportModal" type="button">
                         <div class="text-white text-lg px-3">
                             Cancel
                         </div>
