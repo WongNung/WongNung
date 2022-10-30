@@ -6,7 +6,7 @@ ENV NPM_BIN_PATH=/usr/bin/npm
 
 WORKDIR /app
 
-# Install packages & remove apt cache
+# Install packages
 RUN apt-get update \
     && apt-get install -y --no-install-recommends curl \
     && curl -fsSL https://deb.nodesource.com/setup_current.x | bash - \
@@ -29,12 +29,10 @@ RUN npm install \
     && rm -r /app/theme/static_src
 
 # Uninstall unneeded packages
-RUN apt-get purge -y \
+RUN apt-get purge --autoremove -y \
     nodejs \
     gcc \
-    python3-dev
-
-RUN apt-get autoremove -y \
+    python3-dev \
     && rm -rf /var/lib/apt/lists/*
 
 # End job
