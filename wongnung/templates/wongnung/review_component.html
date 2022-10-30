@@ -108,25 +108,21 @@
 </div>
 
 <!--Report Modal-->
-{% if messages %}
-<div id="ReportModal" data-modal-show="true" tabindex="-1" aria-hidden="true" class="hidden overflow-x-hidden overflow-y-auto fixed h-modal top-5 left-0 right-0 z-50 justify-center items-center">
-{% else %}
-<div id="ReportModal" tabindex="-1" aria-hidden="true" class="hidden overflow-x-hidden overflow-y-auto fixed h-modal top-5 left-0 right-0 z-50 justify-center items-center">
-{% endif %}    
+<div id="ReportModal" tabindex="-1" aria-hidden="true" class="hidden overflow-x-hidden overflow-y-auto fixed h-modal top-5 left-0 right-0 z-50 justify-center items-center">  
     <div class="bg-user-grey relative w-full max-w-2xl px-4 h-full rounded-lg">
         <div class="flex flex-col divide-y">
             <!--Modal header-->
             <div class="font-primary text-tag-yellow text-2xl py-3">
                 Report to review {{ review.id }}
             </div>
-            <form action="{% url 'wongnung:report' review.id %}" method="post">
+            <form action="{% url 'wongnung:report' review.id %}" method="post"> 
                 {% csrf_token %}
                 <!--Content area-->
                 <div class="font-body text-white py-3">
                     <div class="font-body text-white text-lg pb-1">
                         Please type your reason here
                     </div>
-                    <textarea required name="report-content" class="resize-none w-full h-28 focus:ring-1 focus:ring-tag-yellow focus:border-tag-yellow text-black text-lg">
+                    <textarea name="report-content" class="resize-none w-full h-28 focus:ring-1 focus:ring-tag-yellow focus:border-tag-yellow text-black text-lg" required>
                     </textarea>
                 </div>
                 <!--Cancle & submit button-->
