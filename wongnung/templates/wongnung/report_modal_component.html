@@ -1,0 +1,35 @@
+{% load static %} {% load tailwind_tags %} {% tailwind_css %}
+<div id="ReportModal" tabindex="-1" class="{% if cancel %} hidden {% endif %} overflow-x-hidden overflow-y-auto fixed h-92 top-5 left-0 right-0 z-50 justify-center items-center ">  
+    <div class="bg-user-grey relative w-full max-w-2xl px-4 h-full rounded-lg">
+        <div class="flex flex-col divide-y">
+            <!--Modal header-->
+            <div class="font-primary text-tag-yellow text-2xl py-3">
+                Report to review {{ review.id }}
+            </div>
+            <form action="{% url 'wongnung:report' review.id %}" method="post"> 
+                {% csrf_token %}
+                <!--Content area-->
+                <div class="font-body text-white py-3">
+                    <div class="font-body text-white text-lg pb-1">
+                        Please type your reason here
+                    </div>
+                    <textarea name="report-content" class="resize-none w-full h-28 focus:ring-1 focus:ring-tag-yellow focus:border-tag-yellow text-black text-lg" required>
+                    </textarea>
+                </div>
+                <!--Cancel & submit button-->
+                <div class="flex flex-row py-3 justify-center w-full">
+                    <button hx-post="{% url 'wongnung:report' review.id %}" hx-target="#ReportModal" hx-swap="outerHTML" hx-vals='{"cancel": "true"}' class="rounded-lg bg-component-red" type="button">
+                        <div class="text-white text-lg px-3">
+                            Cancel
+                        </div>
+                    </button>
+                    <button hx-post="{% url 'wongnung:report' review.id %}" hx-target="#ReportModal" hx-swap="outerHTML" class="ml-5 rounded-lg bg-tag-yellow" type="submit">
+                        <div class="text-nlack text-lg px-3">
+                            Report
+                        </div>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

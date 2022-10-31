@@ -7,7 +7,8 @@ from .views import (
     post_review_page,
     post_review,
     vote,
-    report
+    report,
+    show_report_modal
 )
 from django.urls import path
 
@@ -34,7 +35,9 @@ htmx_paths = [
     ),
     path("search", search, name="search"),
     path("show_review_component/<int:pk>/vote", vote, name='vote'),
-    path("show_review_component/<int:pk>/report", report, name="report")
+    path("show_review_component/<int:pk>/report", report, name="report"),
+    path("show_report_modal/<int:pk>", show_report_modal, name="report-modal"),
+    path("show_report_modal/<int:pk>/cancel", show_report_modal, {"cancel": "true"}, name="report-modal-cancel"),
 ]
 
 urlpatterns += htmx_paths
