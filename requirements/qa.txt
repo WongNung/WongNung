@@ -2,3 +2,4 @@ flake8
 flake8-django
 coverage
 black
+isort
