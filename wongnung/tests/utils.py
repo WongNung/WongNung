@@ -1,5 +1,7 @@
 """Construct Utilities for testing"""
 
+MATRIX = '603'
+
 
 def get_response_info(pram):
     info = {'title': 'The Matrix',

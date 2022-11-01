@@ -1,10 +1,8 @@
 """Tests for Film model"""
 from unittest.mock import patch
 from django.test import TestCase
-from ..tests.utils import get_response_info, get_response_credits
+from ..tests.utils import get_response_info, get_response_credits, MATRIX
 from ..models import Film
-
-MATRIX = '603'  # film_id for The Matrix
 
 
 class FilmModelTests(TestCase):
