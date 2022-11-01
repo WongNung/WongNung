@@ -242,4 +242,3 @@ class Fandom(models.Model):
     def remove_member(self, existing_member: User):
         """Remove existing member from a fandom."""
         self.members.remove(existing_member)
-
