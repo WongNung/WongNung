@@ -88,7 +88,7 @@ def construct_results_container(
         "absolute",
         "overflow-x-clip",
         "overflow-y-auto",
-        "min-w-80",
+        "max-w-80",
         "max-h-80",
         "flex",
         "flex-col",
