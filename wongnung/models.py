@@ -5,6 +5,7 @@ from typing import List, Optional
 import tmdbsimple as tmdb
 from django.contrib.auth.models import User
 from django.db import models
+from django.db.models import QuerySet
 from django.utils import timezone
 
 
@@ -242,3 +243,11 @@ class Fandom(models.Model):
     def remove_member(self, existing_member: User):
         """Remove existing member from a fandom."""
         self.members.remove(existing_member)
+
+    def get_member_count(self) -> int:
+        """Return total number of members."""
+        return self.members.all().count()
+
+    def get_all_member(self) -> QuerySet[User]:
+        """Return queryset of members."""
+        return self.members.all()
