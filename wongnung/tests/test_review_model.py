@@ -14,16 +14,24 @@ class ReviewModelTests(TestCase):
     @patch("tmdbsimple.Movies.credits", new=get_response_credits)
     def setUp(self):
         self.film = Film.get_film(MATRIX)
-        self.author1 = User.objects.create(username='Mr. AuthorOne', email='author1@email.com', password='Author1')
-        self.author2 = User.objects.create(username='Mr. AuthorTwo', email='author2@email.com', password='Author2')
-        self.user1 = User.objects.create(username='Mr. User1', email='user1@email.com', password='User1')
-        self.user2 = User.objects.create(username='Mr. User2', email='user2@email.com', password='User2')
-        self.user3 = User.objects.create(username='Mr. User3', email='user3@email.com', password='User3')
-        self.user4 = User.objects.create(username='Mr. User4', email='user4@email.com', password='User4')
+        self.author1 = User.objects.create(
+            username='Mr. AuthorOne', email='author1@email.com', password='Author1')
+        self.author2 = User.objects.create(
+            username='Mr. AuthorTwo', email='author2@email.com', password='Author2')
+        self.user1 = User.objects.create(
+            username='Mr. User1', email='user1@email.com', password='User1')
+        self.user2 = User.objects.create(
+            username='Mr. User2', email='user2@email.com', password='User2')
+        self.user3 = User.objects.create(
+            username='Mr. User3', email='user3@email.com', password='User3')
+        self.user4 = User.objects.create(
+            username='Mr. User4', email='user4@email.com', password='User4')
         self.review1 = Review.objects.create(
-            film=self.film, pub_date=timezone.now(), content="Nice Movies with great actors.", author=self.author1)
+            film=self.film, pub_date=timezone.now(),
+            content="Nice Movies with great actors.", author=self.author1)
         self.review2 = Review.objects.create(
-           film=self.film, pub_date=timezone.now(), content="Nice picture.", author=self.author2)
+            film=self.film, pub_date=timezone.now(),
+            content="Nice picture.", author=self.author2)
 
     def test_add_upvotes(self):
         self.review1.add_upvotes(self.user1)
