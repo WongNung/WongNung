@@ -54,7 +54,7 @@ class FeedManager:
                     "feed": FeedSession(user_id),
                     "expiry": timezone.now() + datetime.timedelta(minutes=5),
                 }
-                return self.feeds[user_id]
+                return self.feeds[user_id]["feed"]
         except KeyError:
             self.feeds[user_id] = {
                 "feed": FeedSession(user_id),
