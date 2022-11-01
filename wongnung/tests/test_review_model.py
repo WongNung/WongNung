@@ -34,10 +34,18 @@ class ReviewModelTests(TestCase):
             content="Nice picture.", author=self.author2)
 
     def test_add_upvotes(self):
+        """Add upvotes functionality work."""
         self.review1.add_upvotes(self.user1)
         self.assertEqual(1, self.review1.upvotes.all().count())
         self.review1.add_upvotes(self.user2)
         self.assertEqual(2, self.review1.upvotes.all().count())
+
+    def test_add_downvotes(self):
+        """Add downvotes functionality work."""
+        self.review1.add_downvotes(self.user1)
+        self.assertEqual(1, self.review1.downvotes.all().count())
+        self.review1.add_downvotes(self.user2)
+        self.assertEqual(2, self.review1.downvotes.all().count())
 
     def test_upvotes_downvotes_independent_between_review(self):
         """Upvotes and downvotes should be independent between reviews."""
@@ -47,8 +55,29 @@ class ReviewModelTests(TestCase):
         self.assertEqual(2, self.review1.upvotes.all().count())
         self.assertEqual(1, self.review2.downvotes.all().count())
 
-    def test_add_downvotes(self):
-        self.review1.add_downvotes(self.user1)
+    def test_remove_votes(self):
+        """Remove upvotes and downvotes functionality work."""
+        self.review1.add_upvotes(self.user1)
+        self.review1.remove_upvotes(self.user1)
+        self.assertEqual(0, self.review1.upvotes.all().count())
+        self.review1.add_downvotes(self.user3)
+        self.review1.add_downvotes(self.user4)
+        self.review1.remove_downvotes(self.user3)
         self.assertEqual(1, self.review1.downvotes.all().count())
-        self.review1.add_downvotes(self.user2)
-        self.assertEqual(2, self.review1.downvotes.all().count())
+        self.review1.remove_downvotes(self.user4)
+        self.assertEqual(0, self.review1.downvotes.all().count())
+
+    def test_get_upvotes_downvotes(self):
+        """Get upvotes and downvotes functionality work."""
+        self.review1.add_upvotes(self.user1)
+        self.review1.add_upvotes(self.user2)
+        self.review1.add_downvotes(self.user3)
+        self.assertEqual(2, self.review1.get_upvotes())
+        self.assertEqual(1, self.review1.get_downvotes())
+
+    def test_get_votes(self):
+        """Get votes functionality work."""
+        self.review1.add_upvotes(self.user1)
+        self.review1.add_upvotes(self.user2)
+        self.review1.add_downvotes(self.user3)
+        self.assertEqual(1, self.review1.get_votes())
