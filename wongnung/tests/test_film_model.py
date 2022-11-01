@@ -3,6 +3,7 @@ from unittest.mock import patch
 from django.test import TestCase
 from ..tests.utils import (
     get_incomplete_response_info,
+    get_missing_response_info,
     get_response_info,
     get_response_credits,
     MATRIX,
@@ -118,3 +119,10 @@ class FilmModelTests(TestCase):
         """
         incomplete_film = Film.get_film("0")
         self.assertIsNone(incomplete_film.year_released)
+
+    @patch("tmdbsimple.Movies.info", new=get_missing_response_info)
+    @patch("tmdbsimple.Movies.credits", new=get_response_credits)
+    def test_explicit_no_release_date(self):
+        """
+        If there is no `release_date` key in response, return None.
+        """

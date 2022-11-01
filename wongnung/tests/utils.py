@@ -32,6 +32,18 @@ def get_incomplete_response_info(_):
     }
 
 
+def get_missing_response_info(_):
+    return {
+        "title": "The Matrix",
+        "genres": [
+            {"id": 28, "name": "Action"},
+            {"id": 878, "name": "Science Fiction"},
+        ],
+        "overview": "",
+        "poster_path": "",
+    }
+
+
 def get_response_credits(_):
     return {
         "cast": [
