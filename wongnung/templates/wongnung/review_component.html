@@ -1,40 +1,40 @@
-{% load static %} {% load tailwind_tags %} {% tailwind_css %}
-
-<div class="bg-slate-100 rounded-xl h-96 w-[1000px] review{{review.id}}">
-    <div class="pt-3 flex flex-row items-center">
+<span class="bg-slate-100 rounded-xl py-6 px-2 review{{review.id}}">
+    <div class="flex flex-row items-center justify-between mx-5">
         <!--User profile box-->
-        <div class="bg-user-grey rounded-3xl h-10 w-48 flex items-center ml-5 hover:bg-feed-grey">
-            <div class="rounded-full bg-post-grey h-8 w-8 text-center ml-1.5">
-                {{ fst_char }}
+        <div class="flex flex-row items-center">
+            <div class="bg-user-grey rounded-3xl pr-5 py-1 flex items-center hover:bg-feed-grey">
+                <div class="rounded-full bg-post-grey h-8 w-8 text-center ml-1.5">
+                    {{ fst_char }}
+                </div>
+                <div class="pl-3 font-body text-white text-xl">
+                    {% if review.author %}
+                        {{ review.author }}
+                    {% else %}
+                        Anonymous
+                    {% endif %}
+                </div>
             </div>
-            <div class="pl-3 font-body text-white text-xl">
-                {% if review.author %}
-                {{ review.author }}
-                {% else %}
-                Anonymous
-                {% endif %}
+            <div class="font-body text-black text-xl px-3">
+                {{ review.pub_date|date:"🗓️ N d, Y 🕑 g:i a" }}
             </div>
         </div>
-        <div class="font-body text-black text-xl pl-5">
-            {{ review.pub_date|date:"🗓️ N d, Y 🕑 g:i a" }}
-        </div>
-        <div class="space-x-3 flex flex-row pl-64">
+        
+        <div class="space-x-3 flex flex-row">
             <!--Add to watch list button-->
             <label>
                 <input class="sr-only peer" name="watchlist" type="checkbox" value="keep" />
                 <div class="text-post-grey peer-checked:text-component-red hover:drop-shadow-lg">
-                    <svg class="h-8 relative" viewBox="0 0 200 322" fill="currentColor"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" d="M0.128998 0V321.188L99.585 250.657L199.059 321.188V0H0.128998Z" />
+                    <svg class="h-8 relative" viewBox="0 0 200 322" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M0.128998 0V321.188L99.585 250.657L199.059 321.188V0H0.128998Z"/>
                     </svg>
                 </div>
             </label>
-            <form action="{% url 'wongnung:vote' review.id %}" method="post">
+            <form action="{% url 'wongnung:vote' review.id %}" method="post" hx-boost="true" hx-target=".review{{review.id}}" hx-swap="outerHTML"
+            hx-push-url="false" hx-replace-url="false">
                 {% csrf_token %}
                 <fieldset class="flex flex-row">
                     <!--Upvote button-->
-                    <button hx-post="{% url 'wongnung:vote' review.id %}" hx-target=".review{{review.id}}" hx-swap="outerHTML"
-                            type="submit" name="up" value="up">
+                    <button type="submit" name="up" value="up">
                         <!--if user has been upvote review upvote button will be red-->
                         {% if upvote %}
                         <div class="text-component-red hover:drop-shadow-lg">
@@ -54,8 +54,7 @@
                         {{ votes }}
                     </div>
                     <!--Downvote button-->
-                    <button hx-post="{% url 'wongnung:vote' review.id %}" hx-target=".review{{review.id}}" hx-swap="outerHTML"
-                            type="submit" name="down" value="down">
+                    <button type="submit" name="down" value="down">
                         <!--if user has been downvote review downvote button will be red-->
                         {% if downvote %}
                         <div class="text-component-red hover:drop-shadow-lg">
@@ -77,21 +76,18 @@
                 |
             </label>
             <!--Report button-->
-            <label>
-                <input class="sr-only peer" name="downvote" type="checkbox" value="down" />
-                <div class="text-post-grey peer-checked:text-component-red hover:drop-shadow-lg">
-                    <svg class="h-8 relative" viewBox="0 0 486 442" fill="currentColor"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd"
-                            d="M476.099 331.968L305.899 37.168C278.099 -11.532 207.799 -11.532 180.099 37.168L9.799 331.968C-18.001 380.668 16.599 441.168 72.699 441.168H412.599C468.699 441.168 503.899 380.068 476.099 331.968ZM242.899 375.768C228.099 375.768 215.799 363.468 215.799 348.668C215.799 333.868 228.099 321.568 242.899 321.568C257.699 321.568 269.999 333.868 269.399 349.368C270.099 363.468 257.099 375.768 242.899 375.768ZM267.599 200.568C266.399 221.568 265.099 242.468 263.899 263.468C263.299 270.268 263.299 276.468 263.299 283.168C262.699 294.268 253.999 302.868 242.899 302.868C231.799 302.868 223.199 294.868 222.499 283.768C220.699 251.068 218.799 218.968 216.999 186.268C216.399 177.668 215.799 168.968 215.099 160.368C215.099 146.168 223.099 134.468 236.099 130.768C249.099 127.668 261.999 133.868 267.599 146.168C269.499 150.468 270.099 154.768 270.099 159.768C269.499 173.468 268.199 187.068 267.599 200.568Z" />
+            <button class="block" type="button" hx-get="{% url 'wongnung:report-modal' review.id %}" hx-target="#ReportModal{{ review.id }}" hx-swap="outerHTML">
+                <div class="text-component-red hover:drop-shadow-lg">
+                    <svg class="h-8 relative" viewBox="0 0 486 442" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M476.099 331.968L305.899 37.168C278.099 -11.532 207.799 -11.532 180.099 37.168L9.799 331.968C-18.001 380.668 16.599 441.168 72.699 441.168H412.599C468.699 441.168 503.899 380.068 476.099 331.968ZM242.899 375.768C228.099 375.768 215.799 363.468 215.799 348.668C215.799 333.868 228.099 321.568 242.899 321.568C257.699 321.568 269.999 333.868 269.399 349.368C270.099 363.468 257.099 375.768 242.899 375.768ZM267.599 200.568C266.399 221.568 265.099 242.468 263.899 263.468C263.299 270.268 263.299 276.468 263.299 283.168C262.699 294.268 253.999 302.868 242.899 302.868C231.799 302.868 223.199 294.868 222.499 283.768C220.699 251.068 218.799 218.968 216.999 186.268C216.399 177.668 215.799 168.968 215.099 160.368C215.099 146.168 223.099 134.468 236.099 130.768C249.099 127.668 261.999 133.868 267.599 146.168C269.499 150.468 270.099 154.768 270.099 159.768C269.499 173.468 268.199 187.068 267.599 200.568Z" />
                     </svg>
                 </div>
-            </label>
+            </button>
         </div>
     </div>
     <!--Hyperlink to film details page-->
     <div class="pl-5 pt-5 text-component-red text-xl">
-        Movie: <a class="text-black hover:underline" href="{% url 'wongnung:film-details' film.filmId %}">{{ film.title }}</a>
+        Movie: <a class="text-black hover:underline"  href="{% url 'wongnung:film-details' film.filmId %}">{{ film.title }}</a>
     </div>
     <!--Genres-->
     <div class="pt-1.5 flex flex-row items-center">
@@ -99,16 +95,20 @@
             Genre:
         </div>
         {% for genre in review.film.get_genres %}
-        <div
-            class="rounded-3xl bg-transparent border-2 border-component-red h-7 text-center text-component-red px-2 mx-1 hover:ring-1 hover:ring-red-500">
-            {{ genre }}
-        </div>
+            <div class="rounded-3xl bg-transparent border-2 border-component-red h-7 text-center text-component-red px-2 mx-1 hover:ring-1 hover:ring-red-500">
+                {{ genre }}
+            </div>
         {% endfor %}
-    </div>
+        </div>
     <!--Review content-->
-    <div class="flow-root px-5 pt-5 divide-y flex flex-col">
+    <div class="px-5 pt-5 divide-y flex flex-col">
         <div class="text-justify text-black font-body pb-1">
             {{ review.content }}
         </div>
     </div>
 </div>
+</span>
+{% if feed %}
+<div hx-get="/get_feed" hx-trigger="intersect threshold:0.1 once" hx-target="this" hx-swap="outerHTML"></div>
+{% endif %}
+<span id="ReportModal{{ review.id }}" class="hidden"></span>

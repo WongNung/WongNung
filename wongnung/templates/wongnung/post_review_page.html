@@ -1,27 +1,24 @@
 {% extends 'wongnung/wongnung_page.html' %}
 {% block t %}New Review{% endblock%}
 {% block c %}
-
-<div class="bg-back-grey h-screen">
-  <div class="flex flex-col bg-feed-grey h-full mx-20">
-    <div class="font-body text-white text-xl pl-10 pt-3">
-      You are writing a review for...
-    </div>
-    <div class="py-3 text-tag-yellow text-2xl pl-10 font-bold">{{film}}</div>
-    <form action="{% url 'wongnung:post-review' film.filmId %}" method="post">
-      {% csrf_token %}
-      <div class="px-10">
-        <textarea
-          class="resize-none rounded-md w-full h-96 focus:ring-2 focus:ring-tag-yellow focus:border-tag-yellow"
-          name="content"
-        ></textarea>
-      </div>
-      <div
-        class="bg-component-red h-10 w-16 mt-5 rounded-lg text-white flex items-center justify-center self-end float-right mr-10"
-      >
-        <input type="submit" value="Post" />
-      </div>
-    </form>
+<div class="flex flex-col bg-feed-grey h-full mx-20 py-8">
+  <div class="font-body text-white text-xl pl-10 pt-3">
+    You are writing a review for...
   </div>
+  <div class="py-3 text-tag-yellow text-2xl pl-10 font-bold">{{film}}</div>
+  <form action="{% url 'wongnung:post-review' film.filmId %}" method="post">
+    {% csrf_token %}
+    <div class="px-10">
+      <textarea
+        class="resize-none rounded-md w-full h-96 focus:ring-2 focus:ring-tag-yellow focus:border-tag-yellow"
+        name="content"
+      ></textarea>
+    </div>
+    <div
+      class="bg-component-red h-10 w-16 mt-5 rounded-lg text-white flex items-center justify-center self-end float-right mr-10"
+    >
+      <input type="submit" value="Post" />
+    </div>
+  </form>
 </div>
 {% endblock %}
