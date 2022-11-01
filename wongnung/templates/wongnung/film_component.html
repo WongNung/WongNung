@@ -1,6 +1,6 @@
 <title>{{ film.title }}</title>
 <div class="flex flex-auto bg-feed-grey h-screen overflow-hidden">
-  <div class="p-4 flex flex-row gap-x-3">
+  <div class="p-4 flex flex-row gap-x-3 grow items-stretch">
     <div class="flex flex-none h-full">
       <!-- Image size: w600, h900 -->
       <img class="object-contain md:w-64 lg:w-96 2xl:w-full" src="{{ film.poster }}" />
@@ -53,7 +53,7 @@
         {% if reviews %}
           <div class="flex flex-col sticky space-y-4">
           {% for review in reviews %}
-            <div hx-get="/show_review_component/{{ review.id }}" hx-target="this" hx-swap="outerHTML" hx-trigger="revealed once">
+            <div hx-get="/show_review_component/{{ review.id }}" hx-target="this" hx-swap="outerHTML" hx-trigger="intersect once">
             </div>
           {% endfor %}
           </div>
