@@ -107,8 +107,8 @@
         </div>
     </div>
 </div>
-<div id="ReportModal{{ review.id }}" class="hidden"></div>
 </span>
 {% if feed %}
 <div hx-get="/get_feed" hx-trigger="intersect threshold:0.1 once" hx-target="this" hx-swap="outerHTML"></div>
 {% endif %}
+<span id="ReportModal{{ review.id }}" class="hidden"></span>
