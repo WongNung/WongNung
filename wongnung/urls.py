@@ -1,24 +1,26 @@
-from .views import (
-    show_film_component,
-    show_review_component,
-    test_page,
-    search,
-    film_details_page,
-    post_review_page,
-    post_review,
-    vote,
-    report,
-    show_report_modal
-)
 from django.urls import path
 
+from .views import (
+    cancel_search,
+    feed,
+    film_details_page,
+    get_feed,
+    post_review,
+    report,
+    show_report_modal,
+    post_review_page,
+    search,
+    show_film_component,
+    show_review_component,
+    vote,
+)
 
 app_name = "wongnung"
 urlpatterns = [
-    path("test", test_page, name="test"),
+    path("", feed, name="feed"),
     path("film/<str:filmid>", film_details_page, name="film-details"),
     path("new_review/<str:filmid>", post_review_page, name="new-review"),
-    path("post_review/<str:filmid>", post_review, name="post-review")
+    path("post_review/<str:filmid>", post_review, name="post-review"),
 ]
 
 # Use this array to store paths that should be called using htmx
@@ -33,12 +35,18 @@ htmx_paths = [
         show_review_component,
         name="review-component",
     ),
-    path("search", search, name="search"),
-    path("show_review_component/<int:pk>/vote", vote, name='vote'),
+    path("show_review_component/<int:pk>/vote", vote, name="vote"),
     path("show_review_component/<int:pk>/report", report, name="report"),
     path("show_report_modal/<int:pk>", show_report_modal, name="report-modal"),
-    path("show_report_modal/<int:pk>/cancel", show_report_modal,
-         {"cancel": "true"}, name="report-modal-cancel"),
+    path(
+        "show_report_modal/<int:pk>/cancel",
+        show_report_modal,
+        {"cancel": "true"},
+        name="report-modal-cancel",
+    ),
+    path("search", search, name="search"),
+    path("cancel_search", cancel_search),
+    path("get_feed", get_feed),
 ]
 
 urlpatterns += htmx_paths
