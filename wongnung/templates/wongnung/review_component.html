@@ -76,14 +76,13 @@
                 |
             </label>
             <!--Report button-->
-            <label>
-                <input class="sr-only peer" name="downvote" type="checkbox" value="down" />
-                <div class="text-post-grey peer-checked:text-component-red hover:drop-shadow-lg">
+            <button class="block" type="button" hx-get="{% url 'wongnung:report-modal' review.id %}" hx-target="#ReportModal{{ review.id }}" hx-swap="outerHTML">
+                <div class="text-component-red hover:drop-shadow-lg">
                     <svg class="h-8 relative" viewBox="0 0 486 442" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" d="M476.099 331.968L305.899 37.168C278.099 -11.532 207.799 -11.532 180.099 37.168L9.799 331.968C-18.001 380.668 16.599 441.168 72.699 441.168H412.599C468.699 441.168 503.899 380.068 476.099 331.968ZM242.899 375.768C228.099 375.768 215.799 363.468 215.799 348.668C215.799 333.868 228.099 321.568 242.899 321.568C257.699 321.568 269.999 333.868 269.399 349.368C270.099 363.468 257.099 375.768 242.899 375.768ZM267.599 200.568C266.399 221.568 265.099 242.468 263.899 263.468C263.299 270.268 263.299 276.468 263.299 283.168C262.699 294.268 253.999 302.868 242.899 302.868C231.799 302.868 223.199 294.868 222.499 283.768C220.699 251.068 218.799 218.968 216.999 186.268C216.399 177.668 215.799 168.968 215.099 160.368C215.099 146.168 223.099 134.468 236.099 130.768C249.099 127.668 261.999 133.868 267.599 146.168C269.499 150.468 270.099 154.768 270.099 159.768C269.499 173.468 268.199 187.068 267.599 200.568Z" />
                     </svg>
                 </div>
-            </label>
+            </button>
         </div>
     </div>
     <!--Hyperlink to film details page-->
@@ -107,7 +106,9 @@
             {{ review.content }}
         </div>
     </div>
+</div>
 </span>
 {% if feed %}
 <div hx-get="/get_feed" hx-trigger="intersect threshold:0.1 once" hx-target="this" hx-swap="outerHTML"></div>
 {% endif %}
+<span id="ReportModal{{ review.id }}" class="hidden"></span>

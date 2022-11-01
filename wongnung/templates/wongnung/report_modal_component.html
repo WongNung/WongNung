@@ -1,0 +1,38 @@
+<div id="ReportModal{{ review.id }}" class="{% if cancel %} hidden {% endif %} bg-black/50 fixed overflow-x-hidden overflow-y-auto z-50 top-0 left-0 h-full w-full">
+    <div class="flex justify-center items-center">  
+    <div class="bg-user-grey absolute px-4 w-1/2 rounded-lg top-1/3">
+        <div class="flex flex-col divide-y">
+            <!--Modal header-->
+            <div class="font-primary text-tag-yellow text-2xl py-3">
+                Report Review
+            </div>
+            <span class="text-white">
+                <ul>
+                    <li><b>Film Title:</b> {{ review.film }}</li>
+                    <li><b>Review Content:</b> {{ review.content }}</li>
+                </ul>                
+            </span>
+            <form action="{% url 'wongnung:report' review.id %}" method="post"> 
+                {% csrf_token %}
+                <!--Content area-->
+                <div class="font-body text-white py-3">
+                    <textarea name="report-content" class="resize-none w-full h-28 rounded-md focus:ring-1 focus:ring-tag-yellow focus:border-tag-yellow text-black text-lg" required placeholder="Your reason to report..."></textarea>
+                </div>
+                <!--Cancel & submit button-->
+                <div class="flex flex-row py-3 justify-center w-full">
+                    <button hx-post="{% url 'wongnung:report' review.id %}" hx-target="#ReportModal{{ review.id }}" hx-swap="outerHTML" hx-vals='{"cancel": "true"}' class="rounded-lg bg-component-red" type="button">
+                        <div class="text-white text-lg px-3">
+                            Cancel
+                        </div>
+                    </button>
+                    <button hx-post="{% url 'wongnung:report' review.id %}" hx-target="#ReportModal{{ review.id }}" hx-swap="outerHTML" class="ml-5 rounded-lg bg-tag-yellow" type="submit">
+                        <div class="text-nlack text-lg px-3">
+                            Report
+                        </div>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>

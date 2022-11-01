@@ -8,7 +8,7 @@ from django.urls import reverse
 
 from .feed import FeedManager, FeedSession
 from .globals import SEARCH_CACHE
-from .models import Film, Review
+from .models import Film, Review, Report
 
 feed_manager = FeedManager()
 
@@ -147,7 +147,6 @@ def post_review(request, filmid):
     author = request.user
     film = Film.get_film(filmid)
     content = request.POST["content"].strip()
-    print(content)
     if not content:
         return redirect("wongnung:new-review", filmid=filmid)
     review = Review.objects.create(film=film, content=content, author=author)
@@ -174,5 +173,35 @@ def vote(request, pk):
                 review.remove_upvotes(request.user)
     review.save()
     return HttpResponseRedirect(
-        reverse("wongnung:review-component", args=(review.pk,)),
+        reverse("wongnung:review-component", args=(review.pk,))
     )
+
+
+@login_required
+def report(request, pk):
+    review = get_object_or_404(Review, pk=pk)
+    if request.method == "POST":
+        if "cancel" in request.POST:
+            return redirect(
+                "wongnung:report-modal-cancel",
+                pk=pk,
+            )
+        content = request.POST["report-content"].strip()
+        if not content:
+            return redirect("wongnung:report-modal", pk=pk)
+        report = Report.objects.create(
+            review=review, user=request.user, content=content
+        )
+        report.save()
+    return HttpResponseRedirect(
+        reverse("wongnung:review-component", args=(review.pk,))
+    )
+
+
+@login_required
+def show_report_modal(request, pk, cancel=""):
+    review = get_object_or_404(Review, pk=pk)
+    context = {"review": review}
+    if cancel:
+        context["cancel"] = True
+    return render(request, "wongnung/report_modal_component.html", context)
