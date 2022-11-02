@@ -1,5 +1,5 @@
-{% extends 'wongnung/wongnung_page.html' %}
-{% block t %}Feed{% endblock %}
+{% extends "wongnung/wongnung_page.html" %}
+{% block t %}Feed{% endblock t %}
 {% block c %}
     <div>
         <div class="flex flex-col min-h-screen space-y-4 bg-feed-grey mx-20 p-10 overflow-y-auto">
@@ -9,4 +9,4 @@
                  hx-swap="outerHTML"></div>
         </div>
     </div>
-{% endblock %}
+{% endblock c %}

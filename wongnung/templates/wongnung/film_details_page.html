@@ -1,5 +1,5 @@
-{% extends 'wongnung/wongnung_page.html' %}
-{% block t %}{% endblock %}
+{% extends "wongnung/wongnung_page.html" %}
+{% block t %}{% endblock t %}
 {% block c %}
     <div class="relative flex flex-auto justify-center items-center"
          hx-get="/show_film_component/{{ filmid }}"
@@ -10,4 +10,4 @@
             <span class="text-white text-5xl">Please wait...</span>
         </div>
     </div>
-{% endblock %}
+{% endblock c %}
