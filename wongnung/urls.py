@@ -8,6 +8,7 @@ from .views.review_posting import post_review, post_review_page
 from .views.review_reporting import report, show_report_modal
 from .views.review_voting import vote
 from .views.search import cancel_search, search
+
 # fmt: on
 
 app_name = "wongnung"

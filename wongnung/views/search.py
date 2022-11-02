@@ -1,6 +1,8 @@
 from typing import Collection, Mapping, Optional
+
 import tmdbsimple as tmdb
 from django.http import HttpRequest, HttpResponse
+
 from ..globals import SEARCH_CACHE
 
 

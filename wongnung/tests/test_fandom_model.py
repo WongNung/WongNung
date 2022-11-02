@@ -1,9 +1,12 @@
 """Tests for Fandom model"""
 from unittest.mock import patch
-from django.test import TestCase
+
 from django.contrib.auth.models import User
-from ..tests.utils import get_response_info, get_response_credits, MATRIX
-from ..models import Film, Fandom
+from django.test import TestCase
+
+from ..models.fandom import Fandom
+from ..models.film import Film
+from ..tests.utils import MATRIX, get_response_credits, get_response_info
 
 
 class FandomModelTests(TestCase):
@@ -14,16 +17,21 @@ class FandomModelTests(TestCase):
     def setUp(self):
         self.film = Film.get_film(MATRIX)
         self.owner = User.objects.create(
-            username='Mr. Owner', email='owner1@email.com', password='Owner1')
+            username="Mr. Owner", email="owner1@email.com", password="Owner1"
+        )
         self.user1 = User.objects.create(
-            username='Mr. Member1', email='user1@email.com', password='User1')
+            username="Mr. Member1", email="user1@email.com", password="User1"
+        )
         self.user2 = User.objects.create(
-            username='Mr. Member2', email='user2@email.com', password='User2')
+            username="Mr. Member2", email="user2@email.com", password="User2"
+        )
         self.user3 = User.objects.create(
-            username='Mr. Member3', email='user3@email.com', password='User3')
+            username="Mr. Member3", email="user3@email.com", password="User3"
+        )
         self.user4 = User.objects.create(
-            username='Mr. Member4', email='user4@email.com', password='User4')
-        self.fandom1 = Fandom.objects.create(name='Marvel Fans')
+            username="Mr. Member4", email="user4@email.com", password="User4"
+        )
+        self.fandom1 = Fandom.objects.create(name="Marvel Fans")
 
     def test_add_member(self):
         """add_member() functionality work."""
@@ -61,8 +69,6 @@ class FandomModelTests(TestCase):
         self.fandom1.add_member(self.user2)
 
         # check only members in QuerySet not order
-        expected = self.fandom1.members.all().order_by('username')
-        method_output = self.fandom1.get_all_member().order_by('username')
+        expected = self.fandom1.members.all().order_by("username")
+        method_output = self.fandom1.get_all_member().order_by("username")
         self.assertQuerysetEqual(expected, method_output)
-
-

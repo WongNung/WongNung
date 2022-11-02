@@ -1,9 +1,10 @@
 from __future__ import annotations
 
 from django.contrib.auth.models import User
-from .film import Film
 from django.db import models
 from django.utils import timezone
+
+from .film import Film
 
 
 class Review(models.Model):

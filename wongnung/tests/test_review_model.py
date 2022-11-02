@@ -1,11 +1,13 @@
 """Tests for Review model"""
 from unittest.mock import patch
-from django.test import TestCase
+
 from django.contrib.auth.models import User
+from django.test import TestCase
 from django.utils import timezone
-from ..tests.utils import get_response_info, get_response_credits, MATRIX
+
 from ..models.film import Film
 from ..models.review import Review
+from ..tests.utils import MATRIX, get_response_credits, get_response_info
 
 
 class ReviewModelTests(TestCase):
