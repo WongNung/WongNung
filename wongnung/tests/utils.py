@@ -1,5 +1,8 @@
 """Construct Utilities for testing"""
 
+from django.contrib.auth.models import User
+
+
 MATRIX = "603"
 
 
@@ -58,3 +61,11 @@ def get_response_credits(_):
             {"name": "Lana Wachowski", "job": "Director"},
         ],
     }
+
+
+def new_test_user(username, password) -> User:
+    """Create a new Django user instance."""
+    user = User.objects.create(username=username)
+    user.set_password(password)
+    user.save()
+    return user

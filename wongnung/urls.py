@@ -41,8 +41,8 @@ htmx_paths = [
         name="report-modal-cancel",
     ),
     path("search", search, name="search"),
-    path("cancel_search", cancel_search),
-    path("get_feed", get_feed),
+    path("cancel_search", cancel_search, name="cancel-search"),
+    path("get_feed", get_feed, name="get-feed"),
 ]
 
 urlpatterns += htmx_paths
