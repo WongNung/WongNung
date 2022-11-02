@@ -4,7 +4,8 @@ from django.contrib.auth.models import User
 from django.test import TestCase
 from django.utils import timezone
 
-from wongnung.models import Film, Review
+from ..models.film import Film
+from ..models.review import Review
 from ..feed import FeedSession, FeedManager
 from .utils import get_response_info, get_response_credits
 

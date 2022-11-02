@@ -3,10 +3,7 @@ from __future__ import annotations
 from typing import List, Optional
 
 import tmdbsimple as tmdb
-from django.contrib.auth.models import User
 from django.db import models
-from django.db.models import QuerySet
-from django.utils import timezone
 
 
 class Film(models.Model):
@@ -44,7 +41,8 @@ class Film(models.Model):
     def get_director(self) -> Optional[List[str]]:
         """Get a list contain the name of the director(s) of the film
 
-        :return: A list containing the string representing the name of the director(s) of the film
+        :return: A list containing the string representing the names
+                 of the director(s) of the film
         """
         return (
             [director.strip() for director in self.director.split(",")]
@@ -78,8 +76,8 @@ class Film(models.Model):
         """Get a list containing the name of the director(s) of the film and set it to
         be a director attribute
 
-        :param directors: A list containing the string representing the name of the director(s)
-        of the film
+        :param directors: A list containing the string representing the names
+                          of the director(s) of the film
         """
         self.director = ", ".join(directors)
 
@@ -91,7 +89,8 @@ class Film(models.Model):
         self.genres = ", ".join(genres)
 
     def set_stars(self, stars: List[str]):
-        """Get a list containing the stars of the film and set it to be a stars attribute
+        """Get a list containing the stars of the film and set it to be
+        a stars attribute
 
         :param stars: A list containing the string representing the stars of the film
         """
@@ -117,8 +116,10 @@ class Film(models.Model):
 
             summary = response_info["overview"]
             if not summary:
-                summary = "The summary of this film is unknown or not translated to English."
-
+                summary = (
+                    "The summary of this film is unknown "
+                    + "or not translated to English."
+                )
             try:
                 year_released = response_info["release_date"].split("-")[0]
                 if not year_released:
@@ -161,93 +162,3 @@ class Film(models.Model):
             film.save()
 
         return film
-
-
-class Review(models.Model):
-    """
-    Model for Review with Film object and publishing date
-
-    :param film: A Film object
-    :type film: Film
-    :param pub_date: A date object representing the published date of the review
-    :type pub_date: Datetime
-    :param content: A string representation of the content of this Review
-    :type content: str
-    :param author: User who created the Review
-    :type author: User
-    """
-
-    film = models.ForeignKey(Film, on_delete=models.CASCADE)
-    pub_date = models.DateTimeField(default=timezone.now)
-    content = models.CharField(max_length=1000)
-    author = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
-    upvotes = models.ManyToManyField(User, related_name="upvotes")
-    downvotes = models.ManyToManyField(User, related_name="downvotes")
-
-    def __str__(self) -> str:
-        string = f"Review for {self.film} @ {self.pub_date}"
-        if self.author:
-            return string + f" by {self.author}"
-        return string + " by anonymous"
-
-    def get_votes(self) -> int:
-        """Get number of upvotes minus downvotes."""
-        return self.get_upvotes() - self.get_downvotes()
-
-    def get_upvotes(self) -> int:
-        """Get number of upvotes."""
-        return self.upvotes.all().count()
-
-    def get_downvotes(self) -> int:
-        """Get number of downvotes."""
-        return self.downvotes.all().count()
-
-    def add_upvotes(self, user: User):
-        """Add User to upvotes."""
-        self.upvotes.add(user)
-
-    def remove_upvotes(self, user: User):
-        """Remove User from upvotes."""
-        self.upvotes.remove(user)
-
-    def add_downvotes(self, user: User):
-        """Add User to downvotes."""
-        self.downvotes.add(user)
-
-    def remove_downvotes(self, user: User):
-        """Remove User from downvotes."""
-        self.downvotes.remove(user)
-
-
-class Report(models.Model):
-    review = models.ForeignKey(Review, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    report_date = models.DateTimeField(default=timezone.now)
-    content = models.CharField(max_length=1000)
-
-    def __str__(self):
-        return f"{self.user} reported {self.review} at {self.report_date}."
-
-
-class Fandom(models.Model):
-    name = models.CharField(max_length=64)
-    members = models.ManyToManyField(User, related_name="members")
-
-    def __str__(self):
-        return f"Group's name is {self.name}"
-
-    def add_member(self, new_member: User):
-        """Add new member to a fandom."""
-        self.members.add(new_member)
-
-    def remove_member(self, existing_member: User):
-        """Remove existing member from a fandom."""
-        self.members.remove(existing_member)
-
-    def get_member_count(self) -> int:
-        """Return total number of members."""
-        return self.members.all().count()
-
-    def get_all_member(self) -> QuerySet[User]:
-        """Return queryset of members."""
-        return self.members.all()

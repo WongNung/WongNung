@@ -8,7 +8,7 @@ from ..tests.utils import (
     get_response_credits,
     MATRIX,
 )
-from ..models import Film
+from ..models.film import Film
 
 
 class FilmModelTests(TestCase):

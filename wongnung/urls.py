@@ -1,19 +1,14 @@
 from django.urls import path
 
-from .views import (
-    cancel_search,
-    feed,
-    film_details_page,
-    get_feed,
-    post_review,
-    report,
-    show_report_modal,
-    post_review_page,
-    search,
-    show_film_component,
-    show_review_component,
-    vote,
-)
+# fmt: off
+from .views.feed import feed, get_feed
+from .views.film_details import film_details_page, show_film_component
+from .views.review import show_review_component
+from .views.review_posting import post_review, post_review_page
+from .views.review_reporting import report, show_report_modal
+from .views.review_voting import vote
+from .views.search import cancel_search, search
+# fmt: on
 
 app_name = "wongnung"
 urlpatterns = [
