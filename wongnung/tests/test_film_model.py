@@ -126,3 +126,5 @@ class FilmModelTests(TestCase):
         """
         If there is no `release_date` key in response, return None.
         """
+        incomplete_film = Film.get_film("0")
+        self.assertIsNone(incomplete_film.year_released)

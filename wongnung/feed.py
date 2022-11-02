@@ -34,6 +34,9 @@ class FeedSession:
     def save(self, manager: "FeedManager"):
         manager.update_feed_session(self.user_id, self)
 
+    def __str__(self):
+        return f"Feed {self.user_id}: {self.stack}"
+
 
 class FeedManager:
 
@@ -54,7 +57,7 @@ class FeedManager:
                     "feed": FeedSession(user_id),
                     "expiry": timezone.now() + datetime.timedelta(minutes=5),
                 }
-                return self.feeds[user_id]
+                return self.feeds[user_id]["feed"]
         except KeyError:
             self.feeds[user_id] = {
                 "feed": FeedSession(user_id),
