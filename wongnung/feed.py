@@ -34,6 +34,9 @@ class FeedSession:
     def save(self, manager: "FeedManager"):
         manager.update_feed_session(self.user_id, self)
 
+    def __str__(self):
+        return f"Feed {self.user_id}: {self.stack}"
+
 
 class FeedManager:
 
