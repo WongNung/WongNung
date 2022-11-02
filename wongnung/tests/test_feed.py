@@ -1,12 +1,14 @@
 import datetime
 from unittest.mock import patch
+
 from django.contrib.auth.models import User
 from django.test import TestCase
 from django.utils import timezone
 
-from wongnung.models import Film, Review
-from ..feed import FeedSession, FeedManager
-from .utils import get_response_info, get_response_credits
+from ..feed import FeedManager, FeedSession
+from ..models.film import Film
+from ..models.review import Review
+from .utils import get_response_credits, get_response_info
 
 
 def get_placeholder_time(offset_minutes: int = 0):

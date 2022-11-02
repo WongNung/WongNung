@@ -4,7 +4,7 @@ from typing import List, Optional
 from django.contrib.auth.models import User
 from django.utils import timezone
 
-from .models import Review
+from .models.review import Review
 
 
 class FeedSession:

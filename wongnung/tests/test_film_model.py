@@ -1,17 +1,21 @@
 """Tests for Film model"""
 from unittest.mock import patch
+
 from django.test import TestCase
+
+from ..models.film import Film
 from ..tests.utils import (
+    MATRIX,
     get_incomplete_response_info,
     get_missing_response_info,
-    get_response_info,
     get_response_credits,
-    MATRIX,
+    get_response_info,
 )
-from ..models import Film
 
 
 class FilmModelTests(TestCase):
+    """This class test behaviours and functionalities of Film model."""
+
     @patch("tmdbsimple.Movies.info", new=get_response_info)
     @patch("tmdbsimple.Movies.credits", new=get_response_credits)
     def setUp(self):
