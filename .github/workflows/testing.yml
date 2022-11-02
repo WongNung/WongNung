@@ -1,6 +1,6 @@
 name: Unit testing
 
-on: [push, pull_request]
+on: [push]
 
 permissions:
   contents: read
