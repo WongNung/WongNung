@@ -4,7 +4,7 @@ from unittest.mock import patch
 from django.test import TestCase
 
 from ..models.film import Film
-from ..tests.utils import (
+from .utils import (
     MATRIX,
     get_incomplete_response_info,
     get_missing_response_info,

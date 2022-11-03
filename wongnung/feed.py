@@ -47,17 +47,20 @@ class FeedManager:
             cls.instance = super(FeedManager, cls).__new__(cls)
         return cls.instance
 
-    def get_feed_session(self, user_id: int) -> FeedSession:
+    def get_feed_session(
+        self, user_id: int, renew: bool = True
+    ) -> FeedSession:
         try:
             feed_data = self.feeds[user_id]
-            if (timezone.now() > feed_data["expiry"]) or (
-                not feed_data["feed"].stack
-            ):
+            if (
+                (timezone.now() > feed_data["expiry"])
+                or (not feed_data["feed"].stack)
+            ) and renew:
                 self.feeds[user_id] = {
                     "feed": FeedSession(user_id),
                     "expiry": timezone.now() + datetime.timedelta(minutes=5),
                 }
-                return self.feeds[user_id]["feed"]
+            return self.feeds[user_id]["feed"]
         except KeyError:
             self.feeds[user_id] = {
                 "feed": FeedSession(user_id),

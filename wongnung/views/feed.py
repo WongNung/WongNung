@@ -17,10 +17,9 @@ def feed(request: HttpRequest):
 @login_required
 def get_feed(request: HttpRequest):
     user_id = request.user.pk
-    feed: FeedSession = feed_manager.get_feed_session(user_id)
-    try:
-        review = feed.pop()
-    except TypeError:
+    feed: FeedSession = feed_manager.get_feed_session(user_id, renew=False)
+    review = feed.pop()
+    if not review:
         return HttpResponse(
             """<span class="text-center text-white text-xl">The end.</span>"""
         )

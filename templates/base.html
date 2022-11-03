@@ -1,5 +1,6 @@
 {% load static %}
 {% load tailwind_tags %}
+{% load django_htmx %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -12,5 +13,6 @@
   <body class="bg-back-grey scrollbar">
     {% block content %}{% endblock %}
     <script type="text/javascript" src="{% static 'js/htmx.min.js' %}"></script>
+    {% django_htmx_script %}
   </body>
 </html>
