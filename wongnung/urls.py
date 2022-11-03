@@ -8,6 +8,7 @@ from .views.review_posting import post_review, post_review_page
 from .views.review_reporting import report, show_report_modal
 from .views.review_voting import vote
 from .views.search import cancel_search, search
+from .views.fandom import show_fandom
 
 # fmt: on
 
@@ -17,6 +18,7 @@ urlpatterns = [
     path("film/<str:filmid>", film_details_page, name="film-details"),
     path("new_review/<str:filmid>", post_review_page, name="new-review"),
     path("post_review/<str:filmid>", post_review, name="post-review"),
+    path("fandom/<int:id>", show_fandom, name="fandom")
 ]
 
 # Use this array to store paths that should be called using htmx

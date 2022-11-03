@@ -1,0 +1,1 @@
+from .fandom import Fandom
