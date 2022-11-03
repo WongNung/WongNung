@@ -20,6 +20,7 @@ def show_fandom(request, id):
     }
     return render(request, "wongnung/fandom_page.html", context)
 
+
 @login_required
 def join_fandom(request, id):
     fandom = get_object_or_404(Fandom, id=id)
@@ -27,6 +28,7 @@ def join_fandom(request, id):
     fandom.add_member(user)
     fandom.save()
     return HttpResponseRedirect(reverse("wongnung:fandom", args=(fandom.id,)))
+
 
 @login_required
 def leave_fandom(request, id):
