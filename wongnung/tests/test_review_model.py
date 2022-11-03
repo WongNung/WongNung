@@ -7,7 +7,7 @@ from django.utils import timezone
 
 from ..models.film import Film
 from ..models.review import Review
-from ..tests.utils import MATRIX, get_response_credits, get_response_info
+from .utils import MATRIX, get_response_credits, get_response_info
 
 
 class ReviewModelTests(TestCase):

@@ -1,9 +1,9 @@
 from unittest.mock import patch
 from django.test import Client, TestCase
 from django.urls import reverse
-from wongnung.models.film import Film
+from ..models.film import Film
 
-from wongnung.tests.utils import (
+from .utils import (
     get_response_credits,
     get_response_info,
     new_test_user,
