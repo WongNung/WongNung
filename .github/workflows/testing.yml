@@ -52,3 +52,6 @@ jobs:
         run: |
           coverage run ./manage.py test wongnung
           coverage report --sort=miss -m
+          coverage xml -q
+      - name: Upload coverage report to Codecov
+        uses: codecov/codecov-action@v3
