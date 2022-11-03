@@ -1,4 +1,32 @@
 {% extends "wongnung/wongnung_page.html" %}
-{% block t %}{{ fan_name }}{% endblock t %}
+{% block t %}{{ fandom.name }}{% endblock t %}
 {% block c %}
+<div class="min-w-full h-16 bg-[#858585] flex flex-row items-center drop-shadow-xl justify-between fandom{{ fandom.id }}">
+    <div class="flex flex-row items-center">
+        <div class="pl-24 font-primary text-3xl text-tag-yellow ">
+            {{ fandom.name }}
+        </div>
+        <div class="px-10 font-body text-xl text-white">
+            {{ members_num }} members
+        </div>
+        <div class="font-body text-xl text-white">
+            last active {{ last_active }} ago.
+        </div>
+    </div>
+    <form action='{% url "wongnung:join-fandom" fandom.id %}' method="post" hx-target=".fandom{{fandom.id}" hx-swap="outerHTML" hx-push-url="false" hx-replace-url="false">
+        {% csrf_token %}
+        <fieldset>
+            <div class="bg-component-red w-24 h-8 text-white font-primary text-lg text-center rounded-xl mr-24 items-center">
+                <input type="submit" value="Join">
+            </div>
+        </fieldset>
+    </form>
+</div>
+<div>
+    <div class="flex flex-col min-h-screen space-y-4 bg-feed-grey mx-20 p-10 overflow-y-auto">
+        <div class="text-xl text-white text-center">
+            feed section
+        </div>
+    </div>
+</div>
 {% endblock c %}
