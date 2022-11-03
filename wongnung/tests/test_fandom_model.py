@@ -64,5 +64,3 @@ class FandomModelTests(TestCase):
         expected = self.fandom1.members.all().order_by('username')
         method_output = self.fandom1.get_all_member().order_by('username')
         self.assertQuerysetEqual(expected, method_output)
-
-
