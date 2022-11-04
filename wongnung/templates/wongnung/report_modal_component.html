@@ -11,7 +11,8 @@
                             <b>Film Title:</b> {{ review.film }}
                         </li>
                         <li>
-                            <b>Review Content:</b> {{ review.content }}
+                            <b>Review Content:</b><br />
+                            {{ review.content|truncatewords:10 }}
                         </li>
                     </ul>
                 </span>
@@ -20,7 +21,7 @@
                     <!--Content area-->
                     <div class="font-body text-white py-3">
                         <textarea name="report-content"
-                                  class="resize-none w-full h-28 rounded-md focus:ring-1 focus:ring-tag-yellow focus:border-tag-yellow text-black text-lg"
+                                  class="resize-none w-full h-28 rounded-md focus:ring-1 focus:ring-tag-yellow focus:border-tag-yellow text-black text-lg scrollbar"
                                   required
                                   placeholder="Your reason to report..."></textarea>
                     </div>
