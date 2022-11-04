@@ -13,9 +13,9 @@
             last active {{ last_active }} ago.
         </div>
     </div>
-    {% if not user_status%}
+    {% if not user_status %}
     <!--Join fandom button-->
-    <form action='{% url "wongnung:join-fandom" fandom.id %}' method="post" hx-target=".fandom{{fandom.id}" hx-swap="outerHTML" hx-push-url="false" hx-replace-url="false">
+    <form action='{% url "wongnung:join-fandom" fandom.id %}' method="post" hx-target=".fandom{{ fandom.id }}" hx-swap="outerHTML" hx-push-url="false" hx-replace-url="false">
         {% csrf_token %}
         <fieldset>
             <button type="submit" name="join" value="join">
@@ -27,7 +27,7 @@
     </form>
     {% else %}
     <!--Leave fandom button-->
-    <form action='{% url "wongnung:leave-fandom" fandom.id %}' method="post" hx-target=".fandom{{fandom.id}" hx-swap="outerHTML" hx-push-url="false" hx-replace-url="false">
+    <form action='{% url "wongnung:leave-fandom" fandom.id %}' method="post" hx-target=".fandom{{ fandom.id }}" hx-swap="outerHTML" hx-push-url="false" hx-replace-url="false">
         {% csrf_token %}
         <fieldset>
             <button type="submit" name="leave" value="leave">

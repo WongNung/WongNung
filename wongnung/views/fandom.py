@@ -16,7 +16,7 @@ def show_fandom(request, id):
         "fandom": fandom,
         "members_num": fandom.get_member_count(),
         "last_active": "1 hr",
-        "user_status": user_status
+        "user_status": user_status,
     }
     return render(request, "wongnung/fandom_page.html", context)
 
