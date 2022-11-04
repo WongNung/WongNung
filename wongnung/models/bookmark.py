@@ -4,17 +4,16 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.models import User
 from django.db import models
+from django.db.models import QuerySet
 
 from .review import Review
 from .film import Film
 from .fandom import Fandom
 
 
-def get_bookmark_item_set(ct: ContentType, owner: User) -> \
-        list[Union[Film, Review, Fandom]]:
+def get_bookmark_set(ct: ContentType, owner: User) -> QuerySet[Bookmark]:
     """Get bookmarks for certain user with specified type."""
-    return [bookmark.content_object for
-            bookmark in Bookmark.objects.filter(content_type=ct, owner=owner)]
+    return Bookmark.objects.filter(content_type=ct, owner=owner)
 
 
 def delete_bookmark(ct: ContentType, owner: User, obj_id: int):
