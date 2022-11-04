@@ -3,7 +3,10 @@ from __future__ import annotations
 from typing import List, Optional
 
 import tmdbsimple as tmdb
+from django.contrib.contenttypes.fields import GenericRelation
 from django.db import models
+
+from .bookmark import Bookmark
 
 
 class Film(models.Model):
@@ -34,6 +37,7 @@ class Film(models.Model):
     summary = models.CharField(max_length=1000, blank=True)
     stars = models.CharField(max_length=1000, blank=True)
     poster = models.CharField(max_length=265, blank=True)
+    bookmark = GenericRelation(Bookmark, related_query_name='film')
 
     def __str__(self) -> str:
         return f"{self.title} ({self.year_released})"

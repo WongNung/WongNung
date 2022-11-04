@@ -3,8 +3,12 @@ from __future__ import annotations
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.models import User
-from django.core.exceptions import FieldError
 from django.db import models
+
+
+def get_bookmark_item_set(ct: ContentType):
+    return [
+        bookmark.content_object for bookmark in Bookmark.objects.filter(content_type=ct)]
 
 
 class Bookmark(models.Model):
