@@ -25,7 +25,4 @@ class Bookmark(models.Model):
 
     def get_item(self):
         """Get an item in a bookmark."""
-        try:
-            return self.content_type.model_class().objects.get(id=self.object_id)
-        except FieldError:
-            return self.content_type.model_class().objects.get(pk=self.object_id)
+        return self.content_object
