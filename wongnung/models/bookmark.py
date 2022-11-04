@@ -7,8 +7,8 @@ from django.db import models
 
 
 def get_bookmark_item_set(ct: ContentType):
-    return [
-        bookmark.content_object for bookmark in Bookmark.objects.filter(content_type=ct)]
+    return [bookmark.content_object for
+            bookmark in Bookmark.objects.filter(content_type=ct)]
 
 
 class Bookmark(models.Model):
