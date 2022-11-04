@@ -1,14 +1,10 @@
 from __future__ import annotations
-from typing import Union
+
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import QuerySet
-
-from .review import Review
-from .film import Film
-from .fandom import Fandom
 
 
 def get_bookmark_set(ct: ContentType, owner: User) -> QuerySet[Bookmark]:

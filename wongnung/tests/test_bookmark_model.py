@@ -1,7 +1,5 @@
 """Provided a test for bookmark module including Bookmark class and functions."""
 
-from unittest.mock import patch
-
 from django.contrib.auth.models import User
 from django.test import TestCase
 from django.utils import timezone
@@ -11,7 +9,6 @@ from ..models.fandom import Fandom
 from ..models.film import Film
 from ..models.review import Review
 from ..models.bookmark import Bookmark, get_bookmark_set, delete_bookmark
-from ..tests.utils import MATRIX, get_response_credits, get_response_info
 
 
 class BookmarkModelTest(TestCase):
