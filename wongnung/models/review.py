@@ -1,11 +1,9 @@
 from __future__ import annotations
 
 from django.contrib.auth.models import User
-from django.contrib.contenttypes.fields import GenericRelation
 from django.db import models
 from django.utils import timezone
 
-from .bookmark import Bookmark
 from .film import Film
 
 
@@ -29,7 +27,6 @@ class Review(models.Model):
     author = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
     upvotes = models.ManyToManyField(User, related_name="upvotes")
     downvotes = models.ManyToManyField(User, related_name="downvotes")
-    bookmark = GenericRelation(Bookmark, related_query_name='review')
 
     def __str__(self) -> str:
         string = f"Review for {self.film} @ {self.pub_date}"

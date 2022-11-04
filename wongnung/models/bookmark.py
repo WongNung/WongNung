@@ -6,9 +6,10 @@ from django.contrib.auth.models import User
 from django.db import models
 
 
-def get_bookmark_item_set(ct: ContentType):
+def get_bookmark_item_set(ct: ContentType, owner: User):
+    """Get bookmarks for certain user with specified type."""
     return [bookmark.content_object for
-            bookmark in Bookmark.objects.filter(content_type=ct)]
+            bookmark in Bookmark.objects.filter(content_type=ct, owner=owner)]
 
 
 class Bookmark(models.Model):
