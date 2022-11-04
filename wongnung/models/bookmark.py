@@ -22,7 +22,3 @@ class Bookmark(models.Model):
 
     def __str__(self):
         return f"Bookmark of {self.owner}"
-
-    def get_item(self):
-        """Get an item in a bookmark."""
-        return self.content_object
