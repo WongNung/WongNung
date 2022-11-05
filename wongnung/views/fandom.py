@@ -24,7 +24,9 @@ def show_fandom(request, name):
         user_status = True
     else:
         user_status = False
-    reviews = Review.objects.filter(content__icontains=f"#{fandom.name}")
+    reviews = Review.objects.filter(
+        content__icontains=f"#{fandom.name}"
+    ).order_by("-pub_date")
     context = {
         "fandom": fandom,
         "members_num": fandom.get_member_count(),
