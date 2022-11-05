@@ -19,4 +19,5 @@ def htmx_endpoint(function, required_auth=False):
     return wrap
 
 
-htmx_endpoint_with_auth = lambda func: htmx_endpoint(func, required_auth=True)
+def htmx_endpoint_with_auth(function):
+    return htmx_endpoint(function, required_auth=True)
