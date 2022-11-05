@@ -33,6 +33,7 @@ htmx_paths = [
         show_review_component,
         name="review-component",
     ),
+    path("post_review/<str:filmid>", post_review, name="post-review"),
     path("show_review_component/<int:pk>/vote", vote, name="vote"),
     path("show_review_component/<int:pk>/report", report, name="report"),
     path("show_report_modal/<int:pk>", show_report_modal, name="report-modal"),

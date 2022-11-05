@@ -18,5 +18,5 @@ def post_review(request, filmid):
     content = request.POST["content"].strip()
     if not content:
         return redirect("wongnung:new-review", filmid=filmid)
-    review = Review.objects.create(film=film, content=content, author=author)
-    return redirect("wongnung:review-component", pk=review.pk)
+    Review.objects.create(film=film, content=content, author=author)
+    return redirect("wongnung:film-details", filmid=filmid)

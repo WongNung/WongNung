@@ -2,7 +2,7 @@
 {% block t %}{% endblock t %}
 {% block c %}
     <div class="relative flex flex-auto justify-center items-center"
-         hx-get="/show_film_component/{{ filmid }}"
+         hx-get="{% url 'wongnung:film-component' filmid %}"
          hx-target="this"
          hx-swap="outerHTML"
          hx-trigger="load once">
