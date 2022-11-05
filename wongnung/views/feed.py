@@ -3,6 +3,8 @@ from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
+from wongnung.globals import htmx_endpoint_with_auth
+
 from ..feed import FeedSession
 from . import feed_manager
 
@@ -14,8 +16,9 @@ def feed(request: HttpRequest):
     return render(request, "wongnung/feed.html")
 
 
+@htmx_endpoint_with_auth
 @login_required
-def get_feed(request: HttpRequest):
+def get_feed(request):
     user_id = request.user.pk
     feed: FeedSession = feed_manager.get_feed_session(user_id, renew=False)
     review = feed.pop()

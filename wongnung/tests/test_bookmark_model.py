@@ -1,14 +1,14 @@
 """Provided a test for bookmark module including Bookmark class and functions."""
 
 from django.contrib.auth.models import User
+from django.contrib.contenttypes.models import ContentType
 from django.test import TestCase
 from django.utils import timezone
-from django.contrib.contenttypes.models import ContentType
 
+from ..models.bookmark import Bookmark, delete_bookmark, get_bookmark_set
 from ..models.fandom import Fandom
 from ..models.film import Film
 from ..models.review import Review
-from ..models.bookmark import Bookmark, get_bookmark_set, delete_bookmark
 
 
 class BookmarkModelTest(TestCase):

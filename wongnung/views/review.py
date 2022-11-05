@@ -1,9 +1,12 @@
 from django.http import HttpRequest
 from django.shortcuts import render
 
+from wongnung.globals import htmx_endpoint
+
 from ..models.review import Review
 
 
+@htmx_endpoint
 def show_review_component(request: HttpRequest, pk):
     review = Review.objects.get(pk=pk)
     user = request.user

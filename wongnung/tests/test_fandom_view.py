@@ -3,6 +3,7 @@ from django.test.client import Client
 from django.urls import reverse
 
 from wongnung.models.fandom import Fandom
+
 from ..views.fandom import get_fandom
 
 

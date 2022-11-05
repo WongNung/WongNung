@@ -1,5 +1,7 @@
 from django.urls import path
 
+from .views.fandom import join_fandom, leave_fandom, show_fandom
+
 # fmt: off
 from .views.feed import feed, get_feed
 from .views.film_details import film_details_page, show_film_component
@@ -8,7 +10,6 @@ from .views.review_posting import post_review, post_review_page
 from .views.review_reporting import report, show_report_modal
 from .views.review_voting import vote
 from .views.search import cancel_search, search
-from .views.fandom import show_fandom, join_fandom, leave_fandom
 
 # fmt: on
 

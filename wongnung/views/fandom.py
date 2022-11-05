@@ -1,10 +1,11 @@
 import re
 
-from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.http import Http404, HttpResponseRedirect
+from django.shortcuts import render
 from django.urls import reverse
 
+from wongnung.globals import htmx_endpoint_with_auth
 from wongnung.models.review import Review
 
 from ..models.fandom import Fandom
@@ -37,6 +38,7 @@ def show_fandom(request, name):
     return render(request, "wongnung/fandom_page.html", context)
 
 
+@htmx_endpoint_with_auth
 @login_required
 def join_fandom(request, name):
     fandom = get_fandom(name)
@@ -46,6 +48,7 @@ def join_fandom(request, name):
     return HttpResponseRedirect(reverse("wongnung:fandom", args=(fandom.pk,)))
 
 
+@htmx_endpoint_with_auth
 @login_required
 def leave_fandom(request, name):
     fandom = get_fandom(name)

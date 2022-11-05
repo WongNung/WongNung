@@ -2,7 +2,6 @@
 
 from django.contrib.auth.models import User
 
-
 MATRIX = "603"
 
 
