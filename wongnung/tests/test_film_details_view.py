@@ -1,13 +1,10 @@
 from unittest.mock import patch
+
 from django.test import Client, TestCase
 from django.urls import reverse
-from ..models.film import Film
 
-from .utils import (
-    get_response_credits,
-    get_response_info,
-    new_test_user,
-)
+from ..models.film import Film
+from .utils import get_response_credits, get_response_info, new_test_user
 
 
 class TestFilmDetailsView(TestCase):
@@ -33,7 +30,7 @@ class TestFilmDetailsView(TestCase):
         """Tests if the film has correct details"""
         self.client.login(username=self.username, password=self.password)
         url = reverse("wongnung:film-component", args=(self.film.pk,))
-        resp = self.client.get(url)
+        resp = self.client.get(url, HTTP_HX_Request="true")
         self.assertContains(resp, self.film.title)
         self.assertContains(resp, str(self.film.year_released))
         self.assertContains(resp, self.film.summary)

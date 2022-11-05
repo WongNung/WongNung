@@ -1,6 +1,8 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 
+from wongnung.globals import htmx_endpoint
+
 from ..models.film import Film
 from ..models.review import Review
 
@@ -12,11 +14,12 @@ def post_review_page(request, filmid):
     return render(request, "wongnung/post_review_page.html", context)
 
 
+@htmx_endpoint
 def post_review(request, filmid):
     author = request.user
     film = Film.get_film(filmid)
     content = request.POST["content"].strip()
     if not content:
         return redirect("wongnung:new-review", filmid=filmid)
-    review = Review.objects.create(film=film, content=content, author=author)
-    return redirect("wongnung:review-component", pk=review.pk)
+    Review.objects.create(film=film, content=content, author=author)
+    return redirect("wongnung:film-details", filmid=filmid)

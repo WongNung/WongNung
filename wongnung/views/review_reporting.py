@@ -3,10 +3,13 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 
+from wongnung.globals import htmx_endpoint_with_auth
+
 from ..models.report import Report
 from ..models.review import Review
 
 
+@htmx_endpoint_with_auth
 @login_required
 def report(request, pk):
     review = get_object_or_404(Review, pk=pk)
@@ -28,6 +31,7 @@ def report(request, pk):
     )
 
 
+@htmx_endpoint_with_auth
 @login_required
 def show_report_modal(request, pk, cancel=""):
     review = get_object_or_404(Review, pk=pk)

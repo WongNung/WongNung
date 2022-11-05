@@ -31,7 +31,7 @@ class FandomModelTests(TestCase):
         self.user4 = User.objects.create(
             username="Mr. Member4", email="user4@email.com", password="User4"
         )
-        self.fandom1 = Fandom.objects.create(name="Marvel Fans")
+        self.fandom1 = Fandom.objects.create(name="MarvelFans")
 
     def test_add_member(self):
         """add_member() functionality work."""

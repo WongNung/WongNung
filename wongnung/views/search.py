@@ -3,9 +3,10 @@ from typing import Collection, Mapping, Optional
 import tmdbsimple as tmdb
 from django.http import HttpRequest, HttpResponse
 
-from ..globals import SEARCH_CACHE
+from ..globals import SEARCH_CACHE, htmx_endpoint
 
 
+@htmx_endpoint
 def search(request: HttpRequest):
     query = str(request.GET.get("query")).lower()
 
@@ -24,6 +25,7 @@ def search(request: HttpRequest):
     return HttpResponse(construct_results_container(results))
 
 
+@htmx_endpoint
 def cancel_search(request: HttpRequest):
     return HttpResponse(construct_results_container())
 

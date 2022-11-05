@@ -5,7 +5,7 @@
 {% block content %}
     {% include "wongnung/wongnung_navbar.html" %}
     <div class="w-full h-full"
-         hx-get="/cancel_search"
+         hx-get="{% url 'wongnung:cancel-search' %}"
          hx-trigger="click"
          hx-swap="outerHTML"
          hx-target="#search-results">

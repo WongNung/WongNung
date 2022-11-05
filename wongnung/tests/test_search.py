@@ -1,4 +1,5 @@
 from unittest.mock import patch
+
 from django.test import Client, TestCase
 from django.urls import reverse
 
@@ -32,13 +33,13 @@ class TestSearch(TestCase):
     def test_empty_string_search(self):
         """Empty search query should hide result box"""
         url = reverse("wongnung:search")
-        resp = self.client.get(url, {"query": ""})
+        resp = self.client.get(url, {"query": ""}, HTTP_HX_Request="true")
         self.assertContains(resp, "hidden")
 
     def test_short_string_search(self):
         """Search query with len < 3 should hide result box"""
         url = reverse("wongnung:search")
-        resp = self.client.get(url, {"query": "ab"})
+        resp = self.client.get(url, {"query": "ab"}, HTTP_HX_Request="true")
         self.assertContains(resp, "hidden")
 
     def test_search_with_results(self):
@@ -46,7 +47,9 @@ class TestSearch(TestCase):
         url = reverse("wongnung:search")
         with patch("tmdbsimple.Search.movie") as search:
             search.return_value = search_results()
-            resp = self.client.get(url, {"query": "test"})
+            resp = self.client.get(
+                url, {"query": "test"}, HTTP_HX_Request="true"
+            )
             self.assertContains(resp, "Test Movie (2022)")
             self.assertContains(resp, "Test Movie 2")
 
@@ -55,11 +58,13 @@ class TestSearch(TestCase):
         url = reverse("wongnung:search")
         with patch("tmdbsimple.Search.movie") as search:
             search.return_value = empty_search_results()
-            resp = self.client.get(url, {"query": "test"})
+            resp = self.client.get(
+                url, {"query": "test"}, HTTP_HX_Request="true"
+            )
             self.assertContains(resp, "hidden")
 
     def test_cancel_search(self):
         """When cancel_search is called, hide the result box"""
         url = reverse("wongnung:cancel-search")
-        resp = self.client.get(url)
+        resp = self.client.get(url, HTTP_HX_Request="true")
         self.assertContains(resp, "hidden")

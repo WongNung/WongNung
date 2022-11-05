@@ -1,15 +1,12 @@
 from unittest.mock import patch
+
 from django.test import Client, TestCase
 from django.urls import reverse
+
 from ..feed import FeedManager
 from ..models.film import Film
 from ..models.review import Review
-
-from .utils import (
-    get_response_credits,
-    get_response_info,
-    new_test_user,
-)
+from .utils import get_response_credits, get_response_info, new_test_user
 
 
 class TestFeedView(TestCase):
@@ -32,7 +29,7 @@ class TestFeedView(TestCase):
     def test_empty_feed(self):
         """If there is no content for FeedSession, it should return 'The end.'"""
         url = reverse("wongnung:get-feed")
-        resp = self.client.get(url)
+        resp = self.client.get(url, HTTP_HX_Request="true")
         self.assertContains(
             resp,
             """<span class="text-center text-white text-xl">The end.</span>""",
@@ -45,7 +42,7 @@ class TestFeedView(TestCase):
         film = Film.get_film("0")
         review = Review.objects.create(film=film, content="", author=self.user)
         url = reverse("wongnung:get-feed")
-        resp = self.client.get(url)
+        resp = self.client.get(url, HTTP_HX_Request="true")
         self.assertRedirects(
             resp,
             reverse("wongnung:review-component", args=(review.pk,))

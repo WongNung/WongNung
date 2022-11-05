@@ -117,7 +117,7 @@
     </div>
 </span>
 {% if feed %}
-    <div hx-get="/get_feed"
+    <div hx-get="{% url 'wongnung:get-feed' %}"
          hx-trigger="intersect threshold:0.1 once"
          hx-target="this"
          hx-swap="outerHTML"></div>

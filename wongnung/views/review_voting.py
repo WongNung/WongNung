@@ -3,9 +3,12 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
 
+from wongnung.globals import htmx_endpoint_with_auth
+
 from ..models.review import Review
 
 
+@htmx_endpoint_with_auth
 @login_required
 def vote(request, pk):
     """Since votes should now be HTMX requests, we need to use HTMX"""
