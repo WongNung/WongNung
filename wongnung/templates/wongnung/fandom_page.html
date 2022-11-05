@@ -41,9 +41,15 @@
 </div>
 <div>
     <div class="flex flex-col min-h-screen space-y-4 bg-feed-grey mx-20 p-10 overflow-y-auto">
-        <div class="text-xl text-white text-center">
-            feed section
-        </div>
+        {% if reviews %}
+            {% for review in reviews %}
+                <div hx-get="{% url 'wongnung:review-component' review.pk %}"
+                    hx-target="this"
+                    hx-swap="outerHTML"
+                    hx-trigger="intersect once">
+                </div>
+            {% endfor %}
+        {% endif %}
     </div>
 </div>
 {% endblock c %}

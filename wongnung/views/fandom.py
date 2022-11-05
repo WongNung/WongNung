@@ -5,6 +5,8 @@ from django.contrib.auth.decorators import login_required
 from django.http import Http404, HttpResponseRedirect
 from django.urls import reverse
 
+from wongnung.models.review import Review
+
 from ..models.fandom import Fandom
 
 
@@ -22,11 +24,13 @@ def show_fandom(request, name):
         user_status = True
     else:
         user_status = False
+    reviews = Review.objects.filter(content__icontains=f"#{fandom.name}")
     context = {
         "fandom": fandom,
         "members_num": fandom.get_member_count(),
         "last_active": "1 hr",
         "user_status": user_status,
+        "reviews": reviews,
     }
     return render(request, "wongnung/fandom_page.html", context)
 
