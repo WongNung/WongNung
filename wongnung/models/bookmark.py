@@ -12,18 +12,22 @@ def get_bookmark_set(ct: ContentType, owner: User) -> QuerySet[Bookmark]:
     return Bookmark.objects.filter(content_type=ct, owner=owner)
 
 
-def delete_bookmark(ct: ContentType, owner: User, obj_id: int):
+def delete_bookmark(ct: ContentType, owner: User, obj_id: str):
     """Delete a specified bookmark."""
-    Bookmark.objects.filter(content_type=ct, owner=owner, object_id=obj_id).delete()
+    Bookmark.objects.filter(
+        content_type=ct, owner=owner, object_id=obj_id
+    ).delete()
 
 
 class Bookmark(models.Model):
     """This class hold ContentType."""
+
     owner = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     content_type = models.ForeignKey(
-        ContentType, on_delete=models.CASCADE, null=True)
-    object_id = models.PositiveIntegerField(null=True)
-    content_object = GenericForeignKey('content_type', 'object_id')
+        ContentType, on_delete=models.CASCADE, null=True
+    )
+    object_id = models.CharField(max_length=128, null=True)  # noqa
+    content_object = GenericForeignKey("content_type", "object_id")
 
     class Meta:
         indexes = [
