@@ -8,21 +8,34 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('wongnung', '0016_delete_fandom'),
+        ("wongnung", "0015_fandom"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='review',
-            name='content',
+            model_name="review",
+            name="content",
             field=models.CharField(max_length=1024),
         ),
         migrations.CreateModel(
-            name='Fandom',
+            name="Fandom",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=64)),
-                ('members', models.ManyToManyField(related_name='members', to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=64)),
+                (
+                    "members",
+                    models.ManyToManyField(
+                        related_name="members", to=settings.AUTH_USER_MODEL
+                    ),
+                ),
             ],
         ),
     ]
