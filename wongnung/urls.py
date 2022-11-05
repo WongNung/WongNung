@@ -18,7 +18,7 @@ urlpatterns = [
     path("film/<str:filmid>", film_details_page, name="film-details"),
     path("new_review/<str:filmid>", post_review_page, name="new-review"),
     path("post_review/<str:filmid>", post_review, name="post-review"),
-    path("fandom/<int:id>", show_fandom, name="fandom"),
+    path("fandom/<name>", show_fandom, name="fandom"),
 ]
 
 # Use this array to store paths that should be called using htmx
@@ -45,8 +45,8 @@ htmx_paths = [
     path("search", search, name="search"),
     path("cancel_search", cancel_search, name="cancel-search"),
     path("get_feed", get_feed, name="get-feed"),
-    path("fandom/<int:id>/join", join_fandom, name="join-fandom"),
-    path("fandom/<int:id>/leave", leave_fandom, name="leave-fandom"),
+    path("fandom/<name>/join", join_fandom, name="join-fandom"),
+    path("fandom/<name>/leave", leave_fandom, name="leave-fandom"),
 ]
 
 urlpatterns += htmx_paths

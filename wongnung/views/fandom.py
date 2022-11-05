@@ -1,13 +1,23 @@
-from django.shortcuts import get_object_or_404, render
+import re
+
+from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect
+from django.http import Http404, HttpResponseRedirect
 from django.urls import reverse
 
 from ..models.fandom import Fandom
 
 
-def show_fandom(request, id):
-    fandom = get_object_or_404(Fandom, pk=id)
+def get_fandom(name: str) -> Fandom:
+    name = re.sub(r"\s+", "", name.strip(), flags=re.UNICODE)
+    try:
+        return Fandom.objects.get(name__iexact=name)
+    except Fandom.DoesNotExist:
+        raise Http404()
+
+
+def show_fandom(request, name):
+    fandom = get_fandom(name)
     if request.user in fandom.get_all_member():
         user_status = True
     else:
@@ -22,18 +32,18 @@ def show_fandom(request, id):
 
 
 @login_required
-def join_fandom(request, id):
-    fandom = get_object_or_404(Fandom, id=id)
+def join_fandom(request, name):
+    fandom = get_fandom(name)
     user = request.user
     fandom.add_member(user)
     fandom.save()
-    return HttpResponseRedirect(reverse("wongnung:fandom", args=(fandom.id,)))
+    return HttpResponseRedirect(reverse("wongnung:fandom", args=(fandom.pk,)))
 
 
 @login_required
-def leave_fandom(request, id):
-    fandom = get_object_or_404(Fandom, id=id)
+def leave_fandom(request, name):
+    fandom = get_fandom(name)
     user = request.user
     fandom.remove_member(user)
     fandom.save()
-    return HttpResponseRedirect(reverse("wongnung:fandom", args=(fandom.id,)))
+    return HttpResponseRedirect(reverse("wongnung:fandom", args=(fandom.pk,)))

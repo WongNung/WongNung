@@ -1,10 +1,10 @@
 {% extends "wongnung/wongnung_page.html" %}
 {% block t %}{{ fandom.name }}{% endblock t %}
 {% block c %}
-<div class="min-w-full h-16 bg-[#858585] flex flex-row items-center drop-shadow-xl justify-between fandom{{ fandom.id }}">
+<div class="min-w-full h-16 bg-[#858585] flex flex-row items-center drop-shadow-xl justify-between fandom{{ fandom.name }}">
     <div class="flex flex-row items-center">
-        <div class="pl-24 font-primary text-3xl text-tag-yellow ">
-            {{ fandom.name }}
+        <div class="pl-24 font-primary text-3xl font-bold text-tag-yellow ">
+            #{{ fandom.name }}
         </div>
         <div class="px-10 font-body text-xl text-white">
             {{ members_num }} members
@@ -15,7 +15,7 @@
     </div>
     {% if not user_status %}
     <!--Join fandom button-->
-    <form action='{% url "wongnung:join-fandom" fandom.id %}' method="post" hx-target=".fandom{{ fandom.id }}" hx-swap="outerHTML" hx-push-url="false" hx-replace-url="false">
+    <form action='{% url "wongnung:join-fandom" fandom.name %}' method="post" hx-target=".fandom{{ fandom.name }}" hx-swap="outerHTML" hx-push-url="false" hx-replace-url="false">
         {% csrf_token %}
         <fieldset>
             <button type="submit" name="join" value="join">
@@ -27,7 +27,7 @@
     </form>
     {% else %}
     <!--Leave fandom button-->
-    <form action='{% url "wongnung:leave-fandom" fandom.id %}' method="post" hx-target=".fandom{{ fandom.id }}" hx-swap="outerHTML" hx-push-url="false" hx-replace-url="false">
+    <form action='{% url "wongnung:leave-fandom" fandom.name %}' method="post" hx-target=".fandom{{ fandom.name }}" hx-swap="outerHTML" hx-push-url="false" hx-replace-url="false">
         {% csrf_token %}
         <fieldset>
             <button type="submit" name="leave" value="leave">

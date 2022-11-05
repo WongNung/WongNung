@@ -3,11 +3,19 @@ from __future__ import annotations
 from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import QuerySet
+from django.db.models.functions import Lower
 
 
 class Fandom(models.Model):
     name = models.CharField(max_length=64, primary_key=True)
     members = models.ManyToManyField(User, related_name="members")
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                Lower("name"), name="fandom_name_unique"  # type: ignore
+            )
+        ]
 
     def __str__(self):
         return f"Group's name is {self.name}"
