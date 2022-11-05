@@ -6,7 +6,7 @@ from django.db.models import QuerySet
 
 
 class Fandom(models.Model):
-    name = models.CharField(max_length=64)
+    name = models.CharField(max_length=64, primary_key=True)
     members = models.ManyToManyField(User, related_name="members")
 
     def __str__(self):
