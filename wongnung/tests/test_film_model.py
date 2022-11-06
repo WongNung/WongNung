@@ -1,17 +1,21 @@
 """Tests for Film model"""
 from unittest.mock import patch
+
 from django.test import TestCase
-from ..tests.utils import (
+
+from ..models.film import Film
+from .utils import (
+    MATRIX,
     get_incomplete_response_info,
     get_missing_response_info,
-    get_response_info,
     get_response_credits,
-    MATRIX,
+    get_response_info,
 )
-from ..models import Film
 
 
 class FilmModelTests(TestCase):
+    """This class test behaviours and functionalities of Film model."""
+
     @patch("tmdbsimple.Movies.info", new=get_response_info)
     @patch("tmdbsimple.Movies.credits", new=get_response_credits)
     def setUp(self):
@@ -126,3 +130,5 @@ class FilmModelTests(TestCase):
         """
         If there is no `release_date` key in response, return None.
         """
+        incomplete_film = Film.get_film("0")
+        self.assertIsNone(incomplete_film.year_released)

@@ -1,10 +1,13 @@
 """Tests for Review model"""
 from unittest.mock import patch
-from django.test import TestCase
+
 from django.contrib.auth.models import User
+from django.test import TestCase
 from django.utils import timezone
-from ..tests.utils import get_response_info, get_response_credits, MATRIX
-from ..models import Film, Review
+
+from ..models.film import Film
+from ..models.review import Review
+from .utils import MATRIX, get_response_credits, get_response_info
 
 
 class ReviewModelTests(TestCase):
@@ -15,23 +18,39 @@ class ReviewModelTests(TestCase):
     def setUp(self):
         self.film = Film.get_film(MATRIX)
         self.author1 = User.objects.create(
-            username='Mr. AuthorOne', email='author1@email.com', password='Author1')
+            username="Mr. AuthorOne",
+            email="author1@email.com",
+            password="Author1",
+        )
         self.author2 = User.objects.create(
-            username='Mr. AuthorTwo', email='author2@email.com', password='Author2')
+            username="Mr. AuthorTwo",
+            email="author2@email.com",
+            password="Author2",
+        )
         self.user1 = User.objects.create(
-            username='Mr. User1', email='user1@email.com', password='User1')
+            username="Mr. User1", email="user1@email.com", password="User1"
+        )
         self.user2 = User.objects.create(
-            username='Mr. User2', email='user2@email.com', password='User2')
+            username="Mr. User2", email="user2@email.com", password="User2"
+        )
         self.user3 = User.objects.create(
-            username='Mr. User3', email='user3@email.com', password='User3')
+            username="Mr. User3", email="user3@email.com", password="User3"
+        )
         self.user4 = User.objects.create(
-            username='Mr. User4', email='user4@email.com', password='User4')
+            username="Mr. User4", email="user4@email.com", password="User4"
+        )
         self.review1 = Review.objects.create(
-            film=self.film, pub_date=timezone.now(),
-            content="Nice Movies with great actors.", author=self.author1)
+            film=self.film,
+            pub_date=timezone.now(),
+            content="Nice Movies with great actors.",
+            author=self.author1,
+        )
         self.review2 = Review.objects.create(
-            film=self.film, pub_date=timezone.now(),
-            content="Nice picture.", author=self.author2)
+            film=self.film,
+            pub_date=timezone.now(),
+            content="Nice picture.",
+            author=self.author2,
+        )
 
     def test_add_upvotes(self):
         """Add upvotes functionality work."""
