@@ -11,6 +11,7 @@ from . import feed_manager
 
 @login_required
 def feed(request: HttpRequest):
+    """Renders a feed page."""
     user_id = request.user.pk
     feed_manager.get_feed_session(user_id)
     return render(request, "wongnung/feed.html")
@@ -19,6 +20,7 @@ def feed(request: HttpRequest):
 @htmx_endpoint_with_auth
 @login_required
 def get_feed(request):
+    """Retrieves and renders feed component from feed session."""
     user_id = request.user.pk
     feed: FeedSession = feed_manager.get_feed_session(user_id, renew=False)
     review = feed.pop()

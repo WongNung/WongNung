@@ -8,6 +8,8 @@ from ..views.fandom import get_fandom
 
 
 class TestFandomView(TestCase):
+    """Tests for Fandom view"""
+
     def setUp(self):
         self.client = Client()
         self.fandom = Fandom.objects.create(name="MarvelFans")

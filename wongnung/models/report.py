@@ -8,6 +8,11 @@ from .review import Review
 
 
 class Report(models.Model):
+    """
+    A model that represents a negative report from user to admin
+    for a specific review.
+    """
+
     review = models.ForeignKey(Review, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     report_date = models.DateTimeField(default=timezone.now)

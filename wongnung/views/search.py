@@ -8,6 +8,7 @@ from ..globals import SEARCH_CACHE, htmx_endpoint
 
 @htmx_endpoint
 def search(request: HttpRequest):
+    """Performs search and renders a results div."""
     query = str(request.GET.get("query")).lower()
 
     if len(query) < 3:
@@ -27,6 +28,7 @@ def search(request: HttpRequest):
 
 @htmx_endpoint
 def cancel_search(request: HttpRequest):
+    """Hides the results div."""
     return HttpResponse(construct_results_container())
 
 

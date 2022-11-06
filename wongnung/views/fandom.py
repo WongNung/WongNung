@@ -12,6 +12,7 @@ from ..models.fandom import Fandom
 
 
 def get_fandom(name: str) -> Fandom:
+    """Gets a fandom object from the name, if doesn't exist, raise 404."""
     name = re.sub(r"\s+", "", name.strip(), flags=re.UNICODE)
     try:
         return Fandom.objects.get(name__iexact=name)
@@ -20,6 +21,7 @@ def get_fandom(name: str) -> Fandom:
 
 
 def show_fandom(request, name):
+    """Renders a fandom page according to name given."""
     fandom = get_fandom(name)
     if request.user in fandom.get_all_member():
         user_status = True
@@ -41,6 +43,7 @@ def show_fandom(request, name):
 @htmx_endpoint_with_auth
 @login_required
 def join_fandom(request, name):
+    """User joins a fandom via this endpoint."""
     fandom = get_fandom(name)
     user = request.user
     fandom.add_member(user)
@@ -51,6 +54,7 @@ def join_fandom(request, name):
 @htmx_endpoint_with_auth
 @login_required
 def leave_fandom(request, name):
+    """User leaves a fandom via this endpoint."""
     fandom = get_fandom(name)
     user = request.user
     fandom.remove_member(user)

@@ -8,6 +8,8 @@ from .models.review import Review
 
 
 class FeedSession:
+    """A session for each user which contains a stack of content."""
+
     def __init__(self, user_id: int):
         try:
             self.user_id = User.objects.get(pk=user_id).pk
@@ -39,6 +41,11 @@ class FeedSession:
 
 
 class FeedManager:
+    """
+    A singleton manager class which manage feed sessions.
+    This create new feed sessions, update existing sessions
+    and remove expired sessions.
+    """
 
     feeds = dict()
 
@@ -50,6 +57,12 @@ class FeedManager:
     def get_feed_session(
         self, user_id: int, renew: bool = True
     ) -> FeedSession:
+        """
+        Retreive feed session for user.
+        If feed for the user doesn't exist, create a new one.
+        If feed expires, create a new one.
+        If renew=True, create a new one.
+        """
         try:
             feed_data = self.feeds[user_id]
             if (
@@ -69,6 +82,7 @@ class FeedManager:
         return self.feeds[user_id]["feed"]
 
     def update_feed_session(self, user_id: int, feed: FeedSession):
+        """Updates existing feed session for user."""
         self.feeds[user_id] = {
             "feed": feed,
             "expiry": timezone.now() + datetime.timedelta(minutes=5),

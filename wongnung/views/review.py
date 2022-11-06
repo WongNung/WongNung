@@ -8,6 +8,7 @@ from ..models.review import Review
 
 @htmx_endpoint
 def show_review_component(request: HttpRequest, pk):
+    """Renders a review component based on primary key."""
     review = Review.objects.get(pk=pk)
     user = request.user
     upvote = review.upvotes.filter(id=user.pk).exists()

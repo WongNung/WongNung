@@ -8,6 +8,12 @@ SEARCH_CACHE = caches["searches"]
 
 
 def htmx_endpoint(function, required_auth=False):
+    """
+    A decorator function that requires requests sent to
+    be from HTMX. Any requests that are not from HTMX will be
+    raised with Forbidden (403).
+    """
+
     @wraps(function)
     def wrap(request, *args, **kwargs):
         if request.htmx:

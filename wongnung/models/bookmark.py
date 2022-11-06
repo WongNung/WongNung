@@ -20,7 +20,10 @@ def delete_bookmark(ct: ContentType, owner: User, obj_id: str):
 
 
 class Bookmark(models.Model):
-    """This class hold ContentType."""
+    """
+    A model that represents user's selection of saving site content
+    for later visit.
+    """
 
     owner = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     content_type = models.ForeignKey(

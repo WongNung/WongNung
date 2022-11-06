@@ -12,6 +12,7 @@ from ..models.review import Review
 @htmx_endpoint_with_auth
 @login_required
 def report(request, pk):
+    """An endpoint for saving a new report."""
     review = get_object_or_404(Review, pk=pk)
     if request.method == "POST":
         if "cancel" in request.POST:
@@ -34,6 +35,7 @@ def report(request, pk):
 @htmx_endpoint_with_auth
 @login_required
 def show_report_modal(request, pk, cancel=""):
+    """An endpoint for frontend to show/hide report modal."""
     review = get_object_or_404(Review, pk=pk)
     context = {"review": review}
     if cancel:

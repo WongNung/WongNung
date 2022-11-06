@@ -9,6 +9,7 @@ from ..models.review import Review
 
 @login_required
 def post_review_page(request, filmid):
+    """Renders a review posting page."""
     film = Film.get_film(film_id=filmid)
     context = {"film": film}
     return render(request, "wongnung/post_review_page.html", context)
@@ -16,6 +17,7 @@ def post_review_page(request, filmid):
 
 @htmx_endpoint
 def post_review(request, filmid):
+    """An endpoint for saving a new review."""
     author = request.user
     film = Film.get_film(filmid)
     content = request.POST["content"].strip()

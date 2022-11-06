@@ -7,6 +7,8 @@ from django.db.models.functions import Lower
 
 
 class Fandom(models.Model):
+    """A model as group of users with specific tag"""
+
     name = models.CharField(max_length=64, primary_key=True)
     members = models.ManyToManyField(User, related_name="members")
 

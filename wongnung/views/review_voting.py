@@ -11,21 +11,24 @@ from ..models.review import Review
 @htmx_endpoint_with_auth
 @login_required
 def vote(request, pk):
-    """Since votes should now be HTMX requests, we need to use HTMX"""
+    """An endpoint to set user's vote on a specific review."""
     review = get_object_or_404(Review, pk=pk)
     user = request.user
-    if request.POST.get("up"):
+
+    if request.POST.get("up"):  # When user upvotes
         if review.upvotes.filter(id=user.id).exists():
             review.remove_upvotes(request.user)
         else:
             review.add_upvotes(request.user)
             review.remove_downvotes(request.user)
-    if request.POST.get("down"):
+
+    if request.POST.get("down"):  # When user downvotes
         if review.downvotes.filter(id=user.id).exists():
             review.remove_downvotes(request.user)
         else:
             review.add_downvotes(request.user)
             review.remove_upvotes(request.user)
+
     review.save()
     return HttpResponseRedirect(
         reverse("wongnung:review-component", args=(review.pk,))
