@@ -13,31 +13,44 @@
             last active {{ last_active }} ago.
         </div>
     </div>
-    {% if not user_status %}
-    <!--Join fandom button-->
-    <form action='{% url "wongnung:join-fandom" fandom.name %}' method="post" hx-target=".fandom{{ fandom.name }}" hx-swap="outerHTML" hx-push-url="false" hx-replace-url="false">
-        {% csrf_token %}
-        <fieldset>
-            <button type="submit" name="join" value="join">
-                <div class="bg-post-grey w-24 h-8 text-black font-primary text-lg text-center rounded-xl mr-24 items-center hover:drop-shadow-lg hover:bg-[#d0d0d0]">
-                Join
-                </div>
-            </button>
-        </fieldset>
-    </form>
-    {% else %}
-    <!--Leave fandom button-->
-    <form action='{% url "wongnung:leave-fandom" fandom.name %}' method="post" hx-target=".fandom{{ fandom.name }}" hx-swap="outerHTML" hx-push-url="false" hx-replace-url="false">
-        {% csrf_token %}
-        <fieldset>
-            <button type="submit" name="leave" value="leave">
-                <div class="bg-component-red w-24 h-8 text-white font-primary text-lg text-center rounded-xl mr-24 items-center hover:drop-shadow-lg hover:bg-red-800">
-                Leave
-                </div>
-            </button>
-        </fieldset>
-    </form>
-    {% endif %}
+    <div class="flex flex-row">
+        <label class="pr-5">
+            <input class="sr-only peer" name="watchlist" type="checkbox" value="keep" />
+            <div class="text-post-grey peer-checked:text-tag-yellow hover:drop-shadow-lg">
+                <svg class="h-8 relative"
+                     viewBox="0 0 200 322"
+                     fill="currentColor"
+                     xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M0.128998 0V321.188L99.585 250.657L199.059 321.188V0H0.128998Z"/>
+                </svg>
+            </div>
+        </label>
+        {% if not user_status %}
+        <!--Join fandom button-->
+        <form action='{% url "wongnung:join-fandom" fandom.name %}' method="post" hx-target=".fandom{{ fandom.name }}" hx-swap="outerHTML" hx-push-url="false" hx-replace-url="false">
+            {% csrf_token %}
+            <fieldset>
+                <button type="submit" name="join" value="join">
+                    <div class="bg-post-grey w-24 h-8 text-black font-primary text-lg text-center rounded-xl mr-24 items-center hover:drop-shadow-lg hover:bg-[#d0d0d0]">
+                    Join
+                    </div>
+                </button>
+            </fieldset>
+        </form>
+        {% else %}
+        <!--Leave fandom button-->
+        <form action='{% url "wongnung:leave-fandom" fandom.name %}' method="post" hx-target=".fandom{{ fandom.name }}" hx-swap="outerHTML" hx-push-url="false" hx-replace-url="false">
+            {% csrf_token %}
+            <fieldset>
+                <button type="submit" name="leave" value="leave">
+                    <div class="bg-component-red w-24 h-8 text-white font-primary text-lg text-center rounded-xl mr-24 items-center hover:drop-shadow-lg hover:bg-red-800">
+                    Leave
+                    </div>
+                </button>
+            </fieldset>
+        </form>
+        {% endif %}
+    </div>
 </div>
 <div>
     <div class="flex flex-col min-h-screen space-y-4 bg-feed-grey mx-20 p-10 overflow-y-auto">
