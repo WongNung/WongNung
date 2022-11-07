@@ -8,7 +8,20 @@
                  alt="Film Poster"/>
         </div>
         <div class="flex grow flex-col">
-            <div class="font-primary text-5xl text-neutral-50 drop-shadow-xl">{{ film.title }}</div>
+            <div class="flex flex-row items-center justify-between">
+                <div class="font-primary text-5xl text-neutral-50 drop-shadow-xl">{{ film.title }}</div>
+                <label class="pr-5">
+                    <input class="sr-only peer" name="watchlist" type="checkbox" value="keep"/>
+                    <div class="text-post-grey peer-checked:text-tag-yellow hover:drop-shadow-lg">
+                        <svg class="h-10 relative"
+                             viewBox="0 0 200 322"
+                             fill="currentColor"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M0.128998 0V321.188L99.585 250.657L199.059 321.188V0H0.128998Z"/>
+                        </svg>
+                    </div>
+                </label>
+            </div>
             <div class="flex flex-row text-tag-yellow pt-2.5 items-center">
                 <div class="text-2xl font-body pr-2">{{ film.year_released }} | Genres:</div>
                 {% if film.get_genres %}
