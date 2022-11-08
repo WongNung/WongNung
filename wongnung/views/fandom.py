@@ -40,7 +40,6 @@ def show_fandom(request, name):
     return render(request, "wongnung/fandom_page.html", context)
 
 
-@htmx_endpoint_with_auth
 @login_required
 def join_fandom(request, name):
     """User joins a fandom via this endpoint."""
@@ -51,7 +50,6 @@ def join_fandom(request, name):
     return HttpResponseRedirect(reverse("wongnung:fandom", args=(fandom.pk,)))
 
 
-@htmx_endpoint_with_auth
 @login_required
 def leave_fandom(request, name):
     """User leaves a fandom via this endpoint."""
