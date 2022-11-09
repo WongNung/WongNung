@@ -26,19 +26,26 @@ Welcome to Wongnung
             </div>
             <!--Log in with Google-->
             <div class="self-center pt-5">
-                <button class="h-16 w-80 px-16 m-2 bg-component-red text-white font-primary text-lg text-center rounded-xl hover:drop-shadow-md hover:bg-[#d0d0d0]">
-                    <a href="{% provider_login_url 'google' %}">Login with Google</a>
-                </button>
+                <form action="{% provider_login_url 'google' %}" method="post">
+                    {% csrf_token %}
+                    <fieldset>
+                    <button class="h-16 w-80 px-16 m-2 bg-component-red text-white font-primary text-lg text-center rounded-xl hover:drop-shadow-md hover:bg-[#d0d0d0]">
+                        Login with Google
+                    </button>
+                    </fieldset>
+                </form>
             </div>
             <!--Log in with GitHub-->
             <div class="self-center pt-5">
-                <button class="h-16 w-80 px-16 m-2 bg-component-red text-white font-primary text-lg text-center rounded-xl hover:drop-shadow-md hover:bg-[#d0d0d0]">
-                    <a href="{% provider_login_url 'github' method='js_sdk' %}?next=https://github.com">Login with GitHub</a>
-                </button>
+                <form action="{% provider_login_url 'github' method='js_sdk' %}?next=https://github.com" method="post">
+                    {% csrf_token %}
+                    <fieldset>
+                    <button class="h-16 w-80 px-16 m-2 bg-component-red text-white font-primary text-lg text-center rounded-xl hover:drop-shadow-md hover:bg-[#d0d0d0]">
+                        Login with GitHub
+                    </button>
+                    </fieldset>
+                </form>
             </div>
-            <!--
-            <div><a href="{% provider_login_url 'google' %}">Login With Google</a>
-                <a href="{% provider_login_url 'github' method='js_sdk' %}?next=https://github.com">Login with github</a></div>-->
         </div>
     </div>
 </div>
