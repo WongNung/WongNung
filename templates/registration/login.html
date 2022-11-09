@@ -58,7 +58,7 @@ Welcome to Wongnung
             </div>
             <!--Log in with Discord-->
             <div class="self-center pt-5">
-                <!--<form action="" method="post">-->
+                <form action="{% provider_login_url 'discord' %}" method="post">
                     {% csrf_token %}
                     <button class="flex flex-row h-16 w-70 m-2 mr-6 px-7 bg-[#7289da] text-white
                     font-primary text-lg text-center rounded-xl hover:drop-shadow-md hover:bg-[#d0d0d0]">
@@ -70,7 +70,7 @@ Welcome to Wongnung
                             Login with Discord
                         </div>
                     </button>
-                <!--</form>-->
+                </form>
             </div>
         </div>
     </div>
