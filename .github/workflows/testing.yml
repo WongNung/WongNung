@@ -45,6 +45,10 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
           pip install coverage
+      - name: Setup tailwind
+        working-directory: ./theme/static_src
+        run: |
+          npm install
       - name: Setup migrations and collect static files
         run: |
           python ./manage.py migrate
