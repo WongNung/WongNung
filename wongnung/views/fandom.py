@@ -30,13 +30,12 @@ def show_fandom(request, name):
     else:
         user_status = False
     try:
-        user = request.user
         bm = Bookmark.objects.filter(
             content_type=ContentType.objects.get(model="fandom"),
-            owner=user,
+            owner=request.user,
             object_id=name,
         ).exists()
-    except User.DoesNotExist:
+    except (User.DoesNotExist, TypeError):
         bm = False
     reviews = Review.objects.filter(
         content__icontains=f"#{fandom.name}"
