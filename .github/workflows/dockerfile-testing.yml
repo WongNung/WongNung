@@ -1,0 +1,22 @@
+name: Dockerfile testing
+
+on:
+  push:
+    paths: ["Dockerfile", "cst-config.yml"]
+
+permissions:
+  contents: read
+
+jobs:
+  container-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Checkout ci-utils
+        with:
+          repository: WongNung/ci-utils
+          path: "/ci"
+      - name: Run container-structure-test
+        run: |
+          cp /ci/test-dockerfile .
+          ./test-dockerfile wongnung:testdrive

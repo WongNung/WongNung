@@ -1,0 +1,6 @@
+fileExistenceTests:
+  - name: "Application"
+    path: "/app"
+    shouldExist: true
+metadataTest:
+  workdir: "/app"

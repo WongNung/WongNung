@@ -23,4 +23,4 @@ staticfiles/
 **/.DS_Store
 
 *.md
-
+*.yml
