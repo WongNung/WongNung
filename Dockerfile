@@ -5,6 +5,7 @@ FROM python:3.10-slim
 ENV DEBIAN_FRONTEND=noninteractive
 ENV NPM_BIN_PATH=/usr/bin/npm
 
+# Set working directory to /app
 WORKDIR /app
 
 # Install packages
