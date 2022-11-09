@@ -13,6 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Checkout ci-utils
+        uses: actions/checkout@v3
         with:
           repository: WongNung/ci-utils
           path: "/ci"
