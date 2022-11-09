@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.http import HttpRequest
 from django.shortcuts import render
@@ -16,8 +17,11 @@ def show_review_component(request: HttpRequest, pk):
     downvote = review.downvotes.filter(id=user.pk).exists()
     try:
         user = request.user
-        bm = Bookmark.objects.filter(content_type=ContentType.objects.get(
-            model="fandom"), owner=user, object_id=pk).exists()
+        bm = Bookmark.objects.filter(
+            content_type=ContentType.objects.get(model="fandom"),
+            owner=user,
+            object_id=pk,
+        ).exists()
     except User.DoesNotExist:
         bm = False
     context = {
@@ -27,7 +31,7 @@ def show_review_component(request: HttpRequest, pk):
         "votes": review.get_votes(),
         "upvote": upvote,
         "downvote": downvote,
-        "bookmark_status": bm
+        "bookmark_status": bm,
     }
     if request.GET.get("feed"):
         context["feed"] = "true"

@@ -1,6 +1,7 @@
 import re
 
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import render
@@ -30,8 +31,11 @@ def show_fandom(request, name):
         user_status = False
     try:
         user = request.user
-        bm = Bookmark.objects.filter(content_type=ContentType.objects.get(
-            model="fandom"), owner=user, object_id=name).exists()
+        bm = Bookmark.objects.filter(
+            content_type=ContentType.objects.get(model="fandom"),
+            owner=user,
+            object_id=name,
+        ).exists()
     except User.DoesNotExist:
         bm = False
     reviews = Review.objects.filter(
@@ -43,7 +47,7 @@ def show_fandom(request, name):
         "last_active": "1 hr",
         "user_status": user_status,
         "reviews": reviews,
-        "bookmark_status": bm
+        "bookmark_status": bm,
     }
     return render(request, "wongnung/fandom_page.html", context)
 

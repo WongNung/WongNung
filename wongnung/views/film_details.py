@@ -19,8 +19,11 @@ def show_film_component(request, filmid):
     """Renders a film component based on filmid."""
     try:
         user = request.user
-        bm = Bookmark.objects.filter(content_type=ContentType.objects.get(
-            model="film"), owner=user, object_id=str(filmid)).exists()
+        bm = Bookmark.objects.filter(
+            content_type=ContentType.objects.get(model="film"),
+            owner=user,
+            object_id=str(filmid),
+        ).exists()
     except User.DoesNotExist:
         bm = False
     film = Film.get_film(film_id=filmid)

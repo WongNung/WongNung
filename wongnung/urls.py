@@ -22,7 +22,7 @@ urlpatterns = [
     path("post_review/<str:filmid>", post_review, name="post-review"),
     path("fandom/<name>", show_fandom, name="fandom"),
     path("add_to_bookmark", add_bookmark_view, name="add-bookmark"),
-    path("delete_bookmark", delete_bookmark_view, name="delete-bookmark")
+    path("delete_bookmark", delete_bookmark_view, name="delete-bookmark"),
 ]
 
 # Use this array to store paths that should be called using htmx
