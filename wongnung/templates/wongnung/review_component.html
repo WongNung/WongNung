@@ -15,18 +15,26 @@
             <div class="font-body text-black text-xl px-3">{{ review.pub_date|date:"🗓️ N d, Y 🕑 g:i a" }}</div>
         </div>
         <div class="space-x-3 flex flex-row">
-            <!--Add to watch list button-->
-            <label>
-                <input class="sr-only peer" name="watchlist" type="checkbox" value="keep" />
-                <div class="text-post-grey peer-checked:text-component-red hover:drop-shadow-lg">
-                    <svg class="h-8 relative"
-                         viewBox="0 0 200 322"
-                         fill="currentColor"
-                         xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" d="M0.128998 0V321.188L99.585 250.657L199.059 321.188V0H0.128998Z"/>
-                    </svg>
-                </div>
-            </label>
+            <!--Bookmark button-->
+            {% if bookmark_status %}
+            <form action='{% url "wongnung:delete-bookmark" %}' method="post">
+            {% else %}
+            <form action='{% url "wongnung:add-bookmark" %}' method="post">
+            {% endif %}
+                <input type="hidden" name="url" value="wongnung:review-component">
+                <input type="hidden" name="type" value="review">
+                {% csrf_token %}
+                <button type="submit" name="bookmark" value="{{ review.id }}" >
+                    <div class="{% if bookmark_status %} text-tag-yellow {% else %} text-post-grey {% endif %} hover:drop-shadow-lg">
+                        <svg class="h-10 relative"
+                            viewBox="0 0 200 322"
+                            fill="currentColor"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M0.128998 0V321.188L99.585 250.657L199.059 321.188V0H0.128998Z"/>
+                        </svg>
+                    </div>
+                </button>
+            </form>
             <form action="{% url 'wongnung:vote' review.id %}"
                   method="post"
                   hx-boost="true"
