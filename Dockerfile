@@ -1,5 +1,6 @@
 # syntax=docker/dockerfile:1
 
+# Uses Python 3.10 slim for smaller image
 FROM python:3.10-slim
 ENV DEBIAN_FRONTEND=noninteractive
 ENV NPM_BIN_PATH=/usr/bin/npm

@@ -45,9 +45,10 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
           pip install coverage
-      - name: Make Django migrations
+      - name: Setup migrations and collect static files
         run: |
           python ./manage.py migrate
+          python ./manage.py collectstatic --noinput
       - name: Test and generate coverage report
         run: |
           coverage run ./manage.py test wongnung
