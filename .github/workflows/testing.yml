@@ -48,6 +48,7 @@ jobs:
       - name: Setup migrations and collect static files
         run: |
           python ./manage.py migrate
+          python ./manage.py tailwind build
           python ./manage.py collectstatic --noinput
       - name: Test and generate coverage report
         run: |
