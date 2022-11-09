@@ -1,3 +1,14 @@
-{% extends 'base.html' %}
-{% block title %}{% block t %}{% endblock %}{% endblock %}
-{% block content %}{% include 'wongnung/wongnung_navbar.html' %}{% block c %}{% endblock %}{% endblock %}
+{% extends "base.html" %}
+{% block title %}
+    {% block t %}{% endblock t %}
+{% endblock title %}
+{% block content %}
+    {% include "wongnung/wongnung_navbar.html" %}
+    <div class="w-full h-full"
+         hx-get="{% url 'wongnung:cancel-search' %}"
+         hx-trigger="click"
+         hx-swap="outerHTML"
+         hx-target="#search-results">
+        {% block c %}{% endblock c %}
+    </div>
+{% endblock content %}

@@ -4,4 +4,5 @@ django-tailwind>=3.4.0
 django-htmx>=1.12.2
 django-types~=0.16.0
 tmdbsimple
+pytz
 whitenoise>=6.2.0

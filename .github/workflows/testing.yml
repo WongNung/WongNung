@@ -1,6 +1,6 @@
 name: Unit testing
 
-on: [push, pull_request]
+on: [push]
 
 permissions:
   contents: read
@@ -21,6 +21,7 @@ jobs:
         image: postgres
         env:
           POSTGRES_PASSWORD: password
+          POSTGRES_INITDB_ARGS: --no-sync
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
@@ -51,3 +52,6 @@ jobs:
         run: |
           coverage run ./manage.py test wongnung
           coverage report --sort=miss -m
+          coverage xml -q
+      - name: Upload coverage report to Codecov
+        uses: codecov/codecov-action@v3

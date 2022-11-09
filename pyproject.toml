@@ -5,3 +5,11 @@ extend-exclude = '''
   migrations/
 )
 '''
+
+[tool.isort]
+profile = "black"
+extend_skip_glob = ["**/migrations/*"]
+
+[tool.djlint]
+ignore = "H006"
+profile = "django"

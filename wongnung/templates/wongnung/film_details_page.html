@@ -1,12 +1,13 @@
-{% extends 'wongnung/wongnung_page.html' %}
-{% block t %}{% endblock %}
+{% extends "wongnung/wongnung_page.html" %}
+{% block t %}{% endblock t %}
 {% block c %}
-<div>
-    <div class="flex flex-auto h-screen bg-feed-grey justify-center items-center"
-        hx-get="/show_film_component/{{ filmid }}" hx-target="this" hx-swap="outerHTML" hx-trigger="load once">
+    <div class="relative flex flex-auto justify-center items-center"
+         hx-get="{% url 'wongnung:film-component' filmid %}"
+         hx-target="this"
+         hx-swap="outerHTML"
+         hx-trigger="load once">
         <div class="p-4 flex gap-x-3 animate-pulse">
             <span class="text-white text-5xl">Please wait...</span>
         </div>
     </div>
-</div>
-{% endblock %}
+{% endblock c %}
