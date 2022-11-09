@@ -2,7 +2,7 @@
 name: Code Defect
 about: Found a defect while code reviewing? Use this template.
 title: "[DEFECT CODE] <title>"
-tags: Defect
+labels: Defect
 assignees: ''
 ---
 
