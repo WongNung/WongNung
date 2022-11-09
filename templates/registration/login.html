@@ -21,30 +21,56 @@ Welcome to Wongnung
     <div class="flex items-center justify-center w-full pt-10">
         <!--Sign in box-->
         <div class="box-content w-[450px] h-[450px] bg-regis-grey rounded-2xl flex flex-col pl-5">
-            <div class="font-primary text-3xl text-black pt-5 drop-shadow-lg self-center">
+            <div class="font-primary text-4xl text-black mt-10 mb-2 drop-shadow-lg self-center">
                 SIGN IN
             </div>
             <!--Log in with Google-->
             <div class="self-center pt-5">
                 <form action="{% provider_login_url 'google' %}" method="post">
                     {% csrf_token %}
-                    <fieldset>
-                    <button class="h-16 w-80 px-16 m-2 bg-component-red text-white font-primary text-lg text-center rounded-xl hover:drop-shadow-md hover:bg-[#d0d0d0]">
-                        Login with Google
+                    <button class="flex flex-row h-16 w-70 m-2 mr-6 px-7 bg-component-red text-white
+                    font-primary text-lg text-center rounded-xl hover:drop-shadow-md hover:bg-[#d0d0d0]">
+                        <div>
+                            <img class="w-10 h-10 mr-4 mt-3 rounded-full border-[6px] border-white bg-white "
+                             src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png"/>
+                        </div>
+                        <div class="mt-4">
+                            Login with Google
+                        </div>
                     </button>
-                    </fieldset>
                 </form>
             </div>
             <!--Log in with GitHub-->
             <div class="self-center pt-5">
                 <form action="{% provider_login_url 'github' method='js_sdk' %}?next=https://github.com" method="post">
                     {% csrf_token %}
-                    <fieldset>
-                    <button class="h-16 w-80 px-16 m-2 bg-component-red text-white font-primary text-lg text-center rounded-xl hover:drop-shadow-md hover:bg-[#d0d0d0]">
-                        Login with GitHub
+                    <button class="flex flex-row h-16 w-70 m-2 mr-6 px-7 bg-black text-white
+                    font-primary text-lg text-center rounded-xl hover:drop-shadow-md hover:bg-[#d0d0d0]">
+                        <div>
+                            <img class="w-10 h-10 mr-4 mt-3 rounded-full border-[6px] border-white bg-white "
+                             src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg"/>
+                        </div>
+                        <div class="mt-4">
+                            Login with GitHub
+                        </div>
                     </button>
-                    </fieldset>
                 </form>
+            </div>
+            <!--Log in with Discord-->
+            <div class="self-center pt-5">
+                <!--<form action="" method="post">-->
+                    {% csrf_token %}
+                    <button class="flex flex-row h-16 w-70 m-2 mr-6 px-7 bg-[#7289da] text-white
+                    font-primary text-lg text-center rounded-xl hover:drop-shadow-md hover:bg-[#d0d0d0]">
+                        <div>
+                            <img class="w-10 h-10 mr-4 mt-3 rounded-full border-[6px] border-white bg-white "
+                             src="https://www.svgrepo.com/show/353655/discord-icon.svg"/>
+                        </div>
+                        <div class="mt-4">
+                            Login with Discord
+                        </div>
+                    </button>
+                <!--</form>-->
             </div>
         </div>
     </div>
