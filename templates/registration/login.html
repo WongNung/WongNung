@@ -20,36 +20,22 @@ Welcome to Wongnung
     </div>
     <div class="flex items-center justify-center w-full pt-10">
         <!--Sign in box-->
-        <div class="w-[450px] h-[450px] bg-regis-grey rounded-2xl flex flex-col pl-5">
+        <div class="box-content w-[450px] h-[450px] bg-regis-grey rounded-2xl flex flex-col pl-5">
             <div class="font-primary text-3xl text-black pt-5 drop-shadow-lg self-center">
                 SIGN IN
             </div>
             <!--Log in with Google-->
-            <div class="self-center pt-10">
-                <form action="{% provider_login_url 'google' %}" method="post">
-                {% csrf_token %}
-                <fieldset>
-                    <button class="w-[220px]">
-                        <div class="bg-component-red text-white font-primary text-lg text-center rounded-xl hover:drop-shadow-md hover:bg-[#d0d0d0]">
-                            Login with Google
-                        </div>
-                    </button>
-                </fieldset>
-                </form>
+            <div class="self-center pt-5">
+                <button class="h-16 w-80 px-16 m-2 bg-component-red text-white font-primary text-lg text-center rounded-xl hover:drop-shadow-md hover:bg-[#d0d0d0]">
+                    <a href="{% provider_login_url 'google' %}">Login with Google</a>
+                </button>
             </div>
             <!--Log in with GitHub-->
             <div class="self-center pt-5">
-                <form action="{% provider_login_url 'github' method='js_sdk' %}?next=https://github.com" method="post">
-                {% csrf_token %}
-                    <fieldset>
-                        <button class="w-52">
-                            <div class="bg-component-red text-white font-primary text-lg text-center rounded-xl hover:drop-shadow-md hover:bg-[#d0d0d0]">
-                                Login with Github
-                            </div>
-                        </button>
-                    </fieldset>
-
-                </form>
+                <button class="h-16 w-80 px-16 m-2 bg-component-red text-white font-primary text-lg text-center rounded-xl hover:drop-shadow-md hover:bg-[#d0d0d0]">
+                    <a href="{% provider_login_url 'github' method='js_sdk' %}?next=https://github.com">Login with GitHub</a>
+                </button>
+            </div>
             <!--
             <div><a href="{% provider_login_url 'google' %}">Login With Google</a>
                 <a href="{% provider_login_url 'github' method='js_sdk' %}?next=https://github.com">Login with github</a></div>-->
