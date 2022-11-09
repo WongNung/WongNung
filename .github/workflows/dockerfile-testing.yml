@@ -24,6 +24,9 @@ jobs:
           repository: WongNung/ci-utils
           path: "./ci-utils"
       - name: Run container-structure-test
+        env:
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          TMDB_API_KEY: ${{ secrets.TMDB_API_KEY }}
         run: |
           cp ./ci-utils/test-dockerfile .
           ./test-dockerfile wongnung:testdrive
