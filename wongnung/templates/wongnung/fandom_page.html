@@ -15,13 +15,9 @@
     </div>
     <div class="flex flex-row items-center">
         <!--Bookmark button-->
-        {% if bookmark_status %}
-        <form action='{% url "wongnung:delete-bookmark" %}' method="post">
-        {% else %}
-        <form action='{% url "wongnung:add-bookmark" %}' method="post">
-        {% endif %}
-            <input type="hidden" name="url" value="wongnung:fandom">
-            <input type="hidden" name="type" value="fandom">
+        <form {% if bookmark_status %} action='{% url "wongnung:delete-bookmark" %}' {% else %} action='{% url "wongnung:add-bookmark" %}' {% endif %} method="post">            
+            <input type="hidden" name="url" value="wongnung:fandom" />
+            <input type="hidden" name="type" value="fandom" />
             {% csrf_token %}
             <button type="submit" name="bookmark" value="{{ fandom.name }}">
                 <div class="{% if bookmark_status %} text-tag-yellow {% else %} text-post-grey {% endif %} hover:drop-shadow-lg mr-3">

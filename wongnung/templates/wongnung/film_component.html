@@ -11,13 +11,9 @@
             <div class="flex flex-row items-center justify-between">
                 <div class="font-primary text-5xl text-neutral-50 drop-shadow-xl">{{ film.title }}</div>
                 <!--Bookmark button-->
-                {% if bookmark_status %}
-                <form action='{% url "wongnung:delete-bookmark" %}' method="post">
-                {% else %}
-                <form action='{% url "wongnung:add-bookmark" %}' method="post">
-                {% endif %}
-                    <input type="hidden" name="url" value="wongnung:film-details">
-                    <input type="hidden" name="type" value="film">
+                <form {% if bookmark_status %} action='{% url "wongnung:delete-bookmark" %}' {% else %} action='{% url "wongnung:add-bookmark" %}' {% endif %} method="post">            
+                    <input type="hidden" name="url" value="wongnung:film-details" />
+                    <input type="hidden" name="type" value="film" />
                     {% csrf_token %}
                     <button type="submit" name="bookmark" value="{{ film.filmId }}" >
                         <div class="{% if bookmark_status %} text-tag-yellow {% else %} text-post-grey {% endif %} hover:drop-shadow-lg">
