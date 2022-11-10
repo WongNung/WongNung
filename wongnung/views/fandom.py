@@ -21,6 +21,10 @@ def get_fandom(name: str) -> Fandom:
     except Fandom.DoesNotExist:
         raise Http404()
 
+def fandom_page(request, name):
+    fandom = get_fandom(name)
+    context = { "fandom": fandom }
+    return render(request, "wongnung/fandom_page.html", context)
 
 def show_fandom(request, name):
     """Renders a fandom page according to name given."""
@@ -48,7 +52,7 @@ def show_fandom(request, name):
         "reviews": reviews,
         "bookmark_status": bm,
     }
-    return render(request, "wongnung/fandom_page.html", context)
+    return render(request, "wongnung/fandom_component.html", context)
 
 
 @login_required

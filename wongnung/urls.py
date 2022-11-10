@@ -1,8 +1,7 @@
 from django.urls import path
 
-from .views.fandom import join_fandom, leave_fandom, show_fandom
-
 # fmt: off
+from .views.fandom import join_fandom, leave_fandom, show_fandom, fandom_page
 from .views.feed import feed, get_feed
 from .views.film_details import film_details_page, show_film_component
 from .views.review import show_review_component
@@ -20,9 +19,7 @@ urlpatterns = [
     path("film/<str:filmid>", film_details_page, name="film-details"),
     path("new_review/<str:filmid>", post_review_page, name="new-review"),
     path("post_review/<str:filmid>", post_review, name="post-review"),
-    path("fandom/<name>", show_fandom, name="fandom"),
-    path("add_to_bookmark", add_bookmark_view, name="add-bookmark"),
-    path("delete_bookmark", delete_bookmark_view, name="delete-bookmark"),
+    path("fandom/<name>", fandom_page, name="fandom"),
 ]
 
 # Use this array to store paths that should be called using htmx
@@ -50,8 +47,11 @@ htmx_paths = [
     path("search", search, name="search"),
     path("cancel_search", cancel_search, name="cancel-search"),
     path("get_feed", get_feed, name="get-feed"),
+    path("fandom/<name>/show", show_fandom, name="show-fandom"),
     path("fandom/<name>/join", join_fandom, name="join-fandom"),
     path("fandom/<name>/leave", leave_fandom, name="leave-fandom"),
+    path("add_to_bookmark", add_bookmark_view, name="add-bookmark"),
+    path("delete_bookmark", delete_bookmark_view, name="delete-bookmark"),
 ]
 
 urlpatterns += htmx_paths

@@ -18,7 +18,7 @@ def show_review_component(request: HttpRequest, pk):
     try:
         user = request.user
         bm = Bookmark.objects.filter(
-            content_type=ContentType.objects.get(model="fandom"),
+            content_type=ContentType.objects.get(model="review"),
             owner=user,
             object_id=pk,
         ).exists()

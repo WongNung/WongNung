@@ -10,6 +10,7 @@ from wongnung.models.bookmark import (
 )
 from wongnung.models.film import Film
 from wongnung.models.fandom import Fandom
+from wongnung.models.review import Review
 
 
 @login_required
@@ -25,6 +26,10 @@ def add_bookmark_view(request):
     elif ct_type == "fandom":
         Bookmark.objects.create(
             owner=user, content_object=Fandom.objects.get(name=bookmark_id)
+        )
+    elif ct_type == "review":
+        Bookmark.objects.create(
+            owner=user, content_object=Review.objects.get(pk=bookmark_id)
         )
     return HttpResponseRedirect(reverse(url, args=(bookmark_id,)))
 

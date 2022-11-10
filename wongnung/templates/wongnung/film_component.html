@@ -1,5 +1,5 @@
 <title>{{ film.title }}</title>
-<div class="flex flex-auto bg-feed-grey h-screen overflow-hidden">
+<div class="flex flex-auto bg-feed-grey h-screen overflow-hidden film{{ film.filmId }}">
     <div class="p-4 flex flex-row gap-x-3 grow items-stretch">
         <div class="flex flex-none h-full">
             <!-- Image size: w600, h900 -->
@@ -9,10 +9,12 @@
         </div>
         <div class="flex grow flex-col">
             <div class="flex flex-row items-center justify-between">
-                <div class="font-primary text-5xl text-neutral-50 drop-shadow-xl">{{ film.title }}</div>
+                <div class="font-primary text-5xl text-neutral-50 drop-shadow-xl">
+                    {{ film.title }}
+                </div>
                 <!--Bookmark button-->
-                <form {% if bookmark_status %} action='{% url "wongnung:delete-bookmark" %}' {% else %} action='{% url "wongnung:add-bookmark" %}' {% endif %} method="post">            
-                    <input type="hidden" name="url" value="wongnung:film-details" />
+                <form {% if bookmark_status %} action='{% url "wongnung:delete-bookmark" %}' {% else %} action='{% url "wongnung:add-bookmark" %}' {% endif %} method="post" hx-boost="true" hx-target=".film{{ film.filmId }}" hx-swap="outerHTML" hx-push-url="false" hx-replace-url="false">            
+                    <input type="hidden" name="url" value="wongnung:film-component" />
                     <input type="hidden" name="type" value="film" />
                     {% csrf_token %}
                     <button type="submit" name="bookmark" value="{{ film.filmId }}" >
