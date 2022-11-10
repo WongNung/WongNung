@@ -5,3 +5,4 @@ django-htmx>=1.12.2
 django-types~=0.16.0
 pytz
 tmdbsimple
+django-allauth
