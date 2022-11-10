@@ -29,6 +29,4 @@ jobs:
           TMDB_API_KEY: ${{ secrets.TMDB_API_KEY }}
         run: |
           cp ./ci-utils/test-dockerfile .
-          echo "SECRET_KEY=$SECRET_KEY" >> .env
-          echo "TMDB_API_KEY=$TMDB_API_KEY" >> .env
-          ./test-dockerfile wongnung:testdrive
+          ./test-dockerfile wongnung:testdrive SECRET_KEY TMDB_API_KEY
