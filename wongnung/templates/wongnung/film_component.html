@@ -1,5 +1,5 @@
 <title>{{ film.title }}</title>
-<div class="flex flex-auto bg-feed-grey h-screen overflow-hidden">
+<div class="flex flex-auto bg-feed-grey h-screen overflow-hidden film{{ film.filmId }}">
     <div class="p-4 flex flex-row gap-x-3 grow items-stretch">
         <div class="flex flex-none h-full">
             <!-- Image size: w600, h900 -->
@@ -8,7 +8,27 @@
                  alt="Film Poster"/>
         </div>
         <div class="flex grow flex-col">
-            <div class="font-primary text-5xl text-neutral-50 drop-shadow-xl">{{ film.title }}</div>
+            <div class="flex flex-row items-center justify-between">
+                <div class="font-primary text-5xl text-neutral-50 drop-shadow-xl">
+                    {{ film.title }}
+                </div>
+                <!--Bookmark button-->
+                <form {% if bookmark_status %} action='{% url "wongnung:delete-bookmark" %}' {% else %} action='{% url "wongnung:add-bookmark" %}' {% endif %} method="post" hx-boost="true" hx-target=".film{{ film.filmId }}" hx-swap="outerHTML" hx-push-url="false" hx-replace-url="false">            
+                    <input type="hidden" name="url" value="wongnung:film-component" />
+                    <input type="hidden" name="type" value="film" />
+                    {% csrf_token %}
+                    <button type="submit" name="bookmark" value="{{ film.filmId }}" >
+                        <div class="{% if bookmark_status %} text-tag-yellow {% else %} text-post-grey {% endif %} hover:drop-shadow-lg">
+                            <svg class="h-10 relative"
+                                viewBox="0 0 200 322"
+                                fill="currentColor"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M0.128998 0V321.188L99.585 250.657L199.059 321.188V0H0.128998Z"/>
+                            </svg>
+                        </div>
+                    </button>
+                </form>
+            </div>
             <div class="flex flex-row text-tag-yellow pt-2.5 items-center">
                 <div class="text-2xl font-body pr-2">{{ film.year_released }} | Genres:</div>
                 {% if film.get_genres %}

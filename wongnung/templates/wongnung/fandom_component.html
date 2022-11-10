@@ -1,0 +1,71 @@
+<span class="fandom{{ fandom.name }}">
+<div class="min-w-full h-16 bg-[#858585] flex flex-row items-center drop-shadow-xl justify-between">
+    <div class="flex flex-row items-center">
+        <div class="pl-24 font-primary text-3xl font-bold text-tag-yellow ">
+            #{{ fandom.name }}
+        </div>
+        <div class="px-10 font-body text-xl text-white">
+            {{ members_num }} members
+        </div>
+        <div class="font-body text-xl text-white">
+            last active {{ last_active }} ago.
+        </div>
+    </div>
+    <div class="flex flex-row items-center">
+        <!--Bookmark button-->
+        <form {% if bookmark_status %} action='{% url "wongnung:delete-bookmark" %}' {% else %} action='{% url "wongnung:add-bookmark" %}' {% endif %} method="post" hx-boost="true" hx-target=".fandom{{ fandom.name }}" hx-swap="outerHTML" hx-push-url="false" hx-replace-url="false">            
+            <input type="hidden" name="url" value="wongnung:show-fandom" />
+            <input type="hidden" name="type" value="fandom" />
+            {% csrf_token %}
+            <button type="submit" name="bookmark" value="{{ fandom.name }}">
+                <div class="{% if bookmark_status %} text-tag-yellow {% else %} text-post-grey {% endif %} hover:drop-shadow-lg mr-3">
+                    <svg class="h-9 relative"
+                        viewBox="0 0 200 322"
+                        fill="currentColor"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M0.128998 0V321.188L99.585 250.657L199.059 321.188V0H0.128998Z"/>
+                    </svg>
+                </div>
+            </button>
+        </form>
+        {% if not user_status %}
+        <!--Join fandom button-->
+        <form action='{% url "wongnung:join-fandom" fandom.name %}' method="post" hx-target=".fandom{{ fandom.name }}" hx-swap="outerHTML" hx-push-url="false" hx-replace-url="false">
+            {% csrf_token %}
+            <fieldset>
+                <button type="submit" name="join" value="join">
+                    <div class="bg-post-grey w-24 h-8 text-black font-primary text-lg text-center rounded-xl mr-24 items-center hover:drop-shadow-lg hover:bg-[#d0d0d0]">
+                    Join
+                    </div>
+                </button>
+            </fieldset>
+        </form>
+        {% else %}
+        <!--Leave fandom button-->
+        <form action='{% url "wongnung:leave-fandom" fandom.name %}' method="post" hx-target=".fandom{{ fandom.name }}" hx-swap="outerHTML" hx-push-url="false" hx-replace-url="false">
+            {% csrf_token %}
+            <fieldset>
+                <button type="submit" name="leave" value="leave">
+                    <div class="bg-component-red w-24 h-8 text-white font-primary text-lg text-center rounded-xl mr-24 items-center hover:drop-shadow-lg hover:bg-red-800">
+                    Leave
+                    </div>
+                </button>
+            </fieldset>
+        </form>
+        {% endif %}
+    </div>
+</div>
+<div>
+    <div class="flex flex-col min-h-screen space-y-4 bg-feed-grey mx-20 p-10 overflow-y-auto">
+        {% if reviews %}
+            {% for review in reviews %}
+                <div hx-get="{% url 'wongnung:review-component' review.pk %}"
+                    hx-target="this"
+                    hx-swap="outerHTML"
+                    hx-trigger="intersect once">
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+</div>
+</span>
