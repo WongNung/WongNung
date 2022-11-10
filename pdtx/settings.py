@@ -206,6 +206,11 @@ SOCIALACCOUNT_PROVIDERS = {
         }
     },
     'discord': {
-        'SCOPE': ['email']
+        'SCOPE': ['email',
+                  'identify',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
     }
 }

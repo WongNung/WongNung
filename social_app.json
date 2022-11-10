@@ -1,0 +1,44 @@
+[
+    {
+        "model": "socialaccount.socialapp",
+        "pk": 1,
+        "fields": {
+            "provider": "google",
+            "name": "Google_provider",
+            "client_id": "94262111010-ci1bkmhcgi873j3129m9nfkndba95elf.apps.googleusercontent.com",
+            "secret": "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",
+            "key": "",
+            "sites": [
+                3
+            ]
+        }
+    },
+    {
+        "model": "socialaccount.socialapp",
+        "pk": 2,
+        "fields": {
+            "provider": "github",
+            "name": "Github_provider",
+            "client_id": "5710b71271207f4c7a93",
+            "secret": "67c88a215eb7e2ebf89a3105189fccbacc6031b3",
+            "key": "",
+            "sites": [
+                3
+            ]
+        }
+    },
+    {
+        "model": "socialaccount.socialapp",
+        "pk": 5,
+        "fields": {
+            "provider": "discord",
+            "name": "Discord_provider",
+            "client_id": "1039466809193136138",
+            "secret": "nHLTOIHgSuYwSByeBtYeemJB3nsBFQTe",
+            "key": "",
+            "sites": [
+                3
+            ]
+        }
+    }
+]
