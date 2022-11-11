@@ -31,10 +31,7 @@ def fandom_page(request, name):
 def show_fandom(request, name):
     """Renders a fandom page according to name given."""
     fandom = get_fandom(name)
-    if request.user in fandom.get_all_member():
-        user_status = True
-    else:
-        user_status = False
+    user_status = request.user in fandom.get_all_member()
     try:
         bm = Bookmark.objects.filter(
             content_type=ContentType.objects.get(model="fandom"),

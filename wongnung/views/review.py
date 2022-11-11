@@ -22,7 +22,7 @@ def show_review_component(request: HttpRequest, pk):
             owner=user,
             object_id=pk,
         ).exists()
-    except User.DoesNotExist:
+    except (User.DoesNotExist, TypeError):
         bm = False
     context = {
         "review": review,
