@@ -17,14 +17,13 @@ def film_details_page(request, filmid):
 @htmx_endpoint
 def show_film_component(request, filmid):
     """Renders a film component based on filmid."""
-    try:
-        user = request.user
+    if request.user.is_authenticated:
         bm = Bookmark.objects.filter(
             content_type=ContentType.objects.get(model="film"),
-            owner=user,
+            owner=request.user,
             object_id=str(filmid),
         ).exists()
-    except User.DoesNotExist:
+    else:
         bm = False
     film = Film.get_film(film_id=filmid)
     reviews = Review.objects.filter(film=film).order_by("-pub_date")
