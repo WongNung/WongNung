@@ -29,6 +29,7 @@ def report(request, pk):
         report.save()
     return show_report_modal(request, pk=pk, cancel="true")
 
+
 @htmx_endpoint_with_auth
 @login_required
 def show_report_modal(request, pk, cancel=""):
