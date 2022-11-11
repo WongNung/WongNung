@@ -4,6 +4,9 @@ from django.db import models
 
 
 class UserProfile(models.Model):
+    """
+    A model that represents profile settings for each user
+    """
     user = models.OneToOneField(
         User, on_delete=models.CASCADE, primary_key=True
     )
@@ -12,3 +15,13 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return f"User Profile of {self.user.username}"
+
+    @property
+    def color(self) -> str:
+        return self._color
+
+    @color.setter
+    def color(self, color: str):
+        self._color = color
+
+
