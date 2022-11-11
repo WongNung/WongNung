@@ -15,7 +15,6 @@ def post_review_page(request, filmid):
     return render(request, "wongnung/post_review_page.html", context)
 
 
-@htmx_endpoint
 def post_review(request, filmid):
     """An endpoint for saving a new review."""
     author = request.user
