@@ -13,6 +13,7 @@ from wongnung.models.film import Film
 from wongnung.models.fandom import Fandom
 from wongnung.models.review import Review
 
+
 @htmx_endpoint_with_auth
 @login_required
 def add_bookmark_view(request):
@@ -33,6 +34,7 @@ def add_bookmark_view(request):
             owner=user, content_object=Review.objects.get(pk=bookmark_id)
         )
     return HttpResponseRedirect(reverse(url, args=(bookmark_id,)))
+
 
 @htmx_endpoint_with_auth
 @login_required
