@@ -1,4 +1,4 @@
-<span class="bg-slate-100 rounded-xl py-6 px-2 review{{ review.id }}">
+<span class="bg-slate-100 rounded-xl py-6 px-2 review{{ review.id }} hover:drop-shadow-lg">
     <div class="flex flex-row items-center justify-between mx-5">
         <!--User profile box-->
         <div class="flex flex-row items-center">
@@ -14,7 +14,7 @@
             </div>
             <div class="font-body text-black text-xl px-3">{{ review.pub_date|date:"🗓️ N d, Y 🕑 g:i a" }}</div>
         </div>
-        <div class="space-x-3 flex flex-row">
+        <div class="space-x-4 flex flex-row items-center">
             <!--Bookmark button-->
             <form {% if bookmark_status %}
                     action='{% url "wongnung:delete-bookmark" %}'
@@ -72,7 +72,7 @@
                                 {% else %}
                                 <div class="text-post-grey hover:drop-shadow-lg">
                                     {% endif %}
-                                    <svg class="h-8 relative" viewBox="0 0 238 232" fill="currentColor"
+                                    <svg class="h-8 relative" viewBox="0 0 240 232" fill="currentColor"
                                         xmlns="http://www.w3.org/2000/svg">
                                         <path fill-rule="evenodd"
                                             d="M38.8042 170.012H7.76103C3.47657 170.012 0 166.558 0 162.296L0 7.97718C0 3.71476 3.47657 0.261108 7.76103 0.261108H38.8047C43.0892 0.261108 46.5657 3.71476 46.5657 7.97718L46.5657 162.296C46.5653 166.558 43.0887 170.012 38.8042 170.012ZM23.2836 31.125C19.0014 31.125 15.5225 34.5837 15.5225 38.841C15.5225 43.0984 19.0014 46.5571 23.2836 46.5571C27.5657 46.5571 31.0446 43.0984 31.0446 38.841C31.0446 34.5837 27.5662 31.125 23.2836 31.125Z" />
@@ -83,7 +83,7 @@
                         </button>
                     </fieldset>
                 </form>
-                <label class="text-2xl flex text-center">|</label>
+                <label class="text-3xl flex text-center">|</label>
                 <!--Report button-->
                 <button class="block" type="button" hx-get="{% url 'wongnung:report-modal' review.id %}"
                     hx-target="#ReportModal{{ review.id }}" hx-swap="outerHTML" title="Report">

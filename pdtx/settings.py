@@ -215,3 +215,5 @@ SOCIALACCOUNT_PROVIDERS = {
         },
     },
 }
+
+SOCIALACCOUNT_ADAPTER = "wongnung.adapter.CancellableAccountAdapter"
