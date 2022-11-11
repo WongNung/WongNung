@@ -82,6 +82,7 @@ MIDDLEWARE = [
     "django_htmx.middleware.HtmxMiddleware",
     "django_browser_reload.middleware.BrowserReloadMiddleware",
     "wongnung.middlewares.LocalTimeMiddleware",
+    "wongnung.middlewares.EnsureUserProfileMiddleware",
 ]
 
 ROOT_URLCONF = "pdtx.urls"

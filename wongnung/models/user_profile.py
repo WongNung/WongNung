@@ -7,6 +7,7 @@ class UserProfile(models.Model):
     """
     A model that represents profile settings for each user
     """
+
     user = models.OneToOneField(
         User, on_delete=models.CASCADE, primary_key=True
     )
@@ -23,5 +24,3 @@ class UserProfile(models.Model):
     @color.setter
     def color(self, color: str):
         self._color = color
-
-
