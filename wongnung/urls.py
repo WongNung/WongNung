@@ -1,5 +1,7 @@
 from django.urls import path
 
+from wongnung.views.profile import profile_page, profile_settings_component
+
 # fmt: off
 from .views.fandom import join_fandom, leave_fandom, show_fandom, fandom_page
 from .views.feed import feed, get_feed
@@ -22,6 +24,7 @@ urlpatterns = [
     path("post_review/<str:filmid>", post_review, name="post-review"),
     path("fandom/<name>", fandom_page, name="fandom"),
     path("landing", show_landing_page, name="landing"),
+    path("profile", profile_page, name="profile"),
 ]
 
 # Use this array to store paths that should be called using htmx
@@ -54,6 +57,9 @@ htmx_paths = [
     path("fandom/<name>/leave", leave_fandom, name="leave-fandom"),
     path("add_to_bookmark", add_bookmark_view, name="add-bookmark"),
     path("delete_bookmark", delete_bookmark_view, name="delete-bookmark"),
+    path(
+        "profile_settings", profile_settings_component, name="profile-settings"
+    ),
 ]
 
 urlpatterns += htmx_paths

@@ -9,7 +9,7 @@ def profile_page(request):
     """View for Profile page"""
     return render(
         request,
-        "wongnung:profile",
+        "wongnung/profile_page.html",
         {"user": request.user, "profile": request.user.userprofile},
     )
 
@@ -19,6 +19,6 @@ def profile_page(request):
 def profile_settings_component(request):
     return render(
         request,
-        "wongnung:profile-settings",
+        "wongnung/profile_settings_component.html",
         {"user": request.user, "profile": request.user.userprofile},
     )
