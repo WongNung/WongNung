@@ -108,7 +108,7 @@
         {% for genre in review.film.get_genres %}
         <div
             class="rounded-3xl bg-transparent border-2 border-component-red h-7 text-center text-component-red px-2 mx-1 hover:ring-1 hover:ring-red-500">
-            {{ genre }}
+            <a class="hover:underline" href='{% url "wongnung:fandom" genre %}'>{{ genre }}</a>
         </div>
         {% endfor %}
     </div>
