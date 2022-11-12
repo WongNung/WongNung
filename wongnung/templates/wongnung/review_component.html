@@ -4,13 +4,11 @@
         <!--User profile box-->
         <div class="flex flex-row items-center">
             <div class="bg-user-grey rounded-3xl pr-5 py-1 flex items-center hover:bg-feed-grey">
-                <div class="rounded-full bg-post-grey h-8 w-8 text-center align-baseline mx-1.5">{{ fst_char }}</div>
+                <div style="background-color: {{ bgcolor }}; color: {{ fgcolor }}"
+                     class="rounded-full h-8 w-8 text-center align-baseline mx-1.5">{{ fst_char }}
+                </div>
                 <div class="pl-3 font-body text-white text-xl">
-                    {% if review.author %}
-                    {{ review.author }}
-                    {% else %}
-                    Anonymous
-                    {% endif %}
+                    {{ display_name }}
                 </div>
             </div>
             <div class="font-body text-black text-xl px-3">{{ review.pub_date|date:"🗓️ N d, Y 🕑 g:i a" }}</div>
