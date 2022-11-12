@@ -1,3 +1,4 @@
+{% load wongnung_formatters %}
 <span class="bg-slate-100 rounded-xl py-6 px-2 review{{ review.id }}">
     <div class="flex flex-row items-center justify-between mx-5">
         <!--User profile box-->
@@ -101,7 +102,7 @@
     </div>
     <!--Review content-->
     <div class="px-5 pt-5 divide-y flex flex-col">
-        <div class="text-justify text-black font-body pb-1">{{ review.content | linebreaks }}</div>
+        <div class="text-justify text-black font-body pb-1">{{ review.content | format_fandom_tags | linebreaks }}</div>
     </div>
     </div>
     </div>
