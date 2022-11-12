@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.db.models import Q
 from django.http import Http404, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.urls import reverse
 
 from wongnung.models.review import Review
@@ -20,7 +20,7 @@ def get_fandom(name: str) -> Fandom:
     try:
         return Fandom.objects.get(name__iexact=name)
     except Fandom.DoesNotExist:
-        raise Http404()
+        return Fandom.objects.create(name=name)
 
 
 def fandom_page(request, name):

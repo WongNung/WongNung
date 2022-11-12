@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.http import HttpRequest
 from django.shortcuts import render
+from django.urls import reverse
 
 from wongnung.globals import htmx_endpoint
 
@@ -15,6 +16,8 @@ def show_review_component(request: HttpRequest, pk):
     user = request.user
     upvote = review.upvotes.filter(id=user.pk).exists()
     downvote = review.downvotes.filter(id=user.pk).exists()
+
+    # Try getting Bookmark status
     try:
         user = request.user
         bm = Bookmark.objects.filter(
@@ -24,6 +27,7 @@ def show_review_component(request: HttpRequest, pk):
         ).exists()
     except (User.DoesNotExist, TypeError):
         bm = False
+
     context = {
         "review": review,
         "fst_char": review.author.username[0] if review.author else "a",
