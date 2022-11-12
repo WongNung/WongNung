@@ -3,6 +3,7 @@ import re
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
+from django.db.models import Q
 from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
@@ -41,7 +42,8 @@ def show_fandom(request, name):
     except (User.DoesNotExist, TypeError):
         bm = False
     reviews = Review.objects.filter(
-        content__icontains=f"#{fandom.name}"
+        Q(film__genre__icontains=fandom.name)
+        | Q(content__icontains=f"#{fandom.name}")
     ).order_by("-pub_date")
     context = {
         "fandom": fandom,
