@@ -13,7 +13,19 @@
     </div>
     <div class="flex flex-row items-center">
         <!--Bookmark button-->
-        <form {% if bookmark_status %} action='{% url "wongnung:delete-bookmark" %}' {% else %} action='{% url "wongnung:add-bookmark" %}' {% endif %} method="post" hx-boost="true" hx-target=".fandom{{ fandom.name }}" hx-swap="outerHTML" hx-push-url="false" hx-replace-url="false">            
+          <form {% if bookmark_status %}
+                  action='{% url "wongnung:delete-bookmark" %}'
+                  title="Remove from Bookmark"
+                {% else %}
+                  action='{% url "wongnung:add-bookmark" %}'
+                  title="Add to Bookmark"
+                {% endif %}
+                method="post"
+                hx-boost="true"
+                hx-target=".fandom{{ fandom.name }}" 
+                hx-swap="outerHTML"
+                hx-push-url="false"
+                hx-replace-url="false"> 
             <input type="hidden" name="url" value="wongnung:show-fandom" />
             <input type="hidden" name="type" value="fandom" />
             {% csrf_token %}
