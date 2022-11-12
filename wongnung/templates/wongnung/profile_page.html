@@ -1,0 +1,15 @@
+{% extends "wongnung/wongnung_page.html" %}
+{% block t %}{% endblock t %}
+{% block c %}
+<div class="flex flow-col">
+    <div hx-get='{% url "wongnung:profile-settings" %}'
+         hx-target="this"
+         hx-swap="outerHTML"
+         hx-trigger="load once">
+    </div>
+    <div hx-target="this"
+         hx-swap="outerHTML"
+         hx-trigger="load once">
+    </div>
+</div>
+{% endblock c %}

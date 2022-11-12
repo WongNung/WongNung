@@ -83,6 +83,7 @@ MIDDLEWARE = [
     "django_htmx.middleware.HtmxMiddleware",
     "django_browser_reload.middleware.BrowserReloadMiddleware",
     "wongnung.middlewares.LocalTimeMiddleware",
+    "wongnung.middlewares.EnsureUserProfileMiddleware",
 ]
 
 ROOT_URLCONF = "pdtx.urls"
@@ -187,6 +188,7 @@ AUTHENTICATION_BACKENDS = [
 SITE_ID = 4
 LOGIN_REDIRECT_URL = "/"
 ACCOUNT_UNIQUE_EMAIL = False
+
 SOCIALACCOUNT_PROVIDERS = {
     "google": {
         "SCOPE": [

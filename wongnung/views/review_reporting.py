@@ -27,9 +27,7 @@ def report(request, pk):
             review=review, user=request.user, content=content
         )
         report.save()
-    return HttpResponseRedirect(
-        reverse("wongnung:review-component", args=(review.pk,))
-    )
+    return show_report_modal(request, pk=pk, cancel="true")
 
 
 @htmx_endpoint_with_auth
