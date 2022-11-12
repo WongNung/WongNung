@@ -33,6 +33,7 @@ def show_fandom(request, name):
     """Renders a fandom page according to name given."""
     fandom = get_fandom(name)
     user_status = request.user in fandom.get_all_member()
+
     try:
         bm = Bookmark.objects.filter(
             content_type=ContentType.objects.get(model="fandom"),
@@ -41,14 +42,21 @@ def show_fandom(request, name):
         ).exists()
     except (User.DoesNotExist, TypeError):
         bm = False
+
     reviews = Review.objects.filter(
         Q(film__genres__icontains=fandom.name)
         | Q(content__icontains=f"#{fandom.name}")
     ).order_by("-pub_date")
+
+    latest = reviews.first()
+    last_active = None
+    if latest:
+        last_active = latest.pub_date
+
     context = {
         "fandom": fandom,
         "members_num": fandom.get_member_count(),
-        "last_active": "1 hr",
+        "last_active": last_active,
         "user_status": user_status,
         "reviews": reviews,
         "bookmark_status": bm,

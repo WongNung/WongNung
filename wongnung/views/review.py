@@ -10,6 +10,7 @@ from ..models.review import Review
 from wongnung.models.bookmark import Bookmark
 
 
+@htmx_endpoint
 def show_review_component(request: HttpRequest, pk):
     """Renders a review component based on primary key."""
     review = Review.objects.get(pk=pk)
@@ -30,7 +31,7 @@ def show_review_component(request: HttpRequest, pk):
 
     context = {
         "review": review,
-        "fst_char": review.author.username[0] if review.author else "a",
+        "fst_char": review.author.username[0] if review.author else "?",
         "film": review.film,
         "votes": review.get_votes(),
         "upvote": upvote,

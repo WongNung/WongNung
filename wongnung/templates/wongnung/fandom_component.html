@@ -1,3 +1,4 @@
+{% load humanize %}
 <span class="fandom{{ fandom.name }}">
 <div class="min-w-full h-16 bg-[#858585] flex flex-row items-center drop-shadow-xl justify-between">
     <div class="flex flex-row items-center">
@@ -8,7 +9,12 @@
             {{ members_num }} members
         </div>
         <div class="font-body text-xl text-white">
-            last active {{ last_active }} ago.
+            Last active: 
+            {% if last_active %}
+                {{ last_active | naturaltime }}
+            {% else %}
+                never
+            {% endif %}
         </div>
     </div>
     <div class="flex flex-row items-center">
