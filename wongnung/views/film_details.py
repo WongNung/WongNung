@@ -1,4 +1,3 @@
-from django.http import HttpResponseForbidden
 from django.shortcuts import render
 
 from wongnung.globals import htmx_endpoint
