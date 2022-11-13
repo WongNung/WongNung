@@ -1,0 +1,27 @@
+<div class="p-3 divide-y">
+    <div class="divide-x divide-tag-yellow font-primary text-white text-xl">
+        <button type="submit" name="type" value="film" class="p-2 hover:bg-component-red hover:rounded-t-xl"
+            hx-get='{% url "wongnung:get-bookmarks" %}'
+            hx-target="#ShowBookmark"
+            hx-swap="innerHTML"
+            hx-trigger="click">
+            Films
+        </button>
+        <button type="submit" name="type" value="review" class="p-2 hover:bg-component-red hover:rounded-t-xl"
+            hx-get='{% url "wongnung:get-bookmarks" %}'
+            hx-target="#ShowBookmark"
+            hx-swap="innerHTML"
+            hx-trigger="click">
+            Reviews
+        </button>
+        <button type="submit" name="type" value="fandom" class="p-2 hover:bg-component-red hover:rounded-t-xl"
+            hx-get='{% url "wongnung:get-bookmarks" %}'
+            hx-target="#ShowBookmark"
+            hx-swap="innerHTML"
+            hx-trigger="click">
+            Fandoms
+        </button>
+    </div>
+    <div class="ShowBookmark">
+    </div>
+</div>

@@ -3,14 +3,18 @@
 {% block c %}
 <div class="flex flex-row">
      <div class="w-96 h-screen bg-feed-grey flex flex-col divide-y divide-tag-yellow px-5">
-          <div class="font-primary text-white text-xl pt-6 pb-3"
+          <div class="font-primary text-white text-xl pt-6 pb-3 hover:cursor-pointer"
                hx-get='{% url "wongnung:profile-settings" %}'
                hx-target="#ShowComponent"
                hx-swap="innerHTML"
                hx-trigger="click">
                Profile settings
           </div>
-          <div class="font-primary text-white text-xl py-3">
+          <div class="font-primary text-white text-xl py-3 hover:cursor-pointer"
+               hx-get='{% url "wongnung:bookmarks" %}'
+               hx-target="#ShowComponent"
+               hx-swap="innerHTML"
+               hx-trigger="click">
                Bookmarks
           </div>
           <div class="font-primary text-white text-xl py-3">
@@ -22,15 +26,6 @@
      </div>
      <div class="bg-feed-grey mx-6 w-full">
           <div class="flex flow-col" id="ShowComponent">
-               <!-- <div hx-get='{% url "wongnung:profile-settings" %}'
-                    hx-target="this"
-                    hx-swap="outerHTML"
-                    hx-trigger="load once">
-               </div>
-               <div hx-target="this"
-                    hx-swap="outerHTML"
-                    hx-trigger="load once"> -->
-               </div>
           </div>
      </div>
 </div>

@@ -1,0 +1,7 @@
+<div class="overflow-y-scroll">
+    {% if ct == "film" %}
+        {% for bm in bookmark_set %}
+        <a class="text-white text-lg hover:underline" href="{% url 'wongnung:film-details' bm.filmId %}">{{ bm.title }}</a>
+        {% end for %}
+    {% endif %}
+</div>

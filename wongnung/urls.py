@@ -17,6 +17,7 @@ from .views.review_voting import vote
 from .views.search import cancel_search, search
 from .views.bookmark import add_bookmark_view, delete_bookmark_view
 from .views.landing import show_landing_page
+from .views.bookmark_set import show_bookmarks, get_bookmarks
 
 # fmt: on
 
@@ -30,6 +31,7 @@ urlpatterns = [
     path("landing", show_landing_page, name="landing"),
     path("profile", profile_page, name="profile"),
     path("save_profile", save_profile, name="save-profile"),
+    path("bookmarks", show_bookmarks, name="bookmarks")
 ]
 
 # Use this array to store paths that should be called using htmx
@@ -62,6 +64,7 @@ htmx_paths = [
     path("fandom/<name>/leave", leave_fandom, name="leave-fandom"),
     path("add_to_bookmark", add_bookmark_view, name="add-bookmark"),
     path("delete_bookmark", delete_bookmark_view, name="delete-bookmark"),
+    path("get_bookmarks", get_bookmarks, name="get-bookmarks"),
     path(
         "profile_settings", profile_settings_component, name="profile-settings"
     ),
