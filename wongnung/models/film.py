@@ -97,7 +97,7 @@ class Film(models.Model):
         self.stars = ", ".join(stars)
 
     @classmethod
-    def get_film(cls, film_id: str) -> Film:
+    def get_film(cls: Film, film_id: str) -> Film:
         """Create and return Film object
 
         :param film_id: The ID of a specific film.
