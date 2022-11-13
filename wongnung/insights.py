@@ -47,7 +47,7 @@ class UserWritesReview(UserActivity):
         self.review = review
 
     def accepts(self):
-        query = Q(film__title__iexact=self.film.title)
+        query = Q(film__title__iexact=self.film.title)  # noqa
         for genre in self.film.get_genres():
             query |= Q(film__genres__icontains=genre)
         return query
