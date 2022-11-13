@@ -26,4 +26,5 @@ def htmx_endpoint(function, required_auth=False):
 
 
 def htmx_endpoint_with_auth(function):
+    """Requires request sent to be from HTMX and authenticated user."""
     return htmx_endpoint(function, required_auth=True)
