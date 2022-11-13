@@ -20,7 +20,7 @@ class Fandom(models.Model):
         ]
 
     def __str__(self):
-        return f"Group's name is {self.name}"
+        return f"Fandom for {self.name}"
 
     def add_member(self, new_member: User):
         """Add new member to a fandom."""

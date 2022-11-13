@@ -3,13 +3,16 @@ import re
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
-from django.http import Http404, HttpResponseRedirect
+from django.db.models import Q
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
+from wongnung.insights import UserJoinsFandom
 
 from wongnung.models.review import Review
 
 from ..models.fandom import Fandom
+from . import user_insights
 from wongnung.models.bookmark import Bookmark
 
 
@@ -19,7 +22,7 @@ def get_fandom(name: str) -> Fandom:
     try:
         return Fandom.objects.get(name__iexact=name)
     except Fandom.DoesNotExist:
-        raise Http404()
+        return Fandom.objects.create(name=name)
 
 
 def fandom_page(request, name):
@@ -32,6 +35,7 @@ def show_fandom(request, name):
     """Renders a fandom page according to name given."""
     fandom = get_fandom(name)
     user_status = request.user in fandom.get_all_member()
+
     try:
         bm = Bookmark.objects.filter(
             content_type=ContentType.objects.get(model="fandom"),
@@ -40,13 +44,21 @@ def show_fandom(request, name):
         ).exists()
     except (User.DoesNotExist, TypeError):
         bm = False
+
     reviews = Review.objects.filter(
-        content__icontains=f"#{fandom.name}"
+        Q(film__genres__icontains=fandom.name)
+        | Q(content__icontains=f"#{fandom.name}")
     ).order_by("-pub_date")
+
+    latest = reviews.first()
+    last_active = None
+    if latest:
+        last_active = latest.pub_date
+
     context = {
         "fandom": fandom,
         "members_num": fandom.get_member_count(),
-        "last_active": "1 hr",
+        "last_active": last_active,
         "user_status": user_status,
         "reviews": reviews,
         "bookmark_status": bm,
@@ -61,6 +73,7 @@ def join_fandom(request, name):
     user = request.user
     fandom.add_member(user)
     fandom.save()
+    user_insights.push(user, UserJoinsFandom(fandom))
     return HttpResponseRedirect(reverse("wongnung:fandom", args=(fandom.pk,)))
 
 
