@@ -1,5 +1,6 @@
-from django.http import HttpResponseForbidden
+from django.http import HttpResponseForbidden, HttpResponseRedirect
 from django.shortcuts import render
+from django.urls import reverse
 
 from wongnung.globals import htmx_endpoint
 
@@ -9,6 +10,8 @@ from ..models.review import Review
 
 def film_details_page(request, filmid):
     """Renders a film details page."""
+    if not Film.get_film(film_id=filmid):
+        return HttpResponseRedirect(reverse("wongnung:feed"))
     context = {"filmid": filmid}
     return render(request, "wongnung/film_details_page.html", context)
 
