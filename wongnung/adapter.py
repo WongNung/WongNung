@@ -5,12 +5,14 @@ from django.urls import reverse
 
 
 class CancellableAccountAdapter(DefaultSocialAccountAdapter):
-    def authentication_error(self,
-                             request,
-                             provider_id,
-                             error=None,
-                             exception=None,
-                             extra_context=None):
+    def authentication_error(
+        self,
+        request,
+        provider_id,
+        error=None,
+        exception=None,
+        extra_context=None,
+    ):
         raise ImmediateHttpResponse(
             HttpResponseRedirect(reverse("account_login"))
         )

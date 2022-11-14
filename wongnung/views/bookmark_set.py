@@ -18,31 +18,38 @@ def show_bookmarks(request):
 @login_required
 def get_bookmarks_film_set(request):
     user = request.user
-    ct = ContentType.objects.get(model='film')
+    ct = ContentType.objects.get(model="film")
     film_bookmark_set = [
-        bookmark.content_object for bookmark in get_bookmark_set(ct, user)]
+        bookmark.content_object for bookmark in get_bookmark_set(ct, user)
+    ]
     context = {"bookmark_set": film_bookmark_set}
-    return render(request, "wongnung/bookmark_film_set_component.html", context)
+    return render(
+        request, "wongnung/bookmark_film_set_component.html", context
+    )
 
 
 @htmx_endpoint_with_auth
 @login_required
 def get_bookmarks_review_set(request):
     user = request.user
-    ct = ContentType.objects.get(model='review')
+    ct = ContentType.objects.get(model="review")
     review_bookmark_set = [
-        bookmark.content_object for bookmark in get_bookmark_set(ct, user)]
+        bookmark.content_object for bookmark in get_bookmark_set(ct, user)
+    ]
     context = {"review_set": review_bookmark_set}
-    return render(request, "wongnung/bookmark_review_set_component.html", context)
+    return render(
+        request, "wongnung/bookmark_review_set_component.html", context
+    )
 
 
 @htmx_endpoint_with_auth
 @login_required
 def get_bookmarks_fandom_set(request):
     user = request.user
-    ct = ContentType.objects.get(model='fandom')
+    ct = ContentType.objects.get(model="fandom")
     fandom_bookmark_set = [
-        bookmark.content_object for bookmark in get_bookmark_set(ct, user)]
+        bookmark.content_object for bookmark in get_bookmark_set(ct, user)
+    ]
     fandom_dict = {}
     for fandom in fandom_bookmark_set:
         reviews = Review.objects.filter(
@@ -56,4 +63,6 @@ def get_bookmarks_fandom_set(request):
         fandom_dict[fandom] = last_active
 
     context = {"fandom_set": fandom_dict}
-    return render(request, "wongnung/bookmark_fandom_set_component.html", context)
+    return render(
+        request, "wongnung/bookmark_fandom_set_component.html", context
+    )

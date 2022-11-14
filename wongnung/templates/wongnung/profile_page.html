@@ -17,7 +17,11 @@
                hx-trigger="click">
                Bookmarks
           </div>
-          <div class="font-primary text-white text-xl py-3">
+          <div class="font-primary text-white text-xl py-3 hover:cursor-pointer"
+               hx-get='{% url "wongnung:about-us" %}'
+               hx-target="#ShowComponent"
+               hx-swap="innerHTML"
+               hx-trigger="click">
                About WongNung
           </div>
           <div class="font-primary text-white text-xl py-3" title="Click here to log out">

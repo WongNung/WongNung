@@ -25,8 +25,11 @@ def get_fandom(name: str) -> Fandom:
 
 def fandom_page(request, name):
     fandom = get_fandom(name)
-    context = {"fandom": fandom,
-               "user": request.user, "profile": request.user.userprofile}
+    context = {
+        "fandom": fandom,
+        "user": request.user,
+        "profile": request.user.userprofile,
+    }
     return render(request, "wongnung/fandom_page.html", context)
 
 

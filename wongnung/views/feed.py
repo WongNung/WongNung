@@ -14,8 +14,11 @@ def feed(request: HttpRequest):
     """Renders a feed page."""
     user_id = request.user.pk
     feed_manager.get_feed_session(user_id)
-    return render(request, "wongnung/feed.html",
-                  {"user": request.user, "profile": request.user.userprofile})
+    return render(
+        request,
+        "wongnung/feed.html",
+        {"user": request.user, "profile": request.user.userprofile},
+    )
 
 
 @htmx_endpoint_with_auth

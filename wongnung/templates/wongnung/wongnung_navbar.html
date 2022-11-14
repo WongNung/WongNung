@@ -43,7 +43,7 @@
                 <div class="hidden" id="search-results"></div>
             </span>
         </div>
-        <div class="flex text-white">
+        <div class="flex text-white hover:text-tag-yellow hover:underline">
             <a href='{% url "wongnung:profile" %}'>{% if profile %} {{ profile.display_name }} {% else %} {{ user }} {% endif %}</a>
         </div>
     </div>
