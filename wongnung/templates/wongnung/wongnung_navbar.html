@@ -44,7 +44,7 @@
             </span>
         </div>
         <div class="flex text-white">
-            <a href='{% url "wongnung:profile" %}'>{{ user.username }}</a>
+            <a href='{% url "wongnung:profile" %}'>{% if profile %} {{ profile.display_name }} {% else %} {{ user }} {% endif %}</a>
         </div>
     </div>
 </nav>
