@@ -22,3 +22,14 @@ def get_bookmarks_film_set(request):
         bookmark.content_object for bookmark in get_bookmark_set(ct, user)]
     context = {"bookmark_set": film_bookmark_set}
     return render(request, "wongnung/bookmark_film_set_component.html", context)
+
+
+@htmx_endpoint_with_auth
+@login_required
+def get_bookmarks_review_set(request):
+    user = request.user
+    ct = ContentType.objects.get(model='review')
+    review_bookmark_set = [
+        bookmark.content_object for bookmark in get_bookmark_set(ct, user)]
+    context = {"review_set": review_bookmark_set}
+    return render(request, "wongnung/bookmark_review_set_component.html", context)
