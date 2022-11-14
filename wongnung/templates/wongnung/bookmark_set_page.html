@@ -8,7 +8,7 @@
             Films
         </button>
         <button type="submit" name="type" value="review" class="p-2 hover:bg-component-red hover:rounded-t-xl"
-            hx-get='{% url "wongnung:film-bookmarks" %}'
+            hx-get='{% url "wongnung:review-bookmarks" %}'
             hx-target="#ShowBookmark"
             hx-swap="innerHTML"
             hx-trigger="click">
@@ -22,6 +22,6 @@
             Fandoms
         </button>
     </div>
-    <div id="ShowBookmark" class="overflow-y-scroll">
+    <div id="ShowBookmark" class="overflow-y-hidden">
     </div>
 </div>
