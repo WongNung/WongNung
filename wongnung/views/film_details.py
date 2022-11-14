@@ -13,7 +13,9 @@ def film_details_page(request, filmid):
     context = {
         "filmid": filmid,
         "user": request.user,
-        "profile": request.user.userprofile,
+        "profile": request.user.userprofile
+        if request.user.is_authenticated
+        else None,
     }
     return render(request, "wongnung/film_details_page.html", context)
 

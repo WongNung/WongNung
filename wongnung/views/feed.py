@@ -17,7 +17,12 @@ def feed(request: HttpRequest):
     return render(
         request,
         "wongnung/feed.html",
-        {"user": request.user, "profile": request.user.userprofile},
+        {
+            "user": request.user,
+            "profile": request.user.userprofile
+            if request.user.is_authenticated
+            else None,
+        },
     )
 
 

@@ -28,7 +28,9 @@ def fandom_page(request, name):
     context = {
         "fandom": fandom,
         "user": request.user,
-        "profile": request.user.userprofile,
+        "profile": request.user.userprofile
+        if request.user.is_authenticated
+        else None,
     }
     return render(request, "wongnung/fandom_page.html", context)
 
