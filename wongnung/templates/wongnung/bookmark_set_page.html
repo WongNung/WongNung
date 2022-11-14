@@ -1,26 +1,35 @@
 <div class="p-3 divide-y w-full">
-    <div class="divide-x divide-tag-yellow font-primary text-white text-xl">
-        <button type="submit" name="type" value="film" class="p-2 hover:bg-component-red hover:rounded-t-xl"
-            hx-get='{% url "wongnung:film-bookmarks" %}'
-            hx-target="#ShowBookmark"
-            hx-swap="innerHTML"
-            hx-trigger="click">
-            Films
-        </button>
-        <button type="submit" name="type" value="review" class="p-2 hover:bg-component-red hover:rounded-t-xl"
-            hx-get='{% url "wongnung:film-bookmarks" %}'
-            hx-target="#ShowBookmark"
-            hx-swap="innerHTML"
-            hx-trigger="click">
-            Reviews
-        </button>
-        <button type="submit" name="type" value="fandom" class="p-2 hover:bg-component-red hover:rounded-t-xl"
-            hx-get='{% url "wongnung:film-bookmarks" %}'
-            hx-target="#ShowBookmark"
-            hx-swap="innerHTML"
-            hx-trigger="click">
-            Fandoms
-        </button>
+    <div class="flex flex-row divide-x divide-tag-yellow font-primary text-white text-xl">
+        <label>
+            <input type="radio" class="sr-only peer" name="type" />
+            <div class="p-2 mx-2 peer-checked:bg-component-red peer-checked:rounded-t-xl hover:bg-component-red hover:rounded-t-xl"
+                hx-get='{% url "wongnung:film-bookmarks" %}'
+                hx-target="#ShowBookmark"
+                hx-swap="innerHTML"
+                hx-trigger="click">
+                Films
+            </div>
+        </label>
+        <label>
+            <input type="radio" class="sr-only peer" name="type" />
+            <div class="p-2 mx-2 peer-checked:bg-component-red peer-checked:rounded-t-xl hover:bg-component-red hover:rounded-t-xl"
+                hx-get='{% url "wongnung:film-bookmarks" %}'
+                hx-target="#ShowBookmark"
+                hx-swap="innerHTML"
+                hx-trigger="click">
+                Reviews
+            </div>
+        </label>
+        <label>
+            <input type="radio" class="sr-only peer" name="type" />
+            <div class="p-2 mx-2 peer-checked:bg-component-red peer-checked:rounded-t-xl hover:bg-component-red hover:rounded-t-xl"
+                hx-get='{% url "wongnung:film-bookmarks" %}'
+                hx-target="#ShowBookmark"
+                hx-swap="innerHTML"
+                hx-trigger="click">
+                Fandoms
+            </div>
+        </label>
     </div>
     <div id="ShowBookmark" class="overflow-y-scroll">
     </div>
