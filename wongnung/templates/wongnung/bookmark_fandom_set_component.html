@@ -1,13 +1,22 @@
+{% load humanize %}
 <div class="flex flex-auto h-[calc(100vh-80px)] overflow-hidden">
     <div class="flex flex-col flex-auto w-full h-full rounded-md pr-4 self-center overflow-auto scrollbar">
         <div class="flex flex-col divide-y divide-tag-yellow">
-            {% for fandom in fandom_set %}
-            <div class="w-full h-full m-2 pt-4 grid grid-cols-2 gap-4">
+            {% for fandom, last_active in fandom_set.items %}
+            <div class="w-full h-full m-2 pt-4 grid grid-cols-3">
                     <div class="pl-3 font-primary text-2xl font-bold text-tag-yellow ">
                         <a class="hover:underline" href='{% url "wongnung:fandom" fandom.name %}'>#{{ fandom.name }}</a>
                     </div>
                     <div class="font-body text-xl text-white">
                         {{ fandom.get_member_count }} members
+                    </div>
+                    <div class="font-body text-xl text-white">
+                        last active:
+                        {% if last_active %}
+                            {{ last_active | naturaltime }}
+                        {% else %}
+                            never
+                        {% endif %}
                     </div>
             </div>
             {% endfor %}

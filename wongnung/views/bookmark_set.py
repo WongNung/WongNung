@@ -5,6 +5,7 @@ from wongnung.globals import htmx_endpoint_with_auth
 from ..models.film import Film
 from ..models.review import Review
 from ..models.fandom import Fandom
+from django.db.models import Q
 from wongnung.models.bookmark import get_bookmark_set
 
 
@@ -42,5 +43,17 @@ def get_bookmarks_fandom_set(request):
     ct = ContentType.objects.get(model='fandom')
     fandom_bookmark_set = [
         bookmark.content_object for bookmark in get_bookmark_set(ct, user)]
-    context = {"fandom_set": fandom_bookmark_set}
+    fandom_dict = {}
+    for fandom in fandom_bookmark_set:
+        reviews = Review.objects.filter(
+            Q(film__genres__icontains=fandom.name)
+            | Q(content__icontains=f"#{fandom.name}")
+        ).order_by("-pub_date")
+        latest = reviews.first()
+        last_active = None
+        if latest:
+            last_active = latest.pub_date
+        fandom_dict[fandom] = last_active
+
+    context = {"fandom_set": fandom_dict}
     return render(request, "wongnung/bookmark_fandom_set_component.html", context)
