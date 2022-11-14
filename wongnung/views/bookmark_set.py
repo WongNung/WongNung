@@ -18,9 +18,29 @@ def show_bookmarks(request):
 def get_bookmarks_film_set(request):
     user = request.user
     ct = ContentType.objects.get(model='film')
-    bookmark_set = get_bookmark_set(ct, user)
-    new_set = []
-    for bm in bookmark_set:
-        new_set += [Film.get_film(bm.object_id)]
-    context = {"bookmark_set": new_set}
+    film_bookmark_set = [
+        bookmark.content_object for bookmark in get_bookmark_set(ct, user)]
+    context = {"bookmark_set": film_bookmark_set}
     return render(request, "wongnung/bookmark_film_set_component.html", context)
+
+
+@htmx_endpoint_with_auth
+@login_required
+def get_bookmarks_review_set(request):
+    user = request.user
+    ct = ContentType.objects.get(model='review')
+    review_bookmark_set = [
+        bookmark.content_object for bookmark in get_bookmark_set(ct, user)]
+    context = {"review_set": review_bookmark_set}
+    return render(request, "wongnung/bookmark_review_set_component.html", context)
+
+
+@htmx_endpoint_with_auth
+@login_required
+def get_bookmarks_fandom_set(request):
+    user = request.user
+    ct = ContentType.objects.get(model='fandom')
+    fandom_bookmark_set = [
+        bookmark.content_object for bookmark in get_bookmark_set(ct, user)]
+    context = {"fandom_set": fandom_bookmark_set}
+    return render(request, "wongnung/bookmark_fandom_set_component.html", context)
