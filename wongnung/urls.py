@@ -17,7 +17,8 @@ from .views.review_voting import vote
 from .views.search import cancel_search, search
 from .views.bookmark import add_bookmark_view, delete_bookmark_view
 from .views.landing import show_landing_page
-from .views.bookmark_set import show_bookmarks, get_bookmarks_film_set, get_bookmarks_review_set
+from .views.bookmark_set import \
+    show_bookmarks, get_bookmarks_film_set, get_bookmarks_review_set
 
 # fmt: on
 
