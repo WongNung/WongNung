@@ -18,9 +18,7 @@ def show_bookmarks(request):
 def get_bookmarks_film_set(request):
     user = request.user
     ct = ContentType.objects.get(model='film')
-    bookmark_set = get_bookmark_set(ct, user)
-    new_set = []
-    for bm in bookmark_set:
-        new_set += [Film.get_film(bm.object_id)]
-    context = {"bookmark_set": new_set}
+    film_bookmark_set = [
+        bookmark.content_object for bookmark in get_bookmark_set(ct, user)]
+    context = {"bookmark_set": film_bookmark_set}
     return render(request, "wongnung/bookmark_film_set_component.html", context)
