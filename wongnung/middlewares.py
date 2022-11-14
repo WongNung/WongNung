@@ -9,6 +9,11 @@ from .models.user_profile import UserProfile
 
 
 class LocalTimeMiddleware:
+    """
+    A middleware that will apply a user's timezone based on their cookies,
+    whenever a user navigates to anywhere in the site.
+    """
+
     def __init__(self, get_response):
         self.get_response = get_response
 
@@ -21,6 +26,8 @@ class LocalTimeMiddleware:
 
 
 class EnsureUserProfileMiddleware:
+    """A middleware that ensures the user their own UserProfile."""
+
     def __init__(self, get_response):
         self.get_response = get_response
 
