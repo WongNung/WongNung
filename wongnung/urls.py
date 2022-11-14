@@ -17,8 +17,8 @@ from .views.review_voting import vote
 from .views.search import cancel_search, search
 from .views.bookmark import add_bookmark_view, delete_bookmark_view
 from .views.landing import show_landing_page
-from .views.bookmark_set import \
-    show_bookmarks, get_bookmarks_film_set, get_bookmarks_review_set
+from .views.bookmark_set import show_bookmarks, get_bookmarks_film_set,\
+    get_bookmarks_review_set, get_bookmarks_fandom_set
 
 # fmt: on
 
@@ -35,6 +35,7 @@ urlpatterns = [
     path("bookmarks", show_bookmarks, name="bookmarks"),
     path("film_bookmarks", get_bookmarks_film_set, name="film-bookmarks"),
     path("review_bookmarks", get_bookmarks_review_set, name="review-bookmarks"),
+    path("fandom_bookmarks", get_bookmarks_fandom_set, name="fandom-bookmarks")
 ]
 
 # Use this array to store paths that should be called using htmx
