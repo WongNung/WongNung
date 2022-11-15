@@ -3,9 +3,11 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 
 from wongnung.globals import htmx_endpoint
+from wongnung.insights import UserWritesReview
 
 from ..models.film import Film
 from ..models.review import Review
+from . import user_insights
 
 
 @login_required
@@ -28,5 +30,6 @@ def post_review(request, filmid):
     for tag in findall(r"<{1}.+>{1}", content):
         content = content.replace(tag, "")
 
-    Review.objects.create(film=film, content=content, author=author)
+    review = Review.objects.create(film=film, content=content, author=author)
+    user_insights.push(author, UserWritesReview(film, review))
     return redirect("wongnung:film-details", filmid=filmid)

@@ -1,10 +1,15 @@
 import datetime
-from typing import List, Optional
+from typing import Any, Dict, List, Optional
 
 from django.contrib.auth.models import User
+from django.db.models import Q
 from django.utils import timezone
 
+from wongnung.insights import UserInsights
+
 from .models.review import Review
+
+user_insights = UserInsights()
 
 
 class FeedSession:
@@ -16,10 +21,30 @@ class FeedSession:
         except User.DoesNotExist:
             raise
 
-        # TODO: Make stack more personalized in future...
-        self.stack: List[int] = sorted(
-            [review.pk for review in Review.objects.all()], reverse=True
-        )
+        self.stack: List[int] = [
+            review.pk for review in self.gen_from_insights(user_id)
+        ]
+
+    def gen_from_insights(self, user_id: int):
+        """Generate stack from insights"""
+        user: User = User.objects.get(pk=user_id)
+        insights = user_insights.get(user)
+
+        if not insights:  # No insights yet
+            return Review.objects.all().order_by("-pub_date")
+
+        accepts = Q()  # Q() that ensures criteria
+        excludes = Q()  # Q() that excludes content
+
+        for activity in insights:
+            if activity.accepts():
+                accepts |= activity.accepts()
+            if activity.excludes():
+                excludes |= activity.excludes()
+
+        return Review.objects.all().exclude(excludes) | Review.objects.filter(
+            accepts
+        ).exclude(excludes)
 
     def pop(self) -> Optional[Review]:
         """
@@ -47,7 +72,8 @@ class FeedManager:
     and remove expired sessions.
     """
 
-    feeds = dict()
+    feeds: Dict[int, Any] = dict()
+    MAX_DURATION: int = 5
 
     def __new__(cls):
         if not hasattr(cls, "instance"):
@@ -69,21 +95,24 @@ class FeedManager:
                 (timezone.now() > feed_data["expiry"])
                 or (not feed_data["feed"].stack)
             ) and renew:
-                self.feeds[user_id] = {
-                    "feed": FeedSession(user_id),
-                    "expiry": timezone.now() + datetime.timedelta(minutes=5),
-                }
+                self.new_feed_session(user_id)
             return self.feeds[user_id]["feed"]
         except KeyError:
-            self.feeds[user_id] = {
-                "feed": FeedSession(user_id),
-                "expiry": timezone.now() + datetime.timedelta(minutes=5),
-            }
+            self.new_feed_session(user_id)
         return self.feeds[user_id]["feed"]
+
+    def new_feed_session(self, user_id: int):
+        """Creates a new feed session for user."""
+        self.feeds[user_id] = {
+            "feed": FeedSession(user_id),
+            "expiry": timezone.now()
+            + datetime.timedelta(minutes=self.MAX_DURATION),
+        }
 
     def update_feed_session(self, user_id: int, feed: FeedSession):
         """Updates existing feed session for user."""
         self.feeds[user_id] = {
             "feed": feed,
-            "expiry": timezone.now() + datetime.timedelta(minutes=5),
+            "expiry": timezone.now()
+            + datetime.timedelta(minutes=self.MAX_DURATION),
         }

@@ -4,6 +4,23 @@ Welcome to WongNung
 {% endblock title %}
 {% block content %}
 <div class="w-screen h-screen">
+    <div class="flex flex-col absolute z-10 top-10 left-10 space-y-3">
+        <span class="text-white italic">Want a quick peek?</span>
+        <input class="z-0 px-12 rounded-full text-black placeholder:text-back-grey focus:border-tag-yellow focus:ring-tag-yellow focus:ring-1"
+                        type="text"
+                        id="queryfield"
+                        name="query"
+                        autocomplete="off"
+                        placeholder="Search films..."
+                        maxlength="80"
+                        hx-trigger="click, keyup delay:250ms, input changed delay:250ms"
+                        hx-swap="outerHTML"
+                        hx-target="#search-results"
+                        hx-get="/search"/>
+        <div class="absolute top-16">
+        <div class="hidden" id="search-results"></div>
+        </div>
+    </div>
     <div class="flex flex-col items-center justify-center h-full w-full gap-10">
         <div class="font-primary text-6xl text-white">
             Welcome to
