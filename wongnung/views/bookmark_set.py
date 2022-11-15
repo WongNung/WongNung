@@ -2,9 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.contenttypes.models import ContentType
 from django.shortcuts import render
 from wongnung.globals import htmx_endpoint_with_auth
-from ..models.film import Film
 from ..models.review import Review
-from ..models.fandom import Fandom
 from django.db.models import Q
 from wongnung.models.bookmark import get_bookmark_set
 
