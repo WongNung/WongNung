@@ -17,8 +17,7 @@ from .views.review_voting import vote
 from .views.search import cancel_search, search
 from .views.bookmark import add_bookmark_view, delete_bookmark_view
 from .views.landing import show_landing_page
-from .views.bookmark_set import show_bookmarks, get_bookmarks_film_set,\
-    get_bookmarks_review_set, get_bookmarks_fandom_set
+from .views.bookmark_set import show_bookmarks, get_bookmarks_set
 from .views.about_us import about_us
 
 # fmt: on
@@ -66,13 +65,7 @@ htmx_paths = [
     path("fandom/<name>/leave", leave_fandom, name="leave-fandom"),
     path("add_to_bookmark", add_bookmark_view, name="add-bookmark"),
     path("delete_bookmark", delete_bookmark_view, name="delete-bookmark"),
-    path("film_bookmarks", get_bookmarks_film_set, name="film-bookmarks"),
-    path(
-        "review_bookmarks", get_bookmarks_review_set, name="review-bookmarks"
-    ),
-    path(
-        "fandom_bookmarks", get_bookmarks_fandom_set, name="fandom-bookmarks"
-    ),
+    path("show_bookmarks", get_bookmarks_set, name="show-bookmarks"),
     path(
         "profile_settings", profile_settings_component, name="profile-settings"
     ),
