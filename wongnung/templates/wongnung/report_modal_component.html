@@ -14,6 +14,9 @@
                             <b>Review Content:</b><br />
                             {{ review.content|truncatewords:10 }}
                         </li>
+                        <li class="text-tag-yellow">
+                            <i>*You won't be seeing reviews by this author in your feed for a while</i>
+                        </li>
                     </ul>
                 </span>
                 <form action="{% url 'wongnung:report' review.id %}" method="post">
