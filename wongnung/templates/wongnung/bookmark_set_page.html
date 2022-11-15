@@ -2,61 +2,66 @@
     <div class="divide-x divide-tag-yellow font-primary text-white text-xl">
         <div class="flex flex-row divide-x divide-tag-yellow font-primary text-white text-xl">
             <label>
-                    <form action='{% url "wongnung:show-bookmarks" %}'
-                          title="show film bookmarks"
-                          method="post"
-                          hx-boost="true"
-                          hx-target="#ShowBookmark"
-                          hx-post = '{% url "wongnung:show-bookmarks" %}'
-                          hx-swap="innerHTML"
-                          hx-trigger="click">
-                        <input type="hidden" name="template" value="wongnung/bookmark_film_set_component.html" />
-                        <input type="hidden" name="type" value="film" />
-                        {% csrf_token %}
-                        <input type="radio" class="sr-only peer" name="type" />
-                        <div class="p-2 mx-2 peer-checked:bg-component-red peer-checked:rounded-t-xl hover:bg-component-red hover:rounded-t-xl">
-                            Films
-                        </div>
-                    </form>
+                <form action='{% url "wongnung:show-bookmarks" %}'
+                      title="show film bookmarks"
+                      method="post"
+                      hx-boost="true"
+                      hx-target="#ShowBookmark"
+                      hx-post='{% url "wongnung:show-bookmarks" %}'
+                      hx-swap="innerHTML"
+                      hx-trigger="click">
+                    <input type="hidden"
+                           name="template"
+                           value="wongnung/bookmark_film_set_component.html"/>
+                    <input type="hidden" name="type" value="film" />
+                    {% csrf_token %}
+                    <input type="radio" class="sr-only peer" name="type" />
+                    <div class="p-2 mx-2 peer-checked:bg-component-red peer-checked:rounded-t-xl hover:bg-component-red hover:rounded-t-xl">
+                        Films
+                    </div>
+                </form>
             </label>
             <label>
-                   <form action='{% url "wongnung:show-bookmarks" %}'
-                         title="show review bookmarks"
-                         method="post"
-                         hx-boost="true"
-                         hx-target="#ShowBookmark"
-                         hx-post = '{% url "wongnung:show-bookmarks" %}'
-                         hx-swap="innerHTML"
-                         hx-trigger="click">
-                        <input type="hidden" name="template" value="wongnung/bookmark_review_set_component.html" />
-                        <input type="hidden" name="type" value="review" />
-                        {% csrf_token %}
-                        <input type="radio" class="sr-only peer" name="type" />
-                        <div class="p-2 mx-2 peer-checked:bg-component-red peer-checked:rounded-t-xl hover:bg-component-red hover:rounded-t-xl">
-                            Reviews
-                        </div>
-                   </form>
+                <form action='{% url "wongnung:show-bookmarks" %}'
+                      title="show review bookmarks"
+                      method="post"
+                      hx-boost="true"
+                      hx-target="#ShowBookmark"
+                      hx-post='{% url "wongnung:show-bookmarks" %}'
+                      hx-swap="innerHTML"
+                      hx-trigger="click">
+                    <input type="hidden"
+                           name="template"
+                           value="wongnung/bookmark_review_set_component.html"/>
+                    <input type="hidden" name="type" value="review" />
+                    {% csrf_token %}
+                    <input type="radio" class="sr-only peer" name="type" />
+                    <div class="p-2 mx-2 peer-checked:bg-component-red peer-checked:rounded-t-xl hover:bg-component-red hover:rounded-t-xl">
+                        Reviews
+                    </div>
+                </form>
             </label>
             <label>
-                   <form action='{% url "wongnung:show-bookmarks" %}'
-                         title="show fandom bookmarks"
-                         method="post"
-                         hx-boost="true"
-                         hx-target="#ShowBookmark"
-                         hx-post = '{% url "wongnung:show-bookmarks" %}'
-                         hx-swap="innerHTML"
-                         hx-trigger="click">
-                        <input type="hidden" name="template" value="wongnung/bookmark_fandom_set_component.html" />
-                        <input type="hidden" name="type" value="fandom" />
-                        {% csrf_token %}
-                        <input type="radio" class="sr-only peer" name="type" />
-                        <div class="p-2 mx-2 peer-checked:bg-component-red peer-checked:rounded-t-xl hover:bg-component-red hover:rounded-t-xl">
-                            Fandoms
-                        </div>
-                   </form>
+                <form action='{% url "wongnung:show-bookmarks" %}'
+                      title="show fandom bookmarks"
+                      method="post"
+                      hx-boost="true"
+                      hx-target="#ShowBookmark"
+                      hx-post='{% url "wongnung:show-bookmarks" %}'
+                      hx-swap="innerHTML"
+                      hx-trigger="click">
+                    <input type="hidden"
+                           name="template"
+                           value="wongnung/bookmark_fandom_set_component.html"/>
+                    <input type="hidden" name="type" value="fandom" />
+                    {% csrf_token %}
+                    <input type="radio" class="sr-only peer" name="type" />
+                    <div class="p-2 mx-2 peer-checked:bg-component-red peer-checked:rounded-t-xl hover:bg-component-red hover:rounded-t-xl">
+                        Fandoms
+                    </div>
+                </form>
             </label>
         </div>
     </div>
-    <div id="ShowBookmark" class="overflow-y-hidden">
-    </div>
+    <div id="ShowBookmark" class="overflow-y-hidden"></div>
 </div>
