@@ -1,15 +1,36 @@
 {% extends "wongnung/wongnung_page.html" %}
 {% block t %}Profile{% endblock t %}
 {% block c %}
-<div class="flex flow-col">
-    <div hx-get='{% url "wongnung:profile-settings" %}'
-         hx-target="this"
-         hx-swap="outerHTML"
-         hx-trigger="load once">
-    </div>
-    <div hx-target="this"
-         hx-swap="outerHTML"
-         hx-trigger="load once">
-    </div>
+<div class="flex flex-row">
+     <div class="w-96 h-screen bg-feed-grey flex flex-col divide-y divide-tag-yellow px-5">
+          <div class="font-primary text-white text-xl pt-6 pb-3 hover:cursor-pointer" title="Click here to set your profile"
+               hx-get='{% url "wongnung:profile-settings" %}'
+               hx-target="#ShowComponent"
+               hx-swap="innerHTML"
+               hx-trigger="click">
+               Profile settings
+          </div>
+          <div class="font-primary text-white text-xl py-3 hover:cursor-pointer" title="Click here to view your bookmarks"
+               hx-get='{% url "wongnung:bookmarks" %}'
+               hx-target="#ShowComponent"
+               hx-swap="innerHTML"
+               hx-trigger="click">
+               Bookmarks
+          </div>
+          <div class="font-primary text-white text-xl py-3 hover:cursor-pointer" title="Click here to view about WongNung"
+               hx-get='{% url "wongnung:about-us" %}'
+               hx-target="#ShowComponent"
+               hx-swap="innerHTML"
+               hx-trigger="click">
+               About WongNung
+          </div>
+          <div class="font-primary text-white text-xl py-3" title="Click here to log out">
+               <a href='{% url "logout" %}'>Log out</a>
+          </div>
+     </div>
+     <div class="bg-feed-grey mx-6 w-full h-screen">
+          <div class="flex flow-col" id="ShowComponent">
+          </div>
+     </div>
 </div>
 {% endblock c %}

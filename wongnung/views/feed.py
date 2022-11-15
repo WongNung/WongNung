@@ -15,7 +15,16 @@ def feed(request: HttpRequest):
         return redirect(reverse("wongnung:landing"))
     user_id = request.user.pk
     feed_manager.get_feed_session(user_id)
-    return render(request, "wongnung/feed.html")
+    return render(
+        request,
+        "wongnung/feed.html",
+        {
+            "user": request.user,
+            "profile": request.user.userprofile
+            if request.user.is_authenticated
+            else None,
+        },
+    )
 
 
 @htmx_endpoint_with_auth

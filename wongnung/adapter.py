@@ -9,7 +9,6 @@ class CancellableAccountAdapter(DefaultSocialAccountAdapter):
     A Social Account Adapter for allauth, to instead redirect users to
     login page whenever an auth error occurs.
     """
-
     def authentication_error(
         self,
         request,

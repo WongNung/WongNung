@@ -12,7 +12,13 @@ from wongnung.models.bookmark import Bookmark, get_bookmark_set
 
 def film_details_page(request, filmid):
     """Renders a film details page."""
-    context = {"filmid": filmid}
+    context = {
+        "filmid": filmid,
+        "user": request.user,
+        "profile": request.user.userprofile
+        if request.user.is_authenticated
+        else None,
+    }
     return render(request, "wongnung/film_details_page.html", context)
 
 
