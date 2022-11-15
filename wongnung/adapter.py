@@ -5,12 +5,19 @@ from django.urls import reverse
 
 
 class CancellableAccountAdapter(DefaultSocialAccountAdapter):
-    def authentication_error(self,
-                             request,
-                             provider_id,
-                             error=None,
-                             exception=None,
-                             extra_context=None):
+    """
+    A Social Account Adapter for allauth, to instead redirect users to
+    login page whenever an auth error occurs.
+    """
+
+    def authentication_error(
+        self,
+        request,
+        provider_id,
+        error=None,
+        exception=None,
+        extra_context=None,
+    ):
         raise ImmediateHttpResponse(
             HttpResponseRedirect(reverse("account_login"))
         )

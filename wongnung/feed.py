@@ -73,6 +73,7 @@ class FeedManager:
     """
 
     feeds: Dict[int, Any] = dict()
+    MAX_DURATION: int = 5
 
     def __new__(cls):
         if not hasattr(cls, "instance"):
@@ -94,21 +95,24 @@ class FeedManager:
                 (timezone.now() > feed_data["expiry"])
                 or (not feed_data["feed"].stack)
             ) and renew:
-                self.feeds[user_id] = {
-                    "feed": FeedSession(user_id),
-                    "expiry": timezone.now() + datetime.timedelta(minutes=5),
-                }
+                self.new_feed_session(user_id)
             return self.feeds[user_id]["feed"]
         except KeyError:
-            self.feeds[user_id] = {
-                "feed": FeedSession(user_id),
-                "expiry": timezone.now() + datetime.timedelta(minutes=5),
-            }
+            self.new_feed_session(user_id)
         return self.feeds[user_id]["feed"]
+
+    def new_feed_session(self, user_id: int):
+        """Creates a new feed session for user."""
+        self.feeds[user_id] = {
+            "feed": FeedSession(user_id),
+            "expiry": timezone.now()
+            + datetime.timedelta(minutes=self.MAX_DURATION),
+        }
 
     def update_feed_session(self, user_id: int, feed: FeedSession):
         """Updates existing feed session for user."""
         self.feeds[user_id] = {
             "feed": feed,
-            "expiry": timezone.now() + datetime.timedelta(minutes=5),
+            "expiry": timezone.now()
+            + datetime.timedelta(minutes=self.MAX_DURATION),
         }
