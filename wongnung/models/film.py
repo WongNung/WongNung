@@ -102,7 +102,6 @@ class Film(models.Model):
         """Create and return Film object
 
         :param film_id: The ID of a specific film.
-        :type film_id: str
         :return: film object
         """
         num_id = int(film_id)
@@ -111,58 +110,76 @@ class Film(models.Model):
             film = cls.objects.get(pk=film_id)
         except cls.DoesNotExist:
             try:
-                # tmdbsimple: get movie from movie id
-                response_info = tmdb.Movies(num_id).info()
-                response_credits = tmdb.Movies(num_id).credits()
+                film = cls.__create_film_with_details(num_id)
+                cls.__update_film_credits(film)
             except HTTPError:
                 return None
 
-            title = response_info["title"]
-            summary = response_info["overview"]
-            if not summary:
-                summary = (
-                    "The summary of this film is unknown "
-                    + "or not translated to English."
-                )
-            try:
-                year_released = response_info["release_date"].split("-")[0]
-                if not year_released:
-                    year_released = None
-            except KeyError:
-                year_released = None
+        return film
 
-            # get film poster path
-            path = response_info["poster_path"]
-            if not path:
-                poster = "https://i.ibb.co/2Kxk7XZ/no-poster.jpg"
-            else:
-                poster = (
-                    f"https://image.tmdb.org/t/p/w600_and_h900_bestv2{path}"
-                )
+    @classmethod
+    def __create_film_with_details(cls, film_id: int) -> "Film":
+        """
+        This creates a Film model with basic details.
 
-            film = cls.objects.create(
-                filmId=num_id,
-                title=title,
-                year_released=year_released,
-                summary=summary,
-                poster=poster,
+        :param film_id: ID of film
+        :return: Film instance
+        :raises HTTPError: if film with the film_id returns non-OK response
+        """
+        film_details_response = tmdb.Movies(film_id).info()
+        title = film_details_response["title"]
+        summary = film_details_response["overview"]
+        if not summary:
+            summary = (
+                "The summary of this film is unknown "
+                + "or not translated to English."
             )
+        try:
+            year_released = film_details_response["release_date"].split("-")[0]
+            if not year_released:
+                year_released = None
+        except KeyError:
+            year_released = None
 
-            # get the list of the name of all directors
-            directors = [
-                director["name"]
-                for director in response_credits["crew"]
-                if director["job"] == "Director"
-            ][:5]
-            film.set_director(directors)
+        path = film_details_response["poster_path"]
+        if not path:
+            poster = "https://i.ibb.co/2Kxk7XZ/no-poster.jpg"
+        else:
+            poster = f"https://image.tmdb.org/t/p/w600_and_h900_bestv2{path}"
 
-            # get the list of genres of the film
-            genres_lst = [genres["name"] for genres in response_info["genres"]]
-            film.set_genres(genres_lst)
+        film = cls.objects.create(
+            filmId=film_id,
+            title=title,
+            year_released=year_released,
+            summary=summary,
+            poster=poster,
+        )
 
-            # get the list of the name of all stars
-            stars = [star["name"] for star in response_credits["cast"]][:5]
-            film.set_stars(stars)
-            film.save()
+        genres_lst = [
+            genres["name"] for genres in film_details_response["genres"]
+        ]
+        film.set_genres(genres_lst)
+        film.save()
 
         return film
+
+    @classmethod
+    def __update_film_credits(cls, film: "Film"):
+        """
+        This updates a Film object with credits.
+
+        :param film: Film instance
+        :raises HTTPError: if film with has id that returns non-OK response
+        """
+        film_details_credits = tmdb.Movies(film.pk).credits()
+
+        directors = [
+            director["name"]
+            for director in film_details_credits["crew"]
+            if director["job"] == "Director"
+        ][:5]
+        film.set_director(directors)
+
+        stars = [star["name"] for star in film_details_credits["cast"]][:5]
+        film.set_stars(stars)
+        film.save()
