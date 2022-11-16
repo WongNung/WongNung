@@ -50,10 +50,18 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.humanize",
     "tailwind",
     "theme",
     "django_htmx",
     "django_browser_reload",
+    "django.contrib.sites",
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "allauth.socialaccount.providers.google",
+    "allauth.socialaccount.providers.github",
+    "allauth.socialaccount.providers.discord",
 ]
 
 
@@ -75,6 +83,7 @@ MIDDLEWARE = [
     "django_htmx.middleware.HtmxMiddleware",
     "django_browser_reload.middleware.BrowserReloadMiddleware",
     "wongnung.middlewares.LocalTimeMiddleware",
+    "wongnung.middlewares.EnsureUserProfileMiddleware",
 ]
 
 ROOT_URLCONF = "pdtx.urls"
@@ -170,3 +179,44 @@ MEDIA_URL = "media/"
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+AUTHENTICATION_BACKENDS = [
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
+]
+
+SITE_ID = 4
+LOGIN_REDIRECT_URL = "/"
+ACCOUNT_UNIQUE_EMAIL = False
+
+SOCIALACCOUNT_PROVIDERS = {
+    "google": {
+        "SCOPE": [
+            "profile",
+            "email",
+        ],
+        "AUTH_PARAMS": {
+            "access_type": "online",
+        },
+    },
+    "github": {
+        "SCOPE": [
+            "profile",
+            "email",
+        ],
+        "AUTH_PARAMS": {
+            "access_type": "online",
+        },
+    },
+    "discord": {
+        "SCOPE": [
+            "email",
+            "identify",
+        ],
+        "AUTH_PARAMS": {
+            "access_type": "online",
+        },
+    },
+}
+
+SOCIALACCOUNT_ADAPTER = "wongnung.adapter.CancellableAccountAdapter"

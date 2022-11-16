@@ -4,7 +4,10 @@ from django.shortcuts import get_object_or_404
 from django.urls import reverse
 
 from ..globals import htmx_endpoint_with_auth
+from ..insights import UserUpvotesReview
+
 from ..models.review import Review
+from . import user_insights
 
 
 @htmx_endpoint_with_auth
@@ -20,6 +23,7 @@ def vote(request, pk):
         else:
             review.add_upvotes(request.user)
             review.remove_downvotes(request.user)
+        user_insights.push(user, UserUpvotesReview(review.film, review))
 
     if request.POST.get("down"):  # When user downvotes
         if review.downvotes.filter(id=user.id).exists():

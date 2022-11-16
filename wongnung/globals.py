@@ -4,7 +4,7 @@ from django.core.cache import caches
 from django.http import HttpResponseForbidden
 from django_htmx.http import HttpResponseClientRedirect
 
-SEARCH_CACHE = caches["searches"]
+SEARCH_CACHE = caches["searches"]  # Cache for search results
 
 
 def htmx_endpoint(function, required_auth=False):

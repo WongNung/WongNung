@@ -1,0 +1,33 @@
+<div class="flex flex-auto h-[calc(100vh-80px)] overflow-hidden">
+    <div class="flex flex-col flex-auto w-full h-full rounded-md pr-4 self-center overflow-auto scrollbar">
+        <div class="flex flex-col divide-y divide-tag-yellow">
+            {% for bm in film_set %}
+            <div class="w-full h-full m-2 pt-4 flex flex-row">
+                <!--Film poster-->
+                <div class="flex flex-none w-32 h-full">
+                    <img class="object-contain"
+                     src="{{ bm.poster }}"
+                     alt="Film Poster"/>
+                </div>
+                <!--Film info.-->
+                <div class="font-primary flex flex-col px-5">
+                    <a class="text-white text-2xl hover:underline" href="{% url 'wongnung:film-details' bm.filmId %}">{{ bm.title }}</a>
+                    <div class="flex flex-row text-tag-yellow pt-2.5 items-center">
+                        <div class="text-lg font-body pr-2">{{ bm.year_released }} | Genres:</div>
+                        {% if bm.get_genres %}
+                            {% for genre in bm.get_genres %}
+                                <div class="rounded-3xl text-lg bg-transparent border-2 border-tag-yellow text-center text-tag-yellow px-2 mx-1">
+                                    {{ genre }}
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <span class="text-2xl">-</span>
+                        {% endif %}
+                    </div>
+                    <div class="text-white font-body pt-2.5">{{ bm.summary }}</div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
