@@ -44,7 +44,15 @@
             </span>
         </div>
         <div class="flex text-white hover:text-tag-yellow hover:underline">
-            <a href='{% url "wongnung:profile" %}'>{% if profile.display_name %} {{ profile.display_name }} {% else %} {{ user }} {% endif %}</a>
+            <a href='{% url "wongnung:profile" %}'>
+                {% if user.is_authenticated %}
+                    {% if profile.display_name %}
+                        {{ profile.display_name }}
+                    {% else %}
+                        {{ user }}
+                    {% endif %}
+                {% endif %}
+            </a>
         </div>
     </div>
 </nav>

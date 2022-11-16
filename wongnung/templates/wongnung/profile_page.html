@@ -3,31 +3,40 @@
 {% block c %}
 <div class="flex flex-row">
      <div class="w-96 h-screen bg-feed-grey flex flex-col divide-y divide-tag-yellow px-5">
-          <div class="font-primary text-white text-xl pt-6 pb-3 hover:cursor-pointer" title="Click here to set your profile"
-               hx-get='{% url "wongnung:profile-settings" %}'
-               hx-target="#ShowComponent"
-               hx-swap="innerHTML"
-               hx-trigger="click">
-               Profile settings
+          <div class="font-primary text-white text-xl pt-6 pb-3">
+               <span class="hover:cursor-pointer"
+                     hx-get='{% url "wongnung:profile-settings" %}'
+                     hx-target="#ShowComponent"
+                     hx-swap="innerHTML"
+                     hx-trigger="click"
+                     title="Click here to view your profile settings">
+               Profile Settings
+               </span>
           </div>
-          <div class="font-primary text-white text-xl py-3 hover:cursor-pointer" title="Click here to view your bookmarks"
-               hx-get='{% url "wongnung:bookmarks" %}'
-               hx-target="#ShowComponent"
-               hx-swap="innerHTML"
-               hx-trigger="click">
+          <div class="font-primary text-white text-xl py-3">
+               <span class="hover:cursor-pointer"
+                     hx-get='{% url "wongnung:bookmarks" %}'
+                     hx-target="#ShowComponent"
+                     hx-swap="innerHTML"
+                     hx-trigger="click"
+                     title="Click here to view your bookmarks">
                Bookmarks
+               </span>
           </div>
-          <div class="font-primary text-white text-xl py-3 hover:cursor-pointer" title="Click here to view about WongNung"
-               hx-get='{% url "wongnung:about-us" %}'
-               hx-target="#ShowComponent"
-               hx-swap="innerHTML"
-               hx-trigger="click">
+          <div class="font-primary text-white text-xl py-3">
+               <span class="hover:cursor-pointer"
+                     hx-get='{% url "wongnung:about-us" %}'
+                     hx-target="#ShowComponent"
+                     hx-swap="innerHTML"
+                     hx-trigger="click"
+                     title="Click here to view about WongNung">
                About WongNung
+               </span>
           </div>
-          <div class="font-primary text-white text-xl py-3" title="Click here to log out">
+          <div class="font-primary text-white text-xl py-3">
                <form action='{% url "account_logout" %}' method="post">
                     {% csrf_token %}
-                    <button>Log out</button>
+                    <button title="Click here to log out">Log out</button>
                </form>
           </div>
      </div>
