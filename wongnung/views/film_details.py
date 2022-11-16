@@ -1,4 +1,6 @@
+from django.http import Http404
 from django.shortcuts import render
+from django.urls import reverse
 
 from wongnung.globals import htmx_endpoint
 
@@ -16,6 +18,8 @@ def film_details_page(request, filmid):
 def show_film_component(request, filmid):
     """Renders a film component based on filmid."""
     film = Film.get_film(film_id=filmid)
+    if not film:
+        raise Http404()
     reviews = Review.objects.filter(film=film).order_by("-pub_date")
     context = {"film": film, "reviews": reviews}
     return render(request, "wongnung/film_component.html", context)

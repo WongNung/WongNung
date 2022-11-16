@@ -1,9 +1,10 @@
 from __future__ import annotations
 
-from typing import List, Optional
+from typing import List, Optional, Union
 
 import tmdbsimple as tmdb
 from django.db import models
+from requests import HTTPError
 
 
 class Film(models.Model):
@@ -97,7 +98,7 @@ class Film(models.Model):
         self.stars = ", ".join(stars)
 
     @classmethod
-    def get_film(cls: Film, film_id: str) -> Film:
+    def get_film(cls, film_id: str) -> Union[Film, None]:
         """Create and return Film object
 
         :param film_id: The ID of a specific film.
@@ -109,11 +110,14 @@ class Film(models.Model):
         try:
             film = cls.objects.get(pk=film_id)
         except cls.DoesNotExist:
-            # tmdbsimple: get movie from movie id
-            response_info = tmdb.Movies(num_id).info()
-            response_credits = tmdb.Movies(num_id).credits()
-            title = response_info["title"]
+            try:
+                # tmdbsimple: get movie from movie id
+                response_info = tmdb.Movies(num_id).info()
+                response_credits = tmdb.Movies(num_id).credits()
+            except HTTPError:
+                return None
 
+            title = response_info["title"]
             summary = response_info["overview"]
             if not summary:
                 summary = (
