@@ -1,8 +1,7 @@
 from django.http import HttpRequest
 from django.shortcuts import render
 
-from wongnung.globals import htmx_endpoint
-
+from ..globals import htmx_endpoint
 from ..models.review import Review
 
 

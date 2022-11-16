@@ -1,9 +1,7 @@
 from django.http import Http404
 from django.shortcuts import render
-from django.urls import reverse
 
-from wongnung.globals import htmx_endpoint
-
+from ..globals import htmx_endpoint
 from ..models.film import Film
 from ..models.review import Review
 

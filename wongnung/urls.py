@@ -1,8 +1,8 @@
 from django.urls import path
 
-from .views.fandom import join_fandom, leave_fandom, show_fandom
 
 # fmt: off
+from .views.fandom import join_fandom, leave_fandom, show_fandom
 from .views.feed import feed, get_feed
 from .views.film_details import film_details_page, show_film_component
 from .views.review import show_review_component

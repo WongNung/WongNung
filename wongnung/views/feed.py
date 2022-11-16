@@ -5,11 +5,10 @@ from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from wongnung.globals import htmx_endpoint_with_auth
-
 from ..feed import FeedSession
-from . import feed_manager
+from ..globals import htmx_endpoint_with_auth
 from ..models import Review
+from . import feed_manager
 
 
 @login_required

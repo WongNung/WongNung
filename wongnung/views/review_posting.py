@@ -1,8 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 
-from wongnung.globals import htmx_endpoint
-
 from ..models.film import Film
 from ..models.review import Review
 

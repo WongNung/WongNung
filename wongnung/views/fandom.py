@@ -5,10 +5,8 @@ from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from wongnung.globals import htmx_endpoint_with_auth
-from wongnung.models.review import Review
-
 from ..models.fandom import Fandom
+from ..models.review import Review
 
 
 def get_fandom(name: str) -> Fandom:
