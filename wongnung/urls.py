@@ -7,7 +7,7 @@ from .views.feed import feed, get_feed
 from .views.film_details import film_details_page, show_film_component
 from .views.review import show_review_component
 from .views.review_posting import post_review, post_review_page
-from .views.review_reporting import report, show_report_modal
+from .views.review_reporting import report, set_report_modal_state
 from .views.review_voting import vote
 from .views.search import cancel_search, search
 
@@ -37,10 +37,14 @@ htmx_paths = [
     path("post_review/<str:filmid>", post_review, name="post-review"),
     path("show_review_component/<int:pk>/vote", vote, name="vote"),
     path("show_review_component/<int:pk>/report", report, name="report"),
-    path("show_report_modal/<int:pk>", show_report_modal, name="report-modal"),
     path(
-        "show_report_modal/<int:pk>/cancel",
-        show_report_modal,
+        "report_modal/<int:pk>",
+        set_report_modal_state,
+        name="report-modal",
+    ),
+    path(
+        "report_modal/<int:pk>/cancel",
+        set_report_modal_state,
         {"cancel": "true"},
         name="report-modal-cancel",
     ),

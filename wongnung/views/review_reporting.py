@@ -34,7 +34,7 @@ def report(request, pk):
 
 @htmx_endpoint_with_auth
 @login_required
-def show_report_modal(request, pk, cancel=""):
+def set_report_modal_state(request, pk, cancel=""):
     """An endpoint for frontend to show/hide report modal."""
     review = get_object_or_404(Review, pk=pk)
     context = {"review": review}
