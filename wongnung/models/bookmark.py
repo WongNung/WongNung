@@ -33,6 +33,7 @@ class Bookmark(models.Model):
     content_object = GenericForeignKey("content_type", "object_id")
 
     class Meta:
+        """Create an index on content_type and object_id fields."""
         indexes = [
             models.Index(fields=["content_type", "object_id"]),
         ]

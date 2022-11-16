@@ -1,6 +1,7 @@
 """Construct Utilities for testing"""
 
 from django.contrib.auth.models import User
+from requests import HTTPError
 
 MATRIX = "603"
 
@@ -44,6 +45,10 @@ def get_missing_response_info(_):
         "overview": "",
         "poster_path": "",
     }
+
+
+def get_erroring_response_info(_):
+    raise HTTPError()
 
 
 def get_response_credits(_):

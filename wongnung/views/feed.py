@@ -1,11 +1,13 @@
+from typing import Optional
+
 from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.urls import reverse
 
-from wongnung.globals import htmx_endpoint_with_auth
-
 from ..feed import FeedSession
+from ..globals import htmx_endpoint_with_auth
+from ..models import Review
 from . import feed_manager
 
 
@@ -33,7 +35,7 @@ def get_feed(request):
     """Retrieves and renders feed component from feed session."""
     user_id = request.user.pk
     feed: FeedSession = feed_manager.get_feed_session(user_id, renew=False)
-    review = feed.pop()
+    review: Optional[Review] = feed.pop()
     if not review:
         return HttpResponse(
             """<span class="text-center text-white text-xl">The end.</span>"""

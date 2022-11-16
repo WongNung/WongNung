@@ -1,10 +1,5 @@
 from django.urls import path
 
-from wongnung.views.profile import (
-    profile_page,
-    profile_settings_component,
-    save_profile,
-)
 
 # fmt: off
 from .views.fandom import join_fandom, leave_fandom, show_fandom, fandom_page
@@ -12,13 +7,18 @@ from .views.feed import feed, get_feed
 from .views.film_details import film_details_page, show_film_component
 from .views.review import show_review_component
 from .views.review_posting import post_review, post_review_page
-from .views.review_reporting import report, show_report_modal
+from .views.review_reporting import report, set_report_modal_state
 from .views.review_voting import vote
 from .views.search import cancel_search, search
 from .views.bookmark import add_bookmark_view, delete_bookmark_view
 from .views.landing import show_landing_page
 from .views.bookmark_set import show_bookmarks, get_bookmarks_set
 from .views.about_us import about_us
+from wongnung.views.profile import (
+    profile_page,
+    profile_settings_component,
+    save_profile,
+)
 
 # fmt: on
 
@@ -50,12 +50,10 @@ htmx_paths = [
     path("post_review/<str:filmid>", post_review, name="post-review"),
     path("show_review_component/<int:pk>/vote", vote, name="vote"),
     path("show_review_component/<int:pk>/report", report, name="report"),
-    path("show_report_modal/<int:pk>", show_report_modal, name="report-modal"),
     path(
-        "show_report_modal/<int:pk>/cancel",
-        show_report_modal,
-        {"cancel": "true"},
-        name="report-modal-cancel",
+        "report_modal/<int:pk>",
+        set_report_modal_state,
+        name="report-modal",
     ),
     path("search", search, name="search"),
     path("cancel_search", cancel_search, name="cancel-search"),

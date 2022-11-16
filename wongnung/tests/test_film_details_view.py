@@ -1,10 +1,16 @@
 from unittest.mock import patch
+from django.http import Http404
 
 from django.test import Client, TestCase
 from django.urls import reverse
 
 from ..models.film import Film
-from .utils import get_response_credits, get_response_info, new_test_user
+from .utils import (
+    get_erroring_response_info,
+    get_response_credits,
+    get_response_info,
+    new_test_user,
+)
 
 
 class TestFilmDetailsView(TestCase):
@@ -34,3 +40,10 @@ class TestFilmDetailsView(TestCase):
         self.assertContains(resp, self.film.title)
         self.assertContains(resp, str(self.film.year_released))
         self.assertContains(resp, self.film.summary)
+
+    @patch("tmdbsimple.Movies.info", new=get_erroring_response_info)
+    def test_error_film_raises_404(self):
+        """If getting film has an error, Http404 is raised"""
+        url = reverse("wongnung:film-component", args=("1",))
+        resp = self.client.get(url, HTTP_HX_Request="true")
+        self.assertEqual(resp.status_code, 404)
