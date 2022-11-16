@@ -55,12 +55,6 @@ htmx_paths = [
         set_report_modal_state,
         name="report-modal",
     ),
-    path(
-        "report_modal/<int:pk>/cancel",
-        set_report_modal_state,
-        {"cancel": "true"},
-        name="report-modal-cancel",
-    ),
     path("search", search, name="search"),
     path("cancel_search", cancel_search, name="cancel-search"),
     path("get_feed", get_feed, name="get-feed"),
