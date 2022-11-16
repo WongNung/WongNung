@@ -6,12 +6,12 @@
 <html lang="en">
   <head>
     {% tailwind_css %}
-    <meta charset="utf-8">
-    <title>{% block title %}{% endblock %}</title>
+    <meta charset="utf-8" />
+    <title>{% block title %}{% endblock title %}</title>
   </head>
 
   <body class="bg-back-grey scrollbar">
-    {% block content %}{% endblock %}
+    {% block content %}{% endblock content %}
     <script type="text/javascript">
       const timeZoneName = Intl.DateTimeFormat().resolvedOptions().timeZone;
       document.cookie = 'timezone=' + encodeURIComponent(timeZoneName) + '; path=/';

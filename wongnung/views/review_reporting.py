@@ -4,7 +4,9 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 
 from wongnung.globals import htmx_endpoint_with_auth
+from wongnung.insights import UserReportsReview
 
+from . import user_insights
 from ..models.report import Report
 from ..models.review import Review
 
@@ -27,9 +29,8 @@ def report(request, pk):
             review=review, user=request.user, content=content
         )
         report.save()
-    return HttpResponseRedirect(
-        reverse("wongnung:review-component", args=(review.pk,))
-    )
+    user_insights.push(request.user, UserReportsReview(review.film, review))
+    return show_report_modal(request, pk=pk, cancel="true")
 
 
 @htmx_endpoint_with_auth
