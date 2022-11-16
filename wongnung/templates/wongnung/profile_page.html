@@ -25,7 +25,10 @@
                About WongNung
           </div>
           <div class="font-primary text-white text-xl py-3" title="Click here to log out">
-               <a href='{% url "logout" %}'>Log out</a>
+               <form action='{% url "account_logout" %}' method="post">
+                    {% csrf_token %}
+                    <button>Log out</button>
+               </form>
           </div>
      </div>
      <div class="bg-feed-grey mx-6 w-full h-screen">

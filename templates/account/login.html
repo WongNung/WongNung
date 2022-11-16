@@ -29,9 +29,9 @@ Sign In
                 <form action="{% provider_login_url 'google' %}" method="post">
                     {% csrf_token %}
                     <button class="flex flex-row h-16 w-70 m-2 mr-6 px-7 bg-component-red text-white
-                    font-primary text-lg text-center rounded-xl hover:drop-shadow-md hover:bg-[#d0d0d0]">
+                    font-primary text-lg text-center rounded-xl hover:drop-shadow-md hover:bg-[#d0d0d0]" title="Login with Google">
                         <div>
-                            <img class="w-10 h-10 mr-4 mt-3 rounded-full border-[6px] border-white bg-white "
+                            <img class="w-10 h-10 mr-4 mt-3 rounded-full border-[6px] border-white bg-white " alt="Google"
                              src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png"/>
                         </div>
                         <div class="mt-4">
@@ -45,9 +45,9 @@ Sign In
                 <form action="{% provider_login_url 'github' method='js_sdk' %}?next=https://github.com" method="post">
                     {% csrf_token %}
                     <button class="flex flex-row h-16 w-70 m-2 mr-6 px-7 bg-black text-white
-                    font-primary text-lg text-center rounded-xl hover:drop-shadow-md hover:bg-[#d0d0d0]">
+                    font-primary text-lg text-center rounded-xl hover:drop-shadow-md hover:bg-[#d0d0d0]" title="Login with GitHub">
                         <div>
-                            <img class="w-10 h-10 mr-4 mt-3 rounded-full border-[6px] border-white bg-white "
+                            <img class="w-10 h-10 mr-4 mt-3 rounded-full border-[6px] border-white bg-white " alt="GitHub"
                              src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg"/>
                         </div>
                         <div class="mt-4">
@@ -61,9 +61,9 @@ Sign In
                 <form action="{% provider_login_url 'discord' %}" method="post">
                     {% csrf_token %}
                     <button class="flex flex-row h-16 w-70 m-2 mr-6 px-7 bg-[#7289da] text-white
-                    font-primary text-lg text-center rounded-xl hover:drop-shadow-md hover:bg-[#d0d0d0]">
+                    font-primary text-lg text-center rounded-xl hover:drop-shadow-md hover:bg-[#d0d0d0]" title="Login with Discord">
                         <div>
-                            <img class="w-10 h-10 mr-4 mt-3 rounded-full border-[6px] border-white bg-white "
+                            <img class="w-10 h-10 mr-4 mt-3 rounded-full border-[6px] border-white bg-white " alt="Discord"
                              src="https://www.svgrepo.com/show/353655/discord-icon.svg"/>
                         </div>
                         <div class="mt-4">
