@@ -1,5 +1,5 @@
 <div id="ReportModal{{ review.id }}"
-     class="{% if cancel %} hidden{% endif %} bg-black/50 fixed overflow-x-hidden overflow-y-auto z-50 top-0 left-0 h-full w-full">
+     class="{% if cancel %} hidden {% endif %} bg-black/50 fixed overflow-x-hidden overflow-y-auto z-50 top-0 left-0 h-full w-full">
     <div class="flex justify-center items-center">
         <div class="bg-user-grey absolute px-4 w-1/2 rounded-lg top-1/3">
             <div class="flex flex-col divide-y">
@@ -13,6 +13,9 @@
                         <li>
                             <b>Review Content:</b><br />
                             {{ review.content|truncatewords:10 }}
+                        </li>
+                        <li class="text-tag-yellow">
+                            <i>*You won't be seeing reviews by this author in your feed for a while</i>
                         </li>
                     </ul>
                 </span>

@@ -88,3 +88,6 @@ dmypy.json
 # Node.js
 node_modules/
 
+# fixtures
+social_app.json
+
