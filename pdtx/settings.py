@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 import os
+import json
 from pathlib import Path
 
 import tmdbsimple as tmdb
@@ -26,6 +27,7 @@ typings.setup()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+OAUTH_FILE = "oauth_credentials.json"
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
@@ -227,5 +229,27 @@ SOCIALACCOUNT_PROVIDERS = {
         },
     },
 }
+
+if os.path.exists(BASE_DIR / OAUTH_FILE):
+    with open(BASE_DIR / OAUTH_FILE) as oauth_file:
+        CREDENTIALS = json.load(oauth_file)
+
+    for auth_provider in tuple(CREDENTIALS.keys()):
+        if any(
+            (
+                not CREDENTIALS[auth_provider],
+                not CREDENTIALS[auth_provider]["client_id"],
+                not CREDENTIALS[auth_provider]["secret"],
+            )
+        ):
+            continue
+        SOCIALACCOUNT_PROVIDERS[auth_provider].update(
+            {
+                "APP": {
+                    "client_id": CREDENTIALS[auth_provider]["client_id"],
+                    "secret": CREDENTIALS[auth_provider]["secret"],
+                },
+            }
+        )
 
 SOCIALACCOUNT_ADAPTER = "wongnung.adapter.CancellableAccountAdapter"

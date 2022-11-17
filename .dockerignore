@@ -24,3 +24,4 @@ staticfiles/
 
 *.md
 *.yml
+*.example

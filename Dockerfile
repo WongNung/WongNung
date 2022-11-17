@@ -10,6 +10,12 @@ ENV NPM_BIN_PATH=/usr/bin/npm
 # Set working directory to /app
 WORKDIR /app
 
+# Copy everything to workpath
+COPY . .
+
+# Test the existance of required files
+RUN test -f oauth_credentials.json
+
 # Install packages
 RUN apt-get update \
     && apt-get install -y --no-install-recommends curl \
@@ -20,11 +26,7 @@ RUN apt-get update \
     libpq-dev
 
 # Install Python dependencies
-COPY requirements/* requirements/
 RUN pip3 install --no-cache-dir -r requirements/prod.txt
-
-# Copy everything to workpath
-COPY . .
 
 # Install node dependencies, build Tailwind and remove node packages + src
 WORKDIR /app/theme/static_src
