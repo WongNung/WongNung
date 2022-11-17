@@ -2,12 +2,12 @@ from django.http import Http404
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
-from wongnung.globals import htmx_endpoint
-from wongnung.insights import UserSeesFilm
+from ..globals import htmx_endpoint
+from ..insights import UserSeesFilm
 from . import user_insights
 from ..models.film import Film
 from ..models.review import Review
-from wongnung.models.bookmark import Bookmark
+from ..models.bookmark import Bookmark
 
 
 def film_details_page(request, filmid):

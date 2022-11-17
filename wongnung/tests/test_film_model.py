@@ -6,6 +6,7 @@ from django.test import TestCase
 from ..models.film import Film
 from .utils import (
     MATRIX,
+    get_erroring_response_info,
     get_incomplete_response_info,
     get_missing_response_info,
     get_response_credits,
@@ -132,3 +133,10 @@ class FilmModelTests(TestCase):
         """
         incomplete_film = Film.get_film("0")
         self.assertIsNone(incomplete_film.year_released)
+
+    @patch("tmdbsimple.Movies.info", new=get_erroring_response_info)
+    def test_error_while_creation(self):
+        """
+        If there's an error in film creation, return None
+        """
+        self.assertIsNone(Film.get_film("0"))

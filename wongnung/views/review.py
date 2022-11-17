@@ -4,8 +4,7 @@ from django.http import HttpRequest
 from django.shortcuts import render
 from django.urls import reverse
 
-from wongnung.globals import htmx_endpoint
-
+from ..globals import htmx_endpoint
 from ..models.review import Review
 from wongnung.models.bookmark import Bookmark
 

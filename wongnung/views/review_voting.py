@@ -3,8 +3,8 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
 
-from wongnung.globals import htmx_endpoint_with_auth
-from wongnung.insights import UserUpvotesReview
+from ..globals import htmx_endpoint_with_auth
+from ..insights import UserUpvotesReview
 
 from ..models.review import Review
 from . import user_insights

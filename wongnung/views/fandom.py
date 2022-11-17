@@ -7,13 +7,13 @@ from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
-from wongnung.insights import UserJoinsFandom
+from ..insights import UserJoinsFandom
 
-from wongnung.models.review import Review
+from ..models.review import Review
 
 from ..models.fandom import Fandom
 from . import user_insights
-from wongnung.models.bookmark import Bookmark
+from ..models.bookmark import Bookmark
 
 
 def get_fandom(name: str) -> Fandom:
