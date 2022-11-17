@@ -23,10 +23,18 @@ jobs:
         with:
           repository: WongNung/ci-utils
           path: "./ci-utils"
+      - uses: actions/checkout@v3
+      - name: Checkout secret-items
+        uses: actions/checkout@v3
+        with:
+          repository: WongNung/secret-items
+          token: ${{ secrets.GH_PAT }}
+          path: "./secrets"
       - name: Run container-structure-test
         env:
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
           TMDB_API_KEY: ${{ secrets.TMDB_API_KEY }}
         run: |
+          cp ./secrets/oauth-credentials.json .
           cp ./ci-utils/test-dockerfile .
           ./test-dockerfile wongnung:testdrive SECRET_KEY TMDB_API_KEY
