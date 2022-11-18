@@ -24,7 +24,7 @@ RUN apt-get update \
     gcc \
     python3-dev \
     libpq-dev \
-    vi
+    vim
 
 # Install Python dependencies
 RUN pip3 install --no-cache-dir -r requirements/prod.txt
