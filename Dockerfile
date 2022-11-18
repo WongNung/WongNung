@@ -23,7 +23,8 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends nodejs \
     gcc \
     python3-dev \
-    libpq-dev
+    libpq-dev \
+    vi
 
 # Install Python dependencies
 RUN pip3 install --no-cache-dir -r requirements/prod.txt
