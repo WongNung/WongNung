@@ -31,8 +31,8 @@
                 <input type="hidden" name="url" value="wongnung:review-component" />
                 <input type="hidden" name="type" value="review" />
                     {% csrf_token %}
-                    <button type="submit" name="bookmark" value="{{ review.id }}">
-                        <div class="{% if bookmark_status %} text-tag-yellow {% else %} text-post-grey {% endif %} hover:drop-shadow-lg">
+                    <button class="review{{ review.id }}-bookmark-button" type="submit" name="bookmark" value="{{ review.id }}">
+                        <div class="{% if bookmark_status %} review{{ review.id }}-bookmarked-text-tag-yellow text-tag-yellow {% else %} review{{ review.id }}-bookmarked-text-tag-grey text-post-grey {% endif %} hover:drop-shadow-lg">
                             <svg class="h-10 relative" viewBox="0 0 200 322" fill="currentColor"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd"
