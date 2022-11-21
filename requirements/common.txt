@@ -6,3 +6,4 @@ django-types~=0.16.0
 pytz
 tmdbsimple
 django-allauth
+selenium>=4.6.0
