@@ -4,8 +4,12 @@ from django.test.client import Client
 from django.urls import reverse
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 
+<<<<<<< HEAD
 from selenium.webdriver import Chrome, ChromeOptions
 from selenium.webdriver.common.by import By
+=======
+from ..models.fandom import Fandom
+>>>>>>> add-e2e-test
 
 from wongnung.models.film import Film
 from wongnung.models.review import Review

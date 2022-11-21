@@ -2,8 +2,8 @@ from re import findall
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 
-from wongnung.globals import htmx_endpoint
-from wongnung.insights import UserWritesReview
+from ..globals import htmx_endpoint
+from ..insights import UserWritesReview
 
 from ..models.film import Film
 from ..models.review import Review
