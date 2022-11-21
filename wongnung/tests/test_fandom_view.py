@@ -109,6 +109,7 @@ class TestFandomE2E(StaticLiveServerTestCase):
         )
 
         self.browser.refresh()
+        time.sleep(1)
 
         self.assertIn(
             film.title,
