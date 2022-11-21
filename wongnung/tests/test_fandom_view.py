@@ -110,6 +110,8 @@ class TestFandomE2E(StaticLiveServerTestCase):
 
         self.browser.refresh()
 
+        # HTMX elements don't scroll into view automatically,
+        # below is a code that will scroll Selenium to the element
         review_position = self.browser.find_element(
             By.CLASS_NAME, f"review{review.pk}"
         )
