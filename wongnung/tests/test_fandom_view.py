@@ -170,5 +170,3 @@ class TestFandomE2E(StaticLiveServerTestCase):
             str(naturaltime(review.pub_date)),
             self.browser.find_element(By.ID, "lastActive").text,
         )
-
-    # last active
