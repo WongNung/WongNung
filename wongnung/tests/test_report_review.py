@@ -64,7 +64,7 @@ class ReportReviewTest(StaticLiveServerTestCase):
         self.browser.refresh()
 
     def test_cancel_report_review(self):
-        """If user hit the cancel button report modal will disappear."""
+        """If user click the cancel button report modal will disappear."""
         # login, then go to feed page
         self.browser.get(self.live_server_url)
         self.login()
@@ -93,8 +93,11 @@ class ReportReviewTest(StaticLiveServerTestCase):
                 "class"
             ),
         )
-    
+
     def test_report_review(self):
+        """If review is reported by user, all reviews from review's
+        author will disappear from user feed.
+        """
         # login, then go to feed page
         self.browser.get(self.live_server_url)
         self.login()
@@ -119,12 +122,18 @@ class ReportReviewTest(StaticLiveServerTestCase):
         submit_button[0].click()
         # input reason to report, then submit it.
         time.sleep(0.1)
-        self.browser.find_element(By.ID, report_modal_id).find_element(By.TAG_NAME, "textarea").click()
-        self.browser.find_element(By.ID, report_modal_id).find_element(By.TAG_NAME, "textarea").send_keys("Test report")
+        self.browser.find_element(By.ID, report_modal_id).find_element(
+            By.TAG_NAME, "textarea"
+        ).click()
+        self.browser.find_element(By.ID, report_modal_id).find_element(
+            By.TAG_NAME, "textarea"
+        ).send_keys("Test report")
         submit_button = list(
             filter(
                 lambda elements: elements.text == "Report",
-                self.browser.find_element(By.ID, report_modal_id).find_elements(By.TAG_NAME, "button"),
+                self.browser.find_element(
+                    By.ID, report_modal_id
+                ).find_elements(By.TAG_NAME, "button"),
             )
         )
         submit_button[0].click()
@@ -135,7 +144,8 @@ class ReportReviewTest(StaticLiveServerTestCase):
                 "class"
             ),
         )
-        # After refreshing the browser, all reviews from review's author that the user has already reported will disappear.
+        # After refreshing the browser, all reviews from review's author
+        # that the user has already reported will disappear.
         self.browser.refresh()
         time.sleep(0.1)
         elements = self.browser.find_elements(By.TAG_NAME, "span")
@@ -144,4 +154,3 @@ class ReportReviewTest(StaticLiveServerTestCase):
             if "review" in element.get_attribute("class"):
                 review_list += [element.get_attribute("class")]
         self.assertEqual(1, len(review_list))
-
