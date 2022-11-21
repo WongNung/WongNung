@@ -112,6 +112,8 @@ class TestFandomE2E(StaticLiveServerTestCase):
         self.browser.refresh()
         time.sleep(1)
 
+        print(self.browser.page_source)
+
         review_html = self.browser.find_element(
             By.CLASS_NAME, f"review{review.pk}"
         ).text
