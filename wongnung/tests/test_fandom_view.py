@@ -53,8 +53,9 @@ class TestFandomE2E(StaticLiveServerTestCase):
         opts.add_argument("--headless")
         opts.add_argument("--log-level=3")
         cls.browser = Chrome(options=opts)
-        cls.browser.implicitly_wait(3)
-        cls.browser.set_page_load_timeout(5)
+        cls.browser.implicitly_wait(10)
+        cls.browser.set_page_load_timeout(15)
+        cls.browser.maximize_window()
 
     @classmethod
     def tearDownClass(cls):
@@ -111,19 +112,14 @@ class TestFandomE2E(StaticLiveServerTestCase):
         self.browser.refresh()
         time.sleep(1)
 
-        self.assertIn(
-            film.title,
-            self.browser.find_element(
-                By.CLASS_NAME, f"review{review.pk}"
-            ).text,
-        )
+        review_html = self.browser.find_element(
+            By.CLASS_NAME, f"review{review.pk}"
+        ).text
 
-        self.assertIn(
-            review.content,
-            self.browser.find_element(
-                By.CLASS_NAME, f"review{review.pk}"
-            ).text,
-        )
+        print(review_html)
+
+        self.assertIn(film.title, review_html)
+        self.assertIn(review.content, review_html)
 
     def test_join_leave_fandom(self):
         """When joining or leaving fandom, it should update the join/leave button"""
