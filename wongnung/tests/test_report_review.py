@@ -19,7 +19,7 @@ class ReportReviewTest(StaticLiveServerTestCase):
     def setUpClass(cls):
         super().setUpClass()
         options = webdriver.ChromeOptions()
-        # options.add_argument("--headless")
+        options.add_argument("--headless")
         cls.browser = webdriver.Chrome(options=options)
         cls.browser.implicitly_wait(30)
         cls.browser.set_page_load_timeout(30)
@@ -46,6 +46,9 @@ class ReportReviewTest(StaticLiveServerTestCase):
         self.review_2 = Review.objects.create(
             film=self.film, content="This is review for report testing (2)"
         )
+        self.review_3 = Review.objects.create(
+            film=self.film, content="This is review for report testing (3)"
+        )
 
     def login(self):
         self.client.login(username=self.username, password=self.password)
@@ -61,7 +64,7 @@ class ReportReviewTest(StaticLiveServerTestCase):
         self.browser.refresh()
 
     def test_cancel_report_review(self):
-        """If user hit the cancel button it will disappear."""
+        """If user hit the cancel button report modal will disappear."""
         # login, then go to feed page
         self.browser.get(self.live_server_url)
         self.login()
@@ -90,3 +93,55 @@ class ReportReviewTest(StaticLiveServerTestCase):
                 "class"
             ),
         )
+    
+    def test_report_review(self):
+        # login, then go to feed page
+        self.browser.get(self.live_server_url)
+        self.login()
+        self.browser.get(self.live_server_url + reverse("wongnung:feed"))
+        # click report button on review component
+        review_classname = f"review{self.review_2.id}"
+        report_button_classname = f"reportReview{self.review_2.id}"
+        self.browser.find_element(
+            By.CLASS_NAME, review_classname
+        ).find_element(By.CLASS_NAME, report_button_classname).click()
+        time.sleep(0.1)
+        # find review's report modal
+        report_modal_id = f"ReportModal{self.review_2.id}"
+        report_modal = self.browser.find_element(By.ID, report_modal_id)
+        # if user submit report without typing reason, nothing happen.
+        submit_button = list(
+            filter(
+                lambda elements: elements.text == "Report",
+                report_modal.find_elements(By.TAG_NAME, "button"),
+            )
+        )
+        submit_button[0].click()
+        # input reason to report, then submit it.
+        time.sleep(0.1)
+        self.browser.find_element(By.ID, report_modal_id).find_element(By.TAG_NAME, "textarea").click()
+        self.browser.find_element(By.ID, report_modal_id).find_element(By.TAG_NAME, "textarea").send_keys("Test report")
+        submit_button = list(
+            filter(
+                lambda elements: elements.text == "Report",
+                self.browser.find_element(By.ID, report_modal_id).find_elements(By.TAG_NAME, "button"),
+            )
+        )
+        submit_button[0].click()
+        # after user submit the report, report modal will disappear.
+        self.assertIn(
+            "hidden",
+            self.browser.find_element(By.ID, report_modal_id).get_attribute(
+                "class"
+            ),
+        )
+        # After refreshing the browser, all reviews from review's author that the user has already reported will disappear.
+        self.browser.refresh()
+        time.sleep(0.1)
+        elements = self.browser.find_elements(By.TAG_NAME, "span")
+        review_list = []
+        for element in elements:
+            if "review" in element.get_attribute("class"):
+                review_list += [element.get_attribute("class")]
+        self.assertEqual(1, len(review_list))
+
