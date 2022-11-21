@@ -184,7 +184,7 @@ class BookmarkViewTest(StaticLiveServerTestCase):
         review_bookmark = list(
             filter(
                 lambda elements: elements.text == "Reviews",
-                self.browser.find_elements(By.TAG_NAME, "div")
+                self.browser.find_elements(By.TAG_NAME, "div"),
             )
         )
         self.assertTrue(review_bookmark)
@@ -194,13 +194,13 @@ class BookmarkViewTest(StaticLiveServerTestCase):
         time.sleep(1)
         # check if a review exist in profile bookmark
         self.assertTrue(
-            self.browser.find_element(By.CLASS_NAME, f'review{self.review.id}')
+            self.browser.find_element(By.CLASS_NAME, f"review{self.review.id}")
         )
         # check fandom bookmark
         fandom_bookmark = list(
             filter(
                 lambda elements: elements.text == "Fandoms",
-                self.browser.find_elements(By.TAG_NAME, "div")
+                self.browser.find_elements(By.TAG_NAME, "div"),
             )
         )
         self.assertTrue(fandom_bookmark)
@@ -212,4 +212,3 @@ class BookmarkViewTest(StaticLiveServerTestCase):
         self.assertTrue(
             self.browser.find_element(By.PARTIAL_LINK_TEXT, self.fandom.name)
         )
-
