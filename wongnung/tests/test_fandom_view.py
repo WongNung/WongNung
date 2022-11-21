@@ -51,7 +51,6 @@ class TestFandomE2E(StaticLiveServerTestCase):
         super().setUpClass()
         opts = ChromeOptions()
         opts.add_argument("--headless")
-        opts.add_argument("--log-level=3")
         cls.browser = Chrome(options=opts)
         cls.browser.implicitly_wait(30)
         cls.browser.set_page_load_timeout(30)
@@ -110,7 +109,7 @@ class TestFandomE2E(StaticLiveServerTestCase):
         )
 
         self.browser.refresh()
-        time.sleep(1)
+        time.sleep(3)
 
         print(self.browser.page_source)
 
