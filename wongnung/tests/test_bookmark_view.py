@@ -102,7 +102,7 @@ class BookmarkViewTest(StaticLiveServerTestCase):
         # initial bookmark button color should be grey
         bookmark_button_class_name = f"review{self.review.id}-bookmark-button"
         self.assertIn(
-            f"review{self.review.id}-bookmarked-text-tag-grey",
+            f"review{self.review.id}-bookmark-text-tag-grey",
             self.browser.find_element(
                 By.CLASS_NAME, bookmark_button_class_name
             )
@@ -115,7 +115,7 @@ class BookmarkViewTest(StaticLiveServerTestCase):
         ).click()
         time.sleep(1)
         self.assertIn(
-            f"review{self.review.id}-bookmarked-text-tag-yellow",
+            f"review{self.review.id}-bookmark-text-tag-yellow",
             self.browser.find_element(
                 By.CLASS_NAME, bookmark_button_class_name
             )
