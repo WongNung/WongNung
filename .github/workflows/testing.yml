@@ -50,11 +50,12 @@ jobs:
       - name: Make Django migrations
         run: |
           python ./manage.py migrate
-      - name: Test and generate coverage report
+      - name: Run tests in headless mode
+        uses: GabrielBB/xvfb-action@v1
+        with:
+          run: coverage run ./manage.py test wongnung
+      - name: Collect coverage report
         run: |
-          export DISPLAY=:99
-          sudo Xvfb -ac :99 -screen 0 1280x1024x24 > /dev/null 2>&1
-          coverage run ./manage.py test wongnung
           coverage report --sort=miss -m
           coverage xml -q
       - name: Upload coverage report to Codecov
