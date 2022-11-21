@@ -3,10 +3,8 @@ from unittest.mock import patch
 from selenium import webdriver
 from django.test.client import Client
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
 from wongnung.models.film import Film
 from wongnung.models.review import Review
-from wongnung.models.report import Report
 from django.urls import reverse
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from .utils import get_response_credits, get_response_info, new_test_user
