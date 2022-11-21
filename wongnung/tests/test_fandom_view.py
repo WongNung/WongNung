@@ -119,8 +119,6 @@ class TestFandomE2E(StaticLiveServerTestCase):
             By.CLASS_NAME, f"review{review.pk}"
         ).text
 
-        print(review_html)
-
         self.assertIn(film.title, review_html)
         self.assertIn(review.content, review_html)
 
