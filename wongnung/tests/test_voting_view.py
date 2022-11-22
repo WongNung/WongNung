@@ -1,6 +1,6 @@
 from unittest.mock import patch
 
-from django.test import Client, TestCase, override_settings
+from django.test import Client, TestCase
 from django.urls import reverse
 
 from ..models.film import Film
@@ -153,7 +153,7 @@ class TestVotingE2E(StaticLiveServerTestCase):
             "text-post-grey",
             self.browser.find_element(
                 By.CLASS_NAME, f"review{self.review_2.id}-upvote-button"
-            ).find_element(By.TAG_NAME, "div").get_attribute("class"),)
+            ).find_element(By.TAG_NAME, "div").get_attribute("class"), )
         self.assertIn(
             "text-post-grey",
             self.browser.find_element(
@@ -228,3 +228,60 @@ class TestVotingE2E(StaticLiveServerTestCase):
                 By.CLASS_NAME, f"review{self.review_1.id}-downvote-button"
             ).find_element(By.TAG_NAME, "div").get_attribute("class"), )
 
+    def test_upvote_num_of_votes(self):
+        """When clicking upvote button the number of votes should increase by 1."""
+        self.browser.get(self.live_server_url)
+        self.login()
+        self.browser.get(
+            self.live_server_url
+            + reverse("wongnung:film-details", args=("0",))
+        )
+
+        review_1_div = self.browser.find_element(By.CLASS_NAME, f"review{self.review_1.id}")
+        self.browser.execute_script("arguments[0].scrollIntoView();", review_1_div)
+
+        time.sleep(1)
+
+        # test upvote button
+        self.browser.find_element(
+            By.CLASS_NAME, f"review{self.review_2.id}-upvote-button"
+        ).click()
+        time.sleep(1)
+        votes_num = self.browser.find_element(By.CLASS_NAME, f"review{self.review_2.id}-votes").text
+        self.assertEqual('1', votes_num)
+
+        self.browser.find_element(
+            By.CLASS_NAME, f"review{self.review_1.id}-upvote-button"
+        ).click()
+        time.sleep(1)
+        votes_num = self.browser.find_element(By.CLASS_NAME, f"review{self.review_1.id}-votes").text
+        self.assertEqual('1', votes_num)
+
+    def test_downvote_num_of_votes(self):
+        """When clicking downvote button the number of votes should decrease by 1."""
+        self.browser.get(self.live_server_url)
+        self.login()
+        self.browser.get(
+            self.live_server_url
+            + reverse("wongnung:film-details", args=("0",))
+        )
+
+        review_1_div = self.browser.find_element(By.CLASS_NAME, f"review{self.review_1.id}")
+        self.browser.execute_script("arguments[0].scrollIntoView();", review_1_div)
+
+        time.sleep(1)
+
+        # test downvote button
+        self.browser.find_element(
+            By.CLASS_NAME, f"review{self.review_2.id}-downvote-button"
+        ).click()
+        time.sleep(1)
+        votes_num = self.browser.find_element(By.CLASS_NAME, f"review{self.review_2.id}-votes").text
+        self.assertEqual('-1', votes_num)
+
+        self.browser.find_element(
+            By.CLASS_NAME, f"review{self.review_1.id}-downvote-button"
+        ).click()
+        time.sleep(1)
+        votes_num = self.browser.find_element(By.CLASS_NAME, f"review{self.review_1.id}-votes").text
+        self.assertEqual('-1', votes_num)
