@@ -72,7 +72,7 @@ class BookmarkViewTest(StaticLiveServerTestCase):
         self.browser.find_element(
             By.CLASS_NAME, bookmark_button_class_name
         ).click()
-        time.sleep(1)
+        time.sleep(0.5)
         self.assertIn(
             f"film{self.film_id}-bookmark-yellow-tag",
             self.browser.find_element(
@@ -82,11 +82,11 @@ class BookmarkViewTest(StaticLiveServerTestCase):
             .get_attribute("class"),
         )
         # after being un-bookmarked bookmark button color should be grey
-        self.browser.implicitly_wait(10)
+        self.browser.refresh()
         self.browser.find_element(
             By.CLASS_NAME, bookmark_button_class_name
         ).click()
-        time.sleep(1)
+        time.sleep(0.5)
         self.assertIn(
             f"film{self.film_id}-bookmark-grey-tag",
             self.browser.find_element(
@@ -117,7 +117,7 @@ class BookmarkViewTest(StaticLiveServerTestCase):
         self.browser.find_element(
             By.CLASS_NAME, bookmark_button_class_name
         ).click()
-        time.sleep(1)
+        time.sleep(0.5)
         self.assertIn(
             f"review{self.review.id}-bookmark-text-tag-yellow",
             self.browser.find_element(
@@ -130,7 +130,7 @@ class BookmarkViewTest(StaticLiveServerTestCase):
         self.browser.find_element(
             By.CLASS_NAME, bookmark_button_class_name
         ).click()
-        time.sleep(1)
+        time.sleep(0.5)
         self.assertIn(
             f"review{self.review.id}-bookmark-text-tag-grey",
             self.browser.find_element(
@@ -156,7 +156,7 @@ class BookmarkViewTest(StaticLiveServerTestCase):
         self.browser.find_element(
             By.CLASS_NAME, bookmark_button_class_name
         ).click()
-        time.sleep(1)
+        time.sleep(0.5)
         self.assertIn(
             f"fandom{self.fandom_name}-bookmarked-text-tag-yellow",
             self.browser.find_element(
@@ -169,7 +169,7 @@ class BookmarkViewTest(StaticLiveServerTestCase):
         self.browser.find_element(
             By.CLASS_NAME, bookmark_button_class_name
         ).click()
-        time.sleep(1)
+        time.sleep(0.5)
         self.assertIn(
             f"fandom{self.fandom_name}-bookmarked-text-tag-grey",
             self.browser.find_element(
@@ -199,7 +199,7 @@ class BookmarkViewTest(StaticLiveServerTestCase):
         self.assertIsNotNone(profile_bookmark)
         profile_bookmark[0].click()
         # check film bookmark
-        time.sleep(1)
+        time.sleep(0.5)
         # click Films bookmark radio button
         film_bookmark = list(
             filter(
@@ -210,7 +210,7 @@ class BookmarkViewTest(StaticLiveServerTestCase):
         self.assertTrue(film_bookmark)
         self.assertEqual(1, len(film_bookmark))
         film_bookmark[0].click()
-        time.sleep(1)
+        time.sleep(0.5)
         # scroll down film
         film_element = self.browser.find_element(
             By.PARTIAL_LINK_TEXT, self.film.title
@@ -233,7 +233,7 @@ class BookmarkViewTest(StaticLiveServerTestCase):
         self.assertEqual(1, len(review_bookmark))
         # click Reviews bookmark radio button
         review_bookmark[0].click()
-        time.sleep(1)
+        time.sleep(0.5)
         # scroll down review
         review_element = self.browser.find_element(
             By.CLASS_NAME, f"review{self.review.id}"
@@ -256,7 +256,7 @@ class BookmarkViewTest(StaticLiveServerTestCase):
         self.assertEqual(1, len(fandom_bookmark))
         # click Fandoms bookmark radio button
         fandom_bookmark[0].click()
-        time.sleep(1)
+        time.sleep(0.5)
         # scroll down fandom
         fandom_element = self.browser.find_element(
             By.PARTIAL_LINK_TEXT, self.fandom.name
