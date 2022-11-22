@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     services:
       postgres:
-        image: 'bitnami/postgres:latest'
+        image: 'bitnami/postgresql:latest'
         env:
           POSTGRESQL_DATABASE: postgres
           POSTGRESQL_USERNAME: postgres
