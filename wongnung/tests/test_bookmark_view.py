@@ -99,6 +99,7 @@ class BookmarkViewTest(StaticLiveServerTestCase):
             self.live_server_url
             + reverse("wongnung:film-details", args=(self.film_id,))
         )
+        time.sleep(1)
         # scroll down review element
         review_element = self.browser.find_element(
             By.CLASS_NAME, f"review{self.review.id}"
@@ -106,7 +107,6 @@ class BookmarkViewTest(StaticLiveServerTestCase):
         self.browser.execute_script(
             "arguments[0].scrollIntoView();", review_element
         )
-
         # initial bookmark button color should be grey
         bookmark_button_class_name = f"review{self.review.id}-bookmark-button"
         self.assertIn(
