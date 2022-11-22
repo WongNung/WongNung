@@ -3,7 +3,7 @@ from unittest.mock import patch
 from selenium import webdriver
 from django.test.client import Client
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
+from selenium.common.exceptions import NoSuchElementException
 from wongnung.models.film import Film
 from wongnung.models.review import Review
 from wongnung.models.report import Report
@@ -21,7 +21,7 @@ class ReportReviewTest(StaticLiveServerTestCase):
         options = webdriver.ChromeOptions()
         options.add_argument("--headless")
         cls.browser = webdriver.Chrome(options=options)
-        cls.browser.implicitly_wait(30)
+        cls.browser.implicitly_wait(3)
         cls.browser.set_page_load_timeout(30)
 
     @classmethod
@@ -72,9 +72,17 @@ class ReportReviewTest(StaticLiveServerTestCase):
 
         # scroll down the feed untill every review show up.
         feed_id = "feedContinue"
-        elements = self.browser.find_elements(By.ID, feed_id)
-        for element in elements:
-            element.location_once_scrolled_into_view
+        while True:
+            try:
+                element = self.browser.find_element(By.ID, feed_id)
+                (
+                    webdriver.ActionChains(self.browser)
+                    .scroll_to_element(element)
+                    .perform()
+                )
+                time.sleep(1)
+            except NoSuchElementException:
+                break
 
         # click report button on review component
         review_classname = f"review{self.review_2.id}"
@@ -83,6 +91,7 @@ class ReportReviewTest(StaticLiveServerTestCase):
             By.CLASS_NAME, review_classname
         ).find_element(By.CLASS_NAME, report_button_classname).click()
         time.sleep(0.2)
+
         # find review's report modal
         report_modal_id = f"ReportModal{self.review_2.id}"
         report_modal = self.browser.find_element(By.ID, report_modal_id)
@@ -110,9 +119,17 @@ class ReportReviewTest(StaticLiveServerTestCase):
 
         # scroll down the feed untill every review show up.
         feed_id = "feedContinue"
-        elements = self.browser.find_elements(By.ID, feed_id)
-        for element in elements:
-            element.location_once_scrolled_into_view
+        while True:
+            try:
+                element = self.browser.find_element(By.ID, feed_id)
+                (
+                    webdriver.ActionChains(self.browser)
+                    .scroll_to_element(element)
+                    .perform()
+                )
+                time.sleep(1)
+            except NoSuchElementException:
+                break
 
         # click report button on review component
         review_classname = f"review{self.review_2.id}"
