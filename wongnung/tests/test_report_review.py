@@ -88,9 +88,7 @@ class ReportReviewTest(StaticLiveServerTestCase):
         # click report button on review component
         review_classname = f"review{self.review_2.id}"
         button_classname = f"reportReview{self.review_2.id}"
-        element = self.browser.find_element(
-            By.CLASS_NAME, review_classname
-        )
+        element = self.browser.find_element(By.CLASS_NAME, review_classname)
         webdriver.ActionChains(self.browser).scroll_to_element(
             element
         ).perform()
@@ -142,9 +140,7 @@ class ReportReviewTest(StaticLiveServerTestCase):
         # click report button on review component
         review_classname = f"review{self.review_2.id}"
         button_classname = f"reportReview{self.review_2.id}"
-        element = self.browser.find_element(
-            By.CLASS_NAME, review_classname
-        )
+        element = self.browser.find_element(By.CLASS_NAME, review_classname)
         webdriver.ActionChains(self.browser).scroll_to_element(
             element
         ).perform()
