@@ -17,6 +17,10 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+    deploy:
+      resources:
+        limits:
+          memory: 1gb
   app:
     build: .
     image: wongnung
@@ -40,6 +44,10 @@ services:
       - db
     ports:
       - '8000:8000'
+    deploy:
+      resources:
+        limits:
+          memory: 1gb
 
 volumes:
   db:
