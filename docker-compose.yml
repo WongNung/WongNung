@@ -1,0 +1,53 @@
+services:
+  db:
+    image: postgres:14
+    restart: always
+    environment:
+      POSTGRES_USER: "${DATABASE_USERNAME?:DATABASE_USERNAME not set in env}"
+      POSTGRES_PASSWORD: "${DATABASE_PASSWORD?:DATABASE_PASSWORD not set in env}"
+      POSTGRES_DB: "${DATABASE_NAME?:DATABASE_NAME not set in env}"
+    volumes:
+      - db:/var/lib/postgresql/data
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -d ${DATABASE_NAME?:DATABASE_NAME not set in env} -U ${DATABASE_USERNAME?:DATABASE_USERNAME not set in env}"
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    deploy:
+      resources:
+        limits:
+          memory: 1gb
+  app:
+    build: .
+    image: wongnung
+    command:
+      - /bin/bash
+      - -c
+      - |
+        python3 manage.py collectstatic --noinput
+        python3 manage.py migrate
+        python3 manage.py createcachetable &>/dev/null
+        python3 manage.py runserver 0.0.0.0:8000
+    depends_on:
+      db:
+        condition: service_healthy
+    env_file:
+      - .env
+    environment:
+      DEBUG: "false"
+      DATABASE_HOST: db
+    links:
+      - db
+    ports:
+      - '8000:8000'
+    deploy:
+      resources:
+        limits:
+          memory: 1gb
+
+volumes:
+  db:
