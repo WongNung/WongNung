@@ -34,14 +34,14 @@
                                 hx-target="#ReportModal{{ review.id }}"
                                 hx-swap="outerHTML"
                                 hx-vals='{"cancel": "true"}'
-                                class="rounded-lg bg-component-red"
+                                class="rounded-lg bg-component-red cancelReportButton"
                                 type="button">
                             <div class="text-white text-lg px-3">Cancel</div>
                         </button>
                         <button hx-post="{% url 'wongnung:report' review.id %}"
                                 hx-target="#ReportModal{{ review.id }}"
                                 hx-swap="outerHTML"
-                                class="ml-5 rounded-lg bg-tag-yellow"
+                                class="ml-5 rounded-lg bg-tag-yellow submitReportButton"
                                 type="submit">
                             <div class="text-nlack text-lg px-3">Report</div>
                         </button>
