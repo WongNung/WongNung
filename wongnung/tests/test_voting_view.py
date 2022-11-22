@@ -86,7 +86,7 @@ class TestVotingE2E(StaticLiveServerTestCase):
     def setUpClass(cls):
         super().setUpClass()
         options = ChromeOptions()
-        # options.add_argument("--headless")
+        options.add_argument("--headless")
         cls.browser = Chrome(options=options)
         cls.browser.implicitly_wait(30)
         cls.browser.set_page_load_timeout(30)
