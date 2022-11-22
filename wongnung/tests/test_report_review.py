@@ -143,4 +143,5 @@ class ReportReviewTest(StaticLiveServerTestCase):
         )
         self.browser.refresh()
         # after user report the review, it should save to database
-        self.assertTrue(Report.objects.get(review=self.review_2))
+        reviews_in_report = [report.review for report in Report.objects.all()]
+        self.assertIn(self.review_2, reviews_in_report)
