@@ -3,12 +3,12 @@
         {% csrf_token %}
         <div class="flex flex-col space-y-4">
             <span class="flex text-white text-xl space-x-4 items-baseline justify-between">
-                <span>Display Name:</span><input class="text-black rounded-3xl h-9 focus:ring-tag-yellow focus:border-tag-yellow" type="text" name="display_name" value="{{ profile.display_name }}" />
+                <span>Display Name:</span><input class="text-black rounded-3xl h-9 focus:ring-tag-yellow focus:border-tag-yellow displayName" type="text" name="display_name" value="{{ profile.display_name }}" />
             </span>
             <span class="flex text-white space-x-4 text-xl items-center justify-between">
-                <span>Profile Color:</span><input type="color" name="color" value="#{{ profile.color }}" />
+                <span>Profile Color:</span><input type="color" name="color" value="#{{ profile.color }}" class="profileColor" />
             </span>
-            <button class="bg-component-red text-white h-7 rounded-xl" type="submit">Save</button>
+            <button class="bg-component-red text-white h-7 rounded-xl saveProfileButton" type="submit">Save</button>
         </div>
     </form>
 </div>
