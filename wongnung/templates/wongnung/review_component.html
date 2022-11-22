@@ -46,12 +46,12 @@
                     {% csrf_token %}
                     <fieldset class="flex flex-row">
                         <!--Upvote button-->
-                        <button type="submit" name="up" value="up" title="Upvote">
+                        <button class="review{{ review.id }}-upvote-button" type="submit" name="up" value="up" title="Upvote">
                             <!--if user has been upvote review upvote button will be red-->
                             {% if upvote %}
-                            <div class="text-component-red hover:drop-shadow-lg">
+                            <div class="review{{ review.id }}-upvote text-component-red hover:drop-shadow-lg">
                                 {% else %}
-                                <div class="text-post-grey hover:drop-shadow-lg">
+                                <div class="review{{ review.id }}-upvote text-post-grey hover:drop-shadow-lg">
                                     {% endif %}
                                     <svg class="h-8 relative" viewBox="0 0 512 502" fill="currentColor"
                                         xmlns="http://www.w3.org/2000/svg">
@@ -62,14 +62,14 @@
                                     </svg>
                                 </div>
                         </button>
-                        <div class="px-3 text-2xl text-center ">{{ votes }}</div>
+                        <div class="review{{ review.id }}-votes px-3 text-2xl text-center ">{{ votes }}</div>
                         <!--Downvote button-->
-                        <button type="submit" name="down" value="down" title="Downvote">
+                        <button class="review{{ review.id }}-downvote-button" type="submit" name="down" value="down" title="Downvote">
                             <!--if user has been downvote review downvote button will be red-->
                             {% if downvote %}
-                            <div class="text-component-red hover:drop-shadow-lg">
+                            <div class="review{{ review.id }}-downvote text-component-red hover:drop-shadow-lg">
                                 {% else %}
-                                <div class="text-post-grey hover:drop-shadow-lg">
+                                <div class="review{{ review.id }}-downvote text-post-grey hover:drop-shadow-lg">
                                     {% endif %}
                                     <svg class="h-8 relative" viewBox="0 0 240 232" fill="currentColor"
                                         xmlns="http://www.w3.org/2000/svg">
