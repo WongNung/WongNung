@@ -84,9 +84,9 @@
                 </form>
                 <label class="text-3xl flex text-center">|</label>
                 <!--Report button-->
-                <button class="block" type="button" hx-get="{% url 'wongnung:report-modal' review.id %}"
+                <button class="block reportReview{{ review.id }}" type="button" hx-get="{% url 'wongnung:report-modal' review.id %}"
                     hx-target="#ReportModal{{ review.id }}" hx-swap="outerHTML" title="Report">
-                    <div class="text-component-red hover:drop-shadow-lg reportReview{{ review.id }}">
+                    <div class="text-component-red hover:drop-shadow-lg">
                         <svg class="h-8 relative" viewBox="0 0 486 442" fill="currentColor"
                             xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd"

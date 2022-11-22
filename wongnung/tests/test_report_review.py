@@ -87,7 +87,7 @@ class ReportReviewTest(StaticLiveServerTestCase):
 
         # click report button on review component
         review_classname = f"review{self.review_2.id}"
-        report_button_classname = f"reportReview{self.review_2.id}"
+        button_classname = f"reportReview{self.review_2.id}"
         element = self.browser.find_element(
             By.CLASS_NAME, review_classname
         )
@@ -95,7 +95,7 @@ class ReportReviewTest(StaticLiveServerTestCase):
             element
         ).perform()
         time.sleep(1)
-        element.find_element(By.CLASS_NAME, report_button_classname).click()
+        element.find_element(By.CLASS_NAME, button_classname).click()
         time.sleep(0.2)
 
         # find review's report modal
@@ -141,7 +141,7 @@ class ReportReviewTest(StaticLiveServerTestCase):
 
         # click report button on review component
         review_classname = f"review{self.review_2.id}"
-        report_button_classname = f"reportReview{self.review_2.id}"
+        button_classname = f"reportReview{self.review_2.id}"
         element = self.browser.find_element(
             By.CLASS_NAME, review_classname
         )
@@ -149,8 +149,8 @@ class ReportReviewTest(StaticLiveServerTestCase):
             element
         ).perform()
         time.sleep(1)
-        element.find_element(By.CLASS_NAME, report_button_classname).click()
-        time.sleep(0.1)
+        element.find_element(By.CLASS_NAME, button_classname).click()
+        time.sleep(0.2)
         # find review's report modal
         report_modal_id = f"ReportModal{self.review_2.id}"
         report_modal = self.browser.find_element(By.ID, report_modal_id)
