@@ -47,7 +47,7 @@ class ProfileSttingTest(StaticLiveServerTestCase):
         )
         self.browser.refresh()
 
-    def test_set_profil(self):
+    def test_set_profile(self):
         """User can change thier profile's display name and color.
         After change and save it should save to database.
         """
