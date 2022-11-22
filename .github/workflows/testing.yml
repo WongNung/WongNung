@@ -18,12 +18,10 @@ jobs:
     runs-on: ubuntu-latest
     services:
       postgres:
-        image: 'bitnami/postgresql:latest'
+        image: postgres
         env:
-          POSTGRESQL_DATABASE: postgres
-          POSTGRESQL_USERNAME: postgres
-          POSTGRESQL_PASSWORD: password
-          POSTGRESQL_FSYNC: "off"
+          POSTGRES_PASSWORD: password
+          POSTGRES_INITDB_ARGS: --no-sync
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
