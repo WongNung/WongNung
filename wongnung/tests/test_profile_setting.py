@@ -48,6 +48,9 @@ class ProfileSttingTest(StaticLiveServerTestCase):
         self.browser.refresh()
 
     def test_set_profil(self):
+        """User can change thier profile's display name and color.
+        After change and save it should save to database.
+        """
         # login and go to profile page.
         self.browser.get(self.live_server_url)
         self.login()
@@ -77,6 +80,8 @@ class ProfileSttingTest(StaticLiveServerTestCase):
         # save the change
         self.browser.find_element(By.CLASS_NAME, "saveProfileButton").click()
         time.sleep(0.2)
+
+        # After save the change, all change should save to database.
         user_profile = UserProfile.objects.get(user=self.user)
         self.assertEqual("Test1234", user_profile.display_name)
         self.assertEqual("ff0000", user_profile.color)
