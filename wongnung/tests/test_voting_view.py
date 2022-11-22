@@ -9,7 +9,7 @@ from ..models.review import Review
 from .utils import get_response_credits, get_response_info, new_test_user
 
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
-from selenium.webdriver import Chrome, ChromeOptions, ActionChains
+from selenium.webdriver import Chrome, ChromeOptions
 from selenium.webdriver.common.by import By
 import time
 
@@ -134,14 +134,17 @@ class TestVotingE2E(StaticLiveServerTestCase):
         )
         self.browser.refresh()
 
-    def test_initial_upvote_downvote_button(self):
-        """The color of initial upvote and downvote button should be grey."""
+    def access_wongnung(self):
         self.browser.get(self.live_server_url)
         self.login()
         self.browser.get(
             self.live_server_url
             + reverse("wongnung:film-details", args=("0",))
         )
+
+    def test_initial_upvote_downvote_button(self):
+        """The color of initial upvote and downvote button should be grey."""
+        self.access_wongnung()
 
         review_1_div = self.browser.find_element(By.CLASS_NAME, f"review{self.review_1.id}")
         self.browser.execute_script("arguments[0].scrollIntoView();", review_1_div)
@@ -174,12 +177,7 @@ class TestVotingE2E(StaticLiveServerTestCase):
 
     def test_voted_upvote_downvote_button(self):
         """When clicked upvote or downvote button, the color should change to red."""
-        self.browser.get(self.live_server_url)
-        self.login()
-        self.browser.get(
-            self.live_server_url
-            + reverse("wongnung:film-details", args=("0",))
-        )
+        self.access_wongnung()
 
         review_1_div = self.browser.find_element(By.CLASS_NAME, f"review{self.review_1.id}")
         self.browser.execute_script("arguments[0].scrollIntoView();", review_1_div)
@@ -230,12 +228,7 @@ class TestVotingE2E(StaticLiveServerTestCase):
 
     def test_upvote_num_of_votes(self):
         """When clicking upvote button the number of votes should increase by 1."""
-        self.browser.get(self.live_server_url)
-        self.login()
-        self.browser.get(
-            self.live_server_url
-            + reverse("wongnung:film-details", args=("0",))
-        )
+        self.access_wongnung()
 
         review_1_div = self.browser.find_element(By.CLASS_NAME, f"review{self.review_1.id}")
         self.browser.execute_script("arguments[0].scrollIntoView();", review_1_div)
@@ -243,28 +236,27 @@ class TestVotingE2E(StaticLiveServerTestCase):
         time.sleep(1)
 
         # test upvote button
-        self.browser.find_element(
-            By.CLASS_NAME, f"review{self.review_2.id}-upvote-button"
-        ).click()
+        button1 = self.browser.find_element(
+            By.CLASS_NAME,
+            f"review{self.review_2.id}-upvote-button"
+        )
+        button1.click()
         time.sleep(1)
-        votes_num = self.browser.find_element(By.CLASS_NAME, f"review{self.review_2.id}-votes").text
-        self.assertEqual('1', votes_num)
+        votes_num1 = self.browser.find_element(By.CLASS_NAME, f"review{self.review_2.id}-votes").text
+        self.assertEqual('1', votes_num1)
 
-        self.browser.find_element(
-            By.CLASS_NAME, f"review{self.review_1.id}-upvote-button"
-        ).click()
+        button2 = self.browser.find_element(
+            By.CLASS_NAME,
+            f"review{self.review_1.id}-upvote-button"
+        )
+        button2.click()
         time.sleep(1)
-        votes_num = self.browser.find_element(By.CLASS_NAME, f"review{self.review_1.id}-votes").text
-        self.assertEqual('1', votes_num)
+        votes_num2 = self.browser.find_element(By.CLASS_NAME, f"review{self.review_1.id}-votes").text
+        self.assertEqual('1', votes_num2)
 
     def test_downvote_num_of_votes(self):
         """When clicking downvote button the number of votes should decrease by 1."""
-        self.browser.get(self.live_server_url)
-        self.login()
-        self.browser.get(
-            self.live_server_url
-            + reverse("wongnung:film-details", args=("0",))
-        )
+        self.access_wongnung()
 
         review_1_div = self.browser.find_element(By.CLASS_NAME, f"review{self.review_1.id}")
         self.browser.execute_script("arguments[0].scrollIntoView();", review_1_div)
@@ -272,16 +264,41 @@ class TestVotingE2E(StaticLiveServerTestCase):
         time.sleep(1)
 
         # test downvote button
-        self.browser.find_element(
-            By.CLASS_NAME, f"review{self.review_2.id}-downvote-button"
-        ).click()
+        button1 = self.browser.find_element(
+            By.CLASS_NAME,
+            f"review{self.review_2.id}-downvote-button"
+        )
+        button1.click()
         time.sleep(1)
         votes_num = self.browser.find_element(By.CLASS_NAME, f"review{self.review_2.id}-votes").text
         self.assertEqual('-1', votes_num)
 
-        self.browser.find_element(
-            By.CLASS_NAME, f"review{self.review_1.id}-downvote-button"
-        ).click()
+        button2 = self.browser.find_element(
+            By.CLASS_NAME,
+            f"review{self.review_1.id}-downvote-button"
+        )
+        button2.click()
         time.sleep(1)
         votes_num = self.browser.find_element(By.CLASS_NAME, f"review{self.review_1.id}-votes").text
         self.assertEqual('-1', votes_num)
+
+    def test_num_of_votes_click_both(self):
+        """When click both upvote and downvote the votes number should be zero."""
+        self.access_wongnung()
+
+        review_1_div = self.browser.find_element(By.CLASS_NAME, f"review{self.review_1.id}")
+        self.browser.execute_script("arguments[0].scrollIntoView();", review_1_div)
+
+        button1 = self.browser.find_element(
+            By.CLASS_NAME,
+            f"review{self.review_2.id}-upvote-button"
+        )
+        button2 = self.browser.find_element(
+            By.CLASS_NAME,
+            f"review{self.review_2.id}-downvote-button"
+        )
+        button1.click()
+        button2.click()
+        time.sleep(2)
+        votes_num = self.browser.find_element(By.CLASS_NAME, f"review{self.review_1.id}-votes").text
+        self.assertEqual('0', votes_num)
