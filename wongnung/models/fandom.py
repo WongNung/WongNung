@@ -14,6 +14,7 @@ class Fandom(models.Model):
 
     class Meta:
         """Create unique constraint on lowercase value of name as PK."""
+
         constraints = [
             models.UniqueConstraint(
                 Lower("name"), name="fandom_name_unique"  # type: ignore
