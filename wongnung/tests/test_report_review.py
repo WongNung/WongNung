@@ -70,15 +70,13 @@ class ReportReviewTest(StaticLiveServerTestCase):
         self.browser.get(self.live_server_url + reverse("wongnung:feed"))
 
         # scroll down the feed untill every review show up.
-        feed_id = "feedContinue"
-        while not ("The end" in self.browser.page_source):
-            element = self.browser.find_element(By.ID, feed_id)
-            (
-                webdriver.ActionChains(self.browser)
-                .scroll_to_element(element)
-                .perform()
-            )
+        last_height = self.browser.execute_script("return document.body.scrollHeight")
+        while True:
+            self.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
             time.sleep(1)
+            new_height = self.browser.execute_script("return document.body.scrollHeight")
+            if new_height == last_height: break
+            last_height = new_height
 
         # click report button on review component
         review_classname = f"review{self.review_2.id}"
@@ -114,15 +112,13 @@ class ReportReviewTest(StaticLiveServerTestCase):
         self.browser.get(self.live_server_url + reverse("wongnung:feed"))
 
         # scroll down the feed untill every review show up.
-        feed_id = "feedContinue"
-        while not ("The end" in self.browser.page_source):
-            element = self.browser.find_element(By.ID, feed_id)
-            (
-                webdriver.ActionChains(self.browser)
-                .scroll_to_element(element)
-                .perform()
-            )
+        last_height = self.browser.execute_script("return document.body.scrollHeight")
+        while True:
+            self.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
             time.sleep(1)
+            new_height = self.browser.execute_script("return document.body.scrollHeight")
+            if new_height == last_height: break
+            last_height = new_height
 
         # click report button on review component
         review_classname = f"review{self.review_2.id}"
