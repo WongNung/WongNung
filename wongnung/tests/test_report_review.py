@@ -5,6 +5,7 @@ from django.test.client import Client
 from selenium.webdriver.common.by import By
 from wongnung.models.film import Film
 from wongnung.models.review import Review
+from wongnung.models.report import Report
 from django.urls import reverse
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from .utils import get_response_credits, get_response_info, new_test_user
@@ -93,9 +94,7 @@ class ReportReviewTest(StaticLiveServerTestCase):
         )
 
     def test_report_review(self):
-        """If review is reported by user, all reviews from review's
-        author will disappear from user feed.
-        """
+        """After user submit review's report, report should save to database."""
         # login, then go to feed page
         self.browser.get(self.live_server_url)
         self.login()
@@ -142,13 +141,6 @@ class ReportReviewTest(StaticLiveServerTestCase):
                 "class"
             ),
         )
-        # After refreshing the browser, all reviews from review's author
-        # that the user has already reported will disappear.
         self.browser.refresh()
-        time.sleep(0.1)
-        elements = self.browser.find_elements(By.TAG_NAME, "span")
-        review_list = []
-        for element in elements:
-            if "review" in element.get_attribute("class"):
-                review_list += [element.get_attribute("class")]
-        self.assertEqual(1, len(review_list))
+        # after user report the review, it should save to database
+        self.assertTrue(Report.objects.get(review=self.review_2))
