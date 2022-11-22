@@ -2,13 +2,13 @@
 <span class="fandom{{ fandom.name }}">
 <div class="min-w-full h-16 bg-[#858585] flex flex-row items-center drop-shadow-xl justify-between">
     <div class="flex flex-row items-center">
-        <div class="pl-24 font-primary text-3xl font-bold text-tag-yellow ">
+        <div id="fandomName" class="pl-24 font-primary text-3xl font-bold text-tag-yellow ">
             #{{ fandom.name }}
         </div>
-        <div class="px-10 font-body text-xl text-white">
+        <div id="memberCount" class="px-10 font-body text-xl text-white">
             {{ members_num }} members
         </div>
-        <div class="font-body text-xl text-white">
+        <div id="lastActive" class="font-body text-xl text-white">
             Last active: 
             {% if last_active %}
                 {{ last_active | naturaltime }}
@@ -35,8 +35,8 @@
             <input type="hidden" name="url" value="wongnung:show-fandom" />
             <input type="hidden" name="type" value="fandom" />
             {% csrf_token %}
-            <button type="submit" name="bookmark" value="{{ fandom.name }}">
-                <div class="{% if bookmark_status %} text-tag-yellow {% else %} text-post-grey {% endif %} hover:drop-shadow-lg mr-3">
+            <button class="fandom{{ fandom.name }}-bookmark-button" type="submit" name="bookmark" value="{{ fandom.name }}">
+                <div class="{% if bookmark_status %} fandom{{ fandom.name }}-bookmarked-text-tag-yellow text-tag-yellow {% else %} fandom{{ fandom.name }}-bookmarked-text-tag-grey text-post-grey {% endif %} hover:drop-shadow-lg mr-3">
                     <svg class="h-9 relative"
                         viewBox="0 0 200 322"
                         fill="currentColor"
@@ -77,10 +77,11 @@
     <div class="flex flex-col min-h-screen space-y-4 bg-feed-grey mx-20 p-10 overflow-y-auto">
         {% if reviews %}
             {% for review in reviews %}
-                <div hx-get="{% url 'wongnung:review-component' review.pk %}"
-                    hx-target="this"
-                    hx-swap="outerHTML"
-                    hx-trigger="intersect once">
+                <div class="review{{ review.pk }}"
+                     hx-get="{% url 'wongnung:review-component' review.pk %}"
+                     hx-target="this"
+                     hx-swap="outerHTML"
+                     hx-trigger="intersect once">
                 </div>
             {% endfor %}
         {% endif %}

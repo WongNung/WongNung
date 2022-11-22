@@ -7,3 +7,4 @@ tmdbsimple
 django-allauth
 pytz
 whitenoise>=6.2.0
+selenium>=4.6.0
