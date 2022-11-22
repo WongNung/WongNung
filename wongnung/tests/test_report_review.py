@@ -81,9 +81,11 @@ class ReportReviewTest(StaticLiveServerTestCase):
         # click report button on review component
         review_classname = f"review{self.review_2.id}"
         report_button_classname = f"reportReview{self.review_2.id}"
-        self.browser.find_element(
+        element = self.browser.find_element(
             By.CLASS_NAME, review_classname
-        ).find_element(By.CLASS_NAME, report_button_classname).click()
+        ).find_element(By.CLASS_NAME, report_button_classname)
+        webdriver.ActionChains(self.browser).scroll_to_element(element).perform()
+        element.click()
         time.sleep(0.2)
 
         # find review's report modal
@@ -123,9 +125,11 @@ class ReportReviewTest(StaticLiveServerTestCase):
         # click report button on review component
         review_classname = f"review{self.review_2.id}"
         report_button_classname = f"reportReview{self.review_2.id}"
-        self.browser.find_element(
+        element = self.browser.find_element(
             By.CLASS_NAME, review_classname
-        ).find_element(By.CLASS_NAME, report_button_classname).click()
+        ).find_element(By.CLASS_NAME, report_button_classname)
+        webdriver.ActionChains(self.browser).scroll_to_element(element).perform()
+        element.click()
         time.sleep(0.1)
         # find review's report modal
         report_modal_id = f"ReportModal{self.review_2.id}"
