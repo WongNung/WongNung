@@ -70,12 +70,19 @@ class ReportReviewTest(StaticLiveServerTestCase):
         self.browser.get(self.live_server_url + reverse("wongnung:feed"))
 
         # scroll down the feed untill every review show up.
-        last_height = self.browser.execute_script("return document.body.scrollHeight")
+        last_height = self.browser.execute_script(
+            "return document.body.scrollHeight"
+        )
         while True:
-            self.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+            self.browser.execute_script(
+                "window.scrollTo(0, document.body.scrollHeight);"
+            )
             time.sleep(1)
-            new_height = self.browser.execute_script("return document.body.scrollHeight")
-            if new_height == last_height: break
+            new_height = self.browser.execute_script(
+                "return document.body.scrollHeight"
+            )
+            if new_height == last_height:
+                break
             last_height = new_height
 
         # click report button on review component
@@ -83,10 +90,12 @@ class ReportReviewTest(StaticLiveServerTestCase):
         report_button_classname = f"reportReview{self.review_2.id}"
         element = self.browser.find_element(
             By.CLASS_NAME, review_classname
-        ).find_element(By.CLASS_NAME, report_button_classname)
-        webdriver.ActionChains(self.browser).scroll_to_element(element).perform()
+        )
+        webdriver.ActionChains(self.browser).scroll_to_element(
+            element
+        ).perform()
         time.sleep(1)
-        element.click()
+        element.find_element(By.CLASS_NAME, report_button_classname).click()
         time.sleep(0.2)
 
         # find review's report modal
@@ -115,12 +124,19 @@ class ReportReviewTest(StaticLiveServerTestCase):
         self.browser.get(self.live_server_url + reverse("wongnung:feed"))
 
         # scroll down the feed untill every review show up.
-        last_height = self.browser.execute_script("return document.body.scrollHeight")
+        last_height = self.browser.execute_script(
+            "return document.body.scrollHeight"
+        )
         while True:
-            self.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+            self.browser.execute_script(
+                "window.scrollTo(0, document.body.scrollHeight);"
+            )
             time.sleep(1)
-            new_height = self.browser.execute_script("return document.body.scrollHeight")
-            if new_height == last_height: break
+            new_height = self.browser.execute_script(
+                "return document.body.scrollHeight"
+            )
+            if new_height == last_height:
+                break
             last_height = new_height
 
         # click report button on review component
@@ -128,10 +144,12 @@ class ReportReviewTest(StaticLiveServerTestCase):
         report_button_classname = f"reportReview{self.review_2.id}"
         element = self.browser.find_element(
             By.CLASS_NAME, review_classname
-        ).find_element(By.CLASS_NAME, report_button_classname)
-        webdriver.ActionChains(self.browser).scroll_to_element(element).perform()
+        )
+        webdriver.ActionChains(self.browser).scroll_to_element(
+            element
+        ).perform()
         time.sleep(1)
-        element.click()
+        element.find_element(By.CLASS_NAME, report_button_classname).click()
         time.sleep(0.1)
         # find review's report modal
         report_modal_id = f"ReportModal{self.review_2.id}"
