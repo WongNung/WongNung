@@ -58,7 +58,7 @@ class BookmarkViewTest(StaticLiveServerTestCase):
         self.browser.refresh()
 
     def test_bookmark_film_color_change(self):
-        """Test film bookmark button color behavior."""
+        """Test film bookmark button color behavior when bookmark and un-bookmark."""
         # login and go to film detail page
         self.browser.get(self.live_server_url)
         self.login()
@@ -68,9 +68,7 @@ class BookmarkViewTest(StaticLiveServerTestCase):
         )
         bookmark_button_class_name = f"film{self.film_id}-bookmark-button"
         # after being clicked bookmark button color should be yellow
-        self.browser.find_element(
-            By.CLASS_NAME, bookmark_button_class_name
-        )
+        self.browser.find_element(By.CLASS_NAME, bookmark_button_class_name)
         self.browser.find_element(
             By.CLASS_NAME, bookmark_button_class_name
         ).click()
@@ -99,7 +97,7 @@ class BookmarkViewTest(StaticLiveServerTestCase):
         )
 
     def test_bookmark_review_color_change(self):
-        """Test review bookmark button color behavior."""
+        """Test review bookmark button color behavior when bookmark and un-bookmark."""
         # login and go to film detail page
         self.browser.get(self.live_server_url)
         self.login()
@@ -143,7 +141,7 @@ class BookmarkViewTest(StaticLiveServerTestCase):
         )
 
     def test_bookmark_fandom_color_change(self):
-        """Test fandom bookmark button color behavior."""
+        """Test fandom bookmark button color behavior when bookmark and un-bookmark."""
         # login and go to fandom page
         self.browser.get(self.live_server_url)
         self.login()
