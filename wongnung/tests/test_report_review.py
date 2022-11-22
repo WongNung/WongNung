@@ -80,7 +80,7 @@ class ReportReviewTest(StaticLiveServerTestCase):
                     .scroll_to_element(element)
                     .perform()
                 )
-                time.sleep(1)
+                time.sleep(0.5)
             except NoSuchElementException:
                 break
 
@@ -127,7 +127,7 @@ class ReportReviewTest(StaticLiveServerTestCase):
                     .scroll_to_element(element)
                     .perform()
                 )
-                time.sleep(1)
+                time.sleep(0.5)
             except NoSuchElementException:
                 break
 
