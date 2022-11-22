@@ -72,17 +72,14 @@ class ReportReviewTest(StaticLiveServerTestCase):
 
         # scroll down the feed untill every review show up.
         feed_id = "feedContinue"
-        while True:
-            try:
-                element = self.browser.find_element(By.ID, feed_id)
-                (
-                    webdriver.ActionChains(self.browser)
-                    .scroll_to_element(element)
-                    .perform()
-                )
-                time.sleep(1)
-            except NoSuchElementException:
-                break
+        while not ("The end" in self.browser.page_source):
+            element = self.browser.find_element(By.ID, feed_id)
+            (
+                webdriver.ActionChains(self.browser)
+                .scroll_to_element(element)
+                .perform()
+            )
+            time.sleep(1)
 
         # click report button on review component
         review_classname = f"review{self.review_2.id}"
@@ -119,17 +116,14 @@ class ReportReviewTest(StaticLiveServerTestCase):
 
         # scroll down the feed untill every review show up.
         feed_id = "feedContinue"
-        while True:
-            try:
-                element = self.browser.find_element(By.ID, feed_id)
-                (
-                    webdriver.ActionChains(self.browser)
-                    .scroll_to_element(element)
-                    .perform()
-                )
-                time.sleep(1)
-            except NoSuchElementException:
-                break
+        while not ("The end" in self.browser.page_source):
+            element = self.browser.find_element(By.ID, feed_id)
+            (
+                webdriver.ActionChains(self.browser)
+                .scroll_to_element(element)
+                .perform()
+            )
+            time.sleep(1)
 
         # click report button on review component
         review_classname = f"review{self.review_2.id}"
