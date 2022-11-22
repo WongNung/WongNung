@@ -29,8 +29,8 @@
                     <input type="hidden" name="url" value="wongnung:film-component" />
                     <input type="hidden" name="type" value="film" />
                     {% csrf_token %}
-                    <button type="submit" name="bookmark" value="{{ film.filmId }}" >
-                        <div class="{% if bookmark_status %} text-tag-yellow {% else %} text-post-grey {% endif %} hover:drop-shadow-lg">
+                    <button class="film{{ film.filmId }}-bookmark-button" type="submit" name="bookmark" value="{{ film.filmId }}" >
+                        <div class="{% if bookmark_status %} film{{ film.filmId }}-bookmark-yellow-tag text-tag-yellow {% else %} film{{ film.filmId }}-bookmark-grey-tag text-post-grey {% endif %} hover:drop-shadow-lg">
                             <svg class="h-10 relative"
                                 viewBox="0 0 200 322"
                                 fill="currentColor"
@@ -79,7 +79,8 @@
                 {% if reviews %}
                     <div class="flex flex-col sticky space-y-4">
                         {% for review in reviews %}
-                            <div hx-get="{% url 'wongnung:review-component' review.pk %}"
+                            <div class="review{{ review.id }}"
+                                 hx-get="{% url 'wongnung:review-component' review.pk %}"
                                  hx-target="this"
                                  hx-swap="outerHTML"
                                  hx-trigger="intersect once">
