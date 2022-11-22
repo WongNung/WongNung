@@ -253,3 +253,7 @@ if os.path.exists(BASE_DIR / OAUTH_FILE):
         )
 
 SOCIALACCOUNT_ADAPTER = "wongnung.adapter.CancellableAccountAdapter"
+
+if not DEBUG and config("HTTPS", cast=bool, default=False):
+    CSRF_TRUSTED_ORIGINS = [f"https://{address}" for address in ALLOWED_HOSTS]
+    ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"
