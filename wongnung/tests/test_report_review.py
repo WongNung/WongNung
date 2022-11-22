@@ -113,7 +113,7 @@ class ReportReviewTest(StaticLiveServerTestCase):
         elements = self.browser.find_elements(By.ID, feed_id)
         for element in elements:
             element.location_once_scrolled_into_view
-        
+
         # click report button on review component
         review_classname = f"review{self.review_2.id}"
         report_button_classname = f"reportReview{self.review_2.id}"
