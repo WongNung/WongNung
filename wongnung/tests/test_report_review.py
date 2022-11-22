@@ -85,6 +85,7 @@ class ReportReviewTest(StaticLiveServerTestCase):
             By.CLASS_NAME, review_classname
         ).find_element(By.CLASS_NAME, report_button_classname)
         webdriver.ActionChains(self.browser).scroll_to_element(element).perform()
+        time.sleep(1)
         element.click()
         time.sleep(0.2)
 
@@ -129,6 +130,7 @@ class ReportReviewTest(StaticLiveServerTestCase):
             By.CLASS_NAME, review_classname
         ).find_element(By.CLASS_NAME, report_button_classname)
         webdriver.ActionChains(self.browser).scroll_to_element(element).perform()
+        time.sleep(1)
         element.click()
         time.sleep(0.1)
         # find review's report modal
