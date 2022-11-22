@@ -18,7 +18,7 @@ class ProfileSttingTest(StaticLiveServerTestCase):
         options = webdriver.ChromeOptions()
         options.add_argument("--headless")
         cls.browser = webdriver.Chrome(options=options)
-        cls.browser.implicitly_wait(30)
+        cls.browser.implicitly_wait(3)
         cls.browser.set_page_load_timeout(30)
 
     @classmethod
@@ -63,6 +63,13 @@ class ProfileSttingTest(StaticLiveServerTestCase):
         self.assertIsNotNone(profile_setting_tab)
         profile_setting_tab[0].click()
         time.sleep(0.2)
+
+        # default display name should be blank ("")
+        user_profile = UserProfile.objects.get(user=self.user)
+        self.assertEqual("", user_profile.display_name)
+        # default display color should be #D9D9D9
+        self.assertEqual("D9D9D9", user_profile.color)
+
         # insert new display name
         self.browser.find_element(By.CLASS_NAME, "displayName").send_keys("Test1234")
         # insert new display color
