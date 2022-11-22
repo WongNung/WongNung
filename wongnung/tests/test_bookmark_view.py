@@ -67,22 +67,30 @@ class BookmarkViewTest(StaticLiveServerTestCase):
             + reverse("wongnung:film-details", args=(self.film_id,))
         )
         bookmark_button_class_name = f"film{self.film_id}-bookmark-button"
-        # initial bookmark button color should be grey
-        self.assertIn(
-            f"film{self.film_id}-bookmark-grey-tag",
-            self.browser.find_element(
-                By.CLASS_NAME, bookmark_button_class_name
-            )
-            .find_element(By.TAG_NAME, "div")
-            .get_attribute("class"),
-        )
         # after being clicked bookmark button color should be yellow
+        self.browser.find_element(
+            By.CLASS_NAME, bookmark_button_class_name
+        )
         self.browser.find_element(
             By.CLASS_NAME, bookmark_button_class_name
         ).click()
         time.sleep(1)
         self.assertIn(
             f"film{self.film_id}-bookmark-yellow-tag",
+            self.browser.find_element(
+                By.CLASS_NAME, bookmark_button_class_name
+            )
+            .find_element(By.TAG_NAME, "div")
+            .get_attribute("class"),
+        )
+        # after being un-bookmarked bookmark button color should be grey
+        self.browser.implicitly_wait(10)
+        self.browser.find_element(
+            By.CLASS_NAME, bookmark_button_class_name
+        ).click()
+        time.sleep(1)
+        self.assertIn(
+            f"film{self.film_id}-bookmark-grey-tag",
             self.browser.find_element(
                 By.CLASS_NAME, bookmark_button_class_name
             )
@@ -106,16 +114,7 @@ class BookmarkViewTest(StaticLiveServerTestCase):
         self.browser.execute_script(
             "arguments[0].scrollIntoView();", review_element
         )
-        # initial bookmark button color should be grey
         bookmark_button_class_name = f"review{self.review.id}-bookmark-button"
-        self.assertIn(
-            f"review{self.review.id}-bookmark-text-tag-grey",
-            self.browser.find_element(
-                By.CLASS_NAME, bookmark_button_class_name
-            )
-            .find_element(By.TAG_NAME, "div")
-            .get_attribute("class"),
-        )
         # after being clicked bookmark button color should be yellow
         self.browser.find_element(
             By.CLASS_NAME, bookmark_button_class_name
@@ -123,6 +122,19 @@ class BookmarkViewTest(StaticLiveServerTestCase):
         time.sleep(1)
         self.assertIn(
             f"review{self.review.id}-bookmark-text-tag-yellow",
+            self.browser.find_element(
+                By.CLASS_NAME, bookmark_button_class_name
+            )
+            .find_element(By.TAG_NAME, "div")
+            .get_attribute("class"),
+        )
+        # after being un-bookmarked bookmark button color should be grey
+        self.browser.find_element(
+            By.CLASS_NAME, bookmark_button_class_name
+        ).click()
+        time.sleep(1)
+        self.assertIn(
+            f"review{self.review.id}-bookmark-text-tag-grey",
             self.browser.find_element(
                 By.CLASS_NAME, bookmark_button_class_name
             )
@@ -139,17 +151,8 @@ class BookmarkViewTest(StaticLiveServerTestCase):
             self.live_server_url
             + reverse("wongnung:fandom", args=(self.fandom_name,))
         )
-        # initially bookmark button color should be grey
         bookmark_button_class_name = (
             f"fandom{self.fandom_name}-bookmark-button"
-        )
-        self.assertIn(
-            f"fandom{self.fandom_name}-bookmarked-text-tag-grey",
-            self.browser.find_element(
-                By.CLASS_NAME, bookmark_button_class_name
-            )
-            .find_element(By.TAG_NAME, "div")
-            .get_attribute("class"),
         )
         # after being clicked bookmark button color should be yellow
         self.browser.find_element(
@@ -158,6 +161,19 @@ class BookmarkViewTest(StaticLiveServerTestCase):
         time.sleep(1)
         self.assertIn(
             f"fandom{self.fandom_name}-bookmarked-text-tag-yellow",
+            self.browser.find_element(
+                By.CLASS_NAME, bookmark_button_class_name
+            )
+            .find_element(By.TAG_NAME, "div")
+            .get_attribute("class"),
+        )
+        # after being un-bookmarked bookmark button color should be grey
+        self.browser.find_element(
+            By.CLASS_NAME, bookmark_button_class_name
+        ).click()
+        time.sleep(1)
+        self.assertIn(
+            f"fandom{self.fandom_name}-bookmarked-text-tag-grey",
             self.browser.find_element(
                 By.CLASS_NAME, bookmark_button_class_name
             )
