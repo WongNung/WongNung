@@ -5,10 +5,10 @@
         <div id="fandomName" class="pl-24 font-primary text-3xl font-bold text-tag-yellow ">
             #{{ fandom.name }}
         </div>
-        <div class="px-10 font-body text-xl text-white">
+        <div id="memberCount" class="px-10 font-body text-xl text-white">
             {{ members_num }} members
         </div>
-        <div class="font-body text-xl text-white">
+        <div id="lastActive" class="font-body text-xl text-white">
             Last active: 
             {% if last_active %}
                 {{ last_active | naturaltime }}
@@ -77,10 +77,11 @@
     <div class="flex flex-col min-h-screen space-y-4 bg-feed-grey mx-20 p-10 overflow-y-auto">
         {% if reviews %}
             {% for review in reviews %}
-                <div hx-get="{% url 'wongnung:review-component' review.pk %}"
-                    hx-target="this"
-                    hx-swap="outerHTML"
-                    hx-trigger="intersect once">
+                <div class="review{{ review.pk }}"
+                     hx-get="{% url 'wongnung:review-component' review.pk %}"
+                     hx-target="this"
+                     hx-swap="outerHTML"
+                     hx-trigger="intersect once">
                 </div>
             {% endfor %}
         {% endif %}

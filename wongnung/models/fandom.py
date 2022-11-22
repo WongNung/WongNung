@@ -13,6 +13,7 @@ class Fandom(models.Model):
     members = models.ManyToManyField(User, related_name="members")
 
     class Meta:
+        """Create unique constraint on lowercase value of name as PK."""
         constraints = [
             models.UniqueConstraint(
                 Lower("name"), name="fandom_name_unique"  # type: ignore

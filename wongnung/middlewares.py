@@ -1,4 +1,3 @@
-from datetime import tzinfo
 from urllib import parse
 
 import pytz
