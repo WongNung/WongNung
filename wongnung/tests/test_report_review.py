@@ -3,7 +3,6 @@ from unittest.mock import patch
 from selenium import webdriver
 from django.test.client import Client
 from selenium.webdriver.common.by import By
-from selenium.common.exceptions import NoSuchElementException
 from wongnung.models.film import Film
 from wongnung.models.review import Review
 from wongnung.models.report import Report
