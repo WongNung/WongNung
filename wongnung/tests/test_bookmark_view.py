@@ -99,7 +99,6 @@ class BookmarkViewTest(StaticLiveServerTestCase):
             self.live_server_url
             + reverse("wongnung:film-details", args=(self.film_id,))
         )
-        time.sleep(1)
         # scroll down review element
         review_element = self.browser.find_element(
             By.CLASS_NAME, f"review{self.review.id}"

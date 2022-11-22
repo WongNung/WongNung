@@ -79,7 +79,8 @@
                 {% if reviews %}
                     <div class="flex flex-col sticky space-y-4">
                         {% for review in reviews %}
-                            <div hx-get="{% url 'wongnung:review-component' review.pk %}"
+                            <div class="review{{ review.id }}"
+                                 hx-get="{% url 'wongnung:review-component' review.pk %}"
                                  hx-target="this"
                                  hx-swap="outerHTML"
                                  hx-trigger="intersect once">
