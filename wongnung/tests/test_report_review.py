@@ -3,6 +3,7 @@ from unittest.mock import patch
 from selenium import webdriver
 from django.test.client import Client
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
 from wongnung.models.film import Film
 from wongnung.models.review import Review
 from wongnung.models.report import Report
@@ -68,6 +69,13 @@ class ReportReviewTest(StaticLiveServerTestCase):
         self.browser.get(self.live_server_url)
         self.login()
         self.browser.get(self.live_server_url + reverse("wongnung:feed"))
+
+        # scroll down the feed untill every review show up.
+        feed_id = "feedContinue"
+        elements = self.browser.find_elements(By.ID, feed_id)
+        for element in elements:
+            element.location_once_scrolled_into_view
+
         # click report button on review component
         review_classname = f"review{self.review_2.id}"
         report_button_classname = f"reportReview{self.review_2.id}"
@@ -99,6 +107,13 @@ class ReportReviewTest(StaticLiveServerTestCase):
         self.browser.get(self.live_server_url)
         self.login()
         self.browser.get(self.live_server_url + reverse("wongnung:feed"))
+
+        # scroll down the feed untill every review show up.
+        feed_id = "feedContinue"
+        elements = self.browser.find_elements(By.ID, feed_id)
+        for element in elements:
+            element.location_once_scrolled_into_view
+        
         # click report button on review component
         review_classname = f"review{self.review_2.id}"
         report_button_classname = f"reportReview{self.review_2.id}"
