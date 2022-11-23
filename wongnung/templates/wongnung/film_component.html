@@ -46,7 +46,7 @@
                 {% if film.get_genres %}
                     {% for genre in film.get_genres %}
                         <div class="rounded-3xl bg-transparent border-2 border-tag-yellow text-center text-tag-yellow px-2 mx-1">
-                            {{ genre }}
+                            <a class="hover:underline" href='{% url "wongnung:fandom" genre %}'>{{ genre }}</a>
                         </div>
                     {% endfor %}
                 {% else %}
