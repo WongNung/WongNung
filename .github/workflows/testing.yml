@@ -40,17 +40,28 @@ jobs:
         with:
           node-version: 18
       - run: echo "NPM_BIN_PATH=$(which npm)" >> $GITHUB_ENV
+      - uses: browser-actions/setup-chrome@latest
+      - uses: nanasess/setup-chromedriver@v1.1.0
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
           pip install coverage
-      - name: Make Django migrations
+      - name: Setup tailwind
+        working-directory: ./theme/static_src
+        run: |
+          npm install
+      - name: Setup migrations and collect static files
         run: |
           python ./manage.py migrate
-      - name: Test and generate coverage report
+          python ./manage.py tailwind build
+          python ./manage.py collectstatic --noinput
+      - name: Run tests in headless mode
+        uses: GabrielBB/xvfb-action@v1
+        with:
+          run: coverage run ./manage.py test wongnung
+      - name: Collect coverage report
         run: |
-          coverage run ./manage.py test wongnung
           coverage report --sort=miss -m
           coverage xml -q
       - name: Upload coverage report to Codecov

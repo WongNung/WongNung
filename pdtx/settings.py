@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 import os
+import json
 from pathlib import Path
 
 import tmdbsimple as tmdb
@@ -26,6 +27,7 @@ typings.setup()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+OAUTH_FILE = "oauth_credentials.json"
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
@@ -51,10 +53,6 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.humanize",
-    "tailwind",
-    "theme",
-    "django_htmx",
-    "django_browser_reload",
     "django.contrib.sites",
     "allauth",
     "allauth.account",
@@ -62,8 +60,15 @@ INSTALLED_APPS = [
     "allauth.socialaccount.providers.google",
     "allauth.socialaccount.providers.github",
     "allauth.socialaccount.providers.discord",
+    "tailwind",
+    "theme",
+    "django_htmx",
 ]
 
+if DEBUG:
+    INSTALLED_APPS += [
+        "django_browser_reload",
+    ]
 
 # Tailwind configuration
 TAILWIND_APP_NAME = "theme"
@@ -74,6 +79,7 @@ NPM_BIN_PATH = config("NPM_BIN_PATH", default="")
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -85,6 +91,11 @@ MIDDLEWARE = [
     "wongnung.middlewares.LocalTimeMiddleware",
     "wongnung.middlewares.EnsureUserProfileMiddleware",
 ]
+
+if DEBUG:
+    MIDDLEWARE += [
+        "django_browser_reload.middleware.BrowserReloadMiddleware",
+    ]
 
 ROOT_URLCONF = "pdtx.urls"
 
@@ -166,10 +177,10 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
-if DEBUG:
-    STATICFILES_DIRS = [BASE_DIR / "static"]
-else:
-    STATIC_ROOT = os.path.join(BASE_DIR, "static")
+STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
+
+STATICFILES_DIRS = [BASE_DIR / "static"]
+STATIC_ROOT = BASE_DIR / "staticfiles"
 STATIC_URL = "static/"
 
 # User-uploaded media files
@@ -219,4 +230,30 @@ SOCIALACCOUNT_PROVIDERS = {
     },
 }
 
+if os.path.exists(BASE_DIR / OAUTH_FILE):
+    with open(BASE_DIR / OAUTH_FILE) as oauth_file:
+        CREDENTIALS = json.load(oauth_file)
+
+    for auth_provider in tuple(CREDENTIALS.keys()):
+        if any(
+            (
+                not CREDENTIALS[auth_provider],
+                not CREDENTIALS[auth_provider]["client_id"],
+                not CREDENTIALS[auth_provider]["secret"],
+            )
+        ):
+            continue
+        SOCIALACCOUNT_PROVIDERS[auth_provider].update(
+            {
+                "APP": {
+                    "client_id": CREDENTIALS[auth_provider]["client_id"],
+                    "secret": CREDENTIALS[auth_provider]["secret"],
+                },
+            }
+        )
+
 SOCIALACCOUNT_ADAPTER = "wongnung.adapter.CancellableAccountAdapter"
+
+if not DEBUG and config("HTTPS", cast=bool, default=False):
+    CSRF_TRUSTED_ORIGINS = [f"https://{address}" for address in ALLOWED_HOSTS]
+    ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"
