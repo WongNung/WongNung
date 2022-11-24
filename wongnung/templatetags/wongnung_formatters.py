@@ -11,7 +11,7 @@ TAILWIND_FANDOM_LINK = ["text-component-red", "hover:underline"]
 @register.filter(is_safe=True)
 def format_fandom_tags(value):
     """Format the entire content that has Fandom tags with hyperlinks"""
-    regex = r"#{1}[a-zA-Z_]+"
+    regex = r"#{1}[a-zA-Z_]{1,64}"
     tags = findall(regex, value)
     if not tags:
         return value
