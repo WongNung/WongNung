@@ -19,7 +19,7 @@ from ..models.bookmark import Bookmark
 def get_fandom(name: str) -> Fandom:
     """Gets a fandom object from the name, if doesn't exist, create a new one."""
     name = re.sub(r"\s+", "", name.strip(), flags=re.UNICODE)
-    if len(name) > 64:
+    if len(name) > 64 or not re.match(r"^[a-zA-Z]{1}[a-zA-Z0-9_]+$", name):
         raise Http404()
     try:
         return Fandom.objects.get(name__iexact=name)
