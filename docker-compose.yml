@@ -38,7 +38,7 @@ services:
     env_file:
       - .env
     environment:
-      DEBUG: "false"
+      NPM_BIN_PATH: /usr/bin/npm
       DATABASE_HOST: db
     links:
       - db
