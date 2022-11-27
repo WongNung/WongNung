@@ -36,12 +36,6 @@ class TestSearch(TestCase):
         resp = self.client.get(url, {"query": ""}, HTTP_HX_Request="true")
         self.assertContains(resp, "hidden")
 
-    def test_short_string_search(self):
-        """Search query with len < 3 should hide result box"""
-        url = reverse("wongnung:search")
-        resp = self.client.get(url, {"query": "ab"}, HTTP_HX_Request="true")
-        self.assertContains(resp, "hidden")
-
     def test_search_with_results(self):
         """Searching should return a movie in the result box"""
         url = reverse("wongnung:search")
