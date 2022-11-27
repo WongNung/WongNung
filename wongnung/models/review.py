@@ -1,4 +1,6 @@
 from __future__ import annotations
+import re
+from typing import List
 
 from django.contrib.auth.models import User
 from django.db import models
@@ -61,3 +63,10 @@ class Review(models.Model):
     def remove_downvotes(self, user: User):
         """Remove User from downvotes."""
         self.downvotes.remove(user)
+
+    def get_tags(self) -> List[str]:
+        """Get all tags that matches the review."""
+        tags = [tag[1:] for tag in re.findall(r"#{1}[a-zA-Z0-9_]{1,64}", self.content)]
+        for genre in self.film.get_genres():
+            tags.append(re.sub(r"\s+", "", genre, re.UNICODE))
+        return [tag.lower() for tag in tags]

@@ -46,7 +46,7 @@
                 {% if film.get_genres %}
                     {% for genre in film.get_genres %}
                         <div class="rounded-3xl bg-transparent border-2 border-tag-yellow text-center text-tag-yellow px-2 mx-1">
-                            {{ genre }}
+                            <a class="hover:underline" href='{% url "wongnung:fandom" genre %}'>{{ genre }}</a>
                         </div>
                     {% endfor %}
                 {% else %}
@@ -77,7 +77,7 @@
             </div>
             <div class="reviews flex flex-col flex-auto bg-post-grey w-full h-full rounded-md self-center p-4 overflow-auto scrollbar">
                 {% if reviews %}
-                    <div class="flex flex-col sticky space-y-4">
+                    <div class="flex flex-col sticky">
                         {% for review in reviews %}
                             <div class="review{{ review.id }}"
                                  hx-get="{% url 'wongnung:review-component' review.pk %}"

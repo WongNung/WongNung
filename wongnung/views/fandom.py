@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.db.models import Q
-from django.http import HttpResponseRedirect
+from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from ..insights import UserJoinsFandom
@@ -17,8 +17,10 @@ from ..models.bookmark import Bookmark
 
 
 def get_fandom(name: str) -> Fandom:
-    """Gets a fandom object from the name, if doesn't exist, raise 404."""
+    """Gets a fandom object from the name, if doesn't exist, create a new one."""
     name = re.sub(r"\s+", "", name.strip(), flags=re.UNICODE)
+    if len(name) > 64 or not re.match(r"^[a-zA-Z]{1}[a-zA-Z0-9_]+$", name):
+        raise Http404()
     try:
         return Fandom.objects.get(name__iexact=name)
     except Fandom.DoesNotExist:
@@ -51,15 +53,16 @@ def show_fandom(request, name):
     except (User.DoesNotExist, TypeError):
         bm = False
 
-    reviews = Review.objects.filter(
-        Q(film__genres__icontains=fandom.name)
-        | Q(content__icontains=f"#{fandom.name}")
-    ).order_by("-pub_date")
+    reviews = [
+        review
+        for review in
+        Review.objects.all().order_by("-pub_date")
+        if fandom.name.lower() in review.get_tags()
+    ]
 
-    latest = reviews.first()
     last_active = None
-    if latest:
-        last_active = latest.pub_date
+    if reviews:
+        last_active = reviews[0].pub_date
 
     context = {
         "fandom": fandom,

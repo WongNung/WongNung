@@ -8,6 +8,8 @@
     {% tailwind_css %}
     <meta charset="utf-8" />
     <title>{% block title %}{% endblock title %}</title>
+    <script type="text/javascript" src="{% static 'js/htmx.min.js' %}"></script>
+    {% django_htmx_script %}
   </head>
 
   <body class="bg-back-grey scrollbar">
@@ -16,7 +18,5 @@
       const timeZoneName = Intl.DateTimeFormat().resolvedOptions().timeZone;
       document.cookie = 'timezone=' + encodeURIComponent(timeZoneName) + '; path=/';
     </script>
-    <script type="text/javascript" src="{% static 'js/htmx.min.js' %}"></script>
-    {% django_htmx_script %}
   </body>
 </html>
