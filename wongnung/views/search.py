@@ -11,7 +11,7 @@ def search(request: HttpRequest):
     """Performs search and renders a results div."""
     query = str(request.GET.get("query")).lower()
 
-    if len(query) < 3:
+    if len(query) < 1:
         return HttpResponse(construct_results_container())
 
     if not SEARCH_CACHE.get(query):

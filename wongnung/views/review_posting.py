@@ -14,7 +14,11 @@ from . import user_insights
 def post_review_page(request, filmid):
     """Renders a review posting page."""
     film = Film.get_film(film_id=filmid)
-    context = {"film": film}
+    context = {
+        "film": film,
+        "user": request.user,
+        "profile": request.user.userprofile,
+    }
     return render(request, "wongnung/post_review_page.html", context)
 
 
