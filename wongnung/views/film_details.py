@@ -1,4 +1,4 @@
-from django.http import Http404
+from django.http import Http404, HttpResponseNotFound
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
@@ -33,9 +33,11 @@ def show_film_component(request, filmid):
         ).exists()
     except (User.DoesNotExist, TypeError):
         bm = False
+
     film = Film.get_film(film_id=filmid)
     if not film:
-        raise Http404()
+        return render(request, "wongnung/404.html", {"HX-Redirect": "true"})
+
     reviews = Review.objects.filter(film=film).order_by("-pub_date")
     if request.user.is_authenticated:
         user_insights.push(request.user, UserSeesFilm(film))

@@ -1,14 +1,16 @@
 {% extends "base.html" %}
 {% block title %}
-Oops! ran out of popcorn!
+Oops, ran out of popcorn!
 {% endblock title %}
 {% block content %}
-<div class="w-screen h-screen bg-back-grey flex flex-col items-center justify-center">
-    <div class="font-primary text-white text-6xl">
-        404
-    </div>
-    <div class="font-primary text-white text-5xl pt-5">
-        Ran out of popcorn!
+<div class="w-screen h-screen bg-back-grey flex flex-col items-center justify-center space-y-8">
+    <div class="flex flex-col items-center justify-center">
+        <div class="font-primary text-white text-6xl">
+            404
+        </div>
+        <div class="font-primary text-white text-5xl pt-5">
+            Ran out of popcorn!
+        </div>
     </div>
     <a href='{% url "wongnung:feed" %}'>
         <button class="text-2xl font-primary text-white bg-component-red py-1.5 px-7 rounded-xl hover:drop-shadow-lg hover:bg-red-800" type="button">

@@ -71,5 +71,3 @@ htmx_paths = [
 ]
 
 urlpatterns += htmx_paths
-
-handler404 = "wongnung.views.error_handler.error_404_view"
