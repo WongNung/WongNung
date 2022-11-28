@@ -122,6 +122,11 @@ Before you install, see the [Preparing the installation](#preparing-the-installa
    python manage.py createcachetable
    ```
 
+   **(Optional, but recommended)** You should create an admin account in the application.
+   ```sh
+   python manage.py createsuperuser
+   ```
+
 5. Choose either:
    * Run on development (`DEBUG=True`), open two terminal windows and each type different commands:
      ```sh
