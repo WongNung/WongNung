@@ -36,7 +36,7 @@ class FeedSession:
         accepts = Q()  # Q() that ensures criteria
         excludes = Q()  # Q() that excludes content
 
-        for activity in insights:
+        for activity in insights[::-1]:
             if activity.accepts():
                 accepts |= activity.accepts()
             if activity.excludes():
