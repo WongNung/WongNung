@@ -19,6 +19,9 @@ def post_review_page(request, filmid):
         "user": request.user,
         "profile": request.user.userprofile,
     }
+    review = Review.objects.filter(film=film, author=request.user).first()
+    if review:
+        context["review"] = review
     return render(request, "wongnung/post_review_page.html", context)
 
 
@@ -34,6 +37,13 @@ def post_review(request, filmid):
     for tag in findall(r"<{1}.+>{1}", content):
         content = content.replace(tag, "")
 
-    review = Review.objects.create(film=film, content=content, author=author)
+    review = Review.objects.filter(film=film, author=author).first()
+    if review:
+        review.content = content
+        review.save()
+    else:
+        review = Review.objects.create(
+            film=film, content=content, author=author
+        )
     user_insights.push(author, UserWritesReview(film, review))
     return redirect("wongnung:film-details", filmid=filmid)
