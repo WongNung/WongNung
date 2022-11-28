@@ -2,6 +2,7 @@ from django.http import Http404, HttpResponseNotFound
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
+from django_htmx.http import HttpResponseClientRedirect
 from ..globals import htmx_endpoint
 from ..insights import UserSeesFilm
 from . import user_insights
@@ -36,7 +37,7 @@ def show_film_component(request, filmid):
 
     film = Film.get_film(film_id=filmid)
     if not film:
-        return render(request, "wongnung/404.html", {"HX-Redirect": "true"})
+        return HttpResponseClientRedirect("/not_found")
 
     reviews = Review.objects.filter(film=film).order_by("-pub_date")
     if request.user.is_authenticated:
