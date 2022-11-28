@@ -22,3 +22,5 @@ urlpatterns = [
     path("accounts/", include("allauth.urls")),
     path("", include("wongnung.urls")),
 ]
+
+handler404 = "wongnung.views.error_handler.error_404_view"

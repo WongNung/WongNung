@@ -19,6 +19,7 @@ from wongnung.views.profile import (
     profile_settings_component,
     save_profile,
 )
+from .views.error_handler import error_404_view
 
 # fmt: on
 
@@ -33,6 +34,7 @@ urlpatterns = [
     path("profile", profile_page, name="profile"),
     path("save_profile", save_profile, name="save-profile"),
     path("bookmarks", show_bookmarks, name="bookmarks"),
+    path("not_found", error_404_view, name="404")
 ]
 
 # Use this array to store paths that should be called using htmx
