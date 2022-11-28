@@ -84,7 +84,55 @@ Before you install, see the [Preparing the installation](#preparing-the-installa
 **For further work with Docker installation, see [Maintenance with Docker](https://github.com/WongNung/WongNung/wiki/Maintenance-with-Docker).**
 
 ## Install from source
+0. Make sure you have the following software/tools installed:
+   * `Python` version 3.9 or greater
+   * `Node.js` version 16 or greater
+   * `PostgreSQL` server and client version 14
+      * For Windows and Mac, the server and client is already bundled together.
+      * For Linux, install `postgresql` and `postgresql-client`.
 
+   If you will be running on production (`DEBUG=False`), there are additional tools required:
+   * `gcc`
+   * `Python headers` usually in `python3-dev` package
+   * `libpq-dev`
+
+1. Make sure your connection to PostgreSQL (using credentials in `.env`) works, usually you will need to modify `pg_hba.conf`
+
+2. Navigate to `theme` and install node dependencies.
+   ```sh
+   cd theme/static_src
+   npm install
+   cd ../..  # Navigate back to main folder
+   ```
+
+3. Create a virtual environment in the main folder and install Python dependencies.
+   ```sh
+   python -m venv venv
+   source ./venv/bin/activate  # or Windows: ./venv/Scripts/activate
+
+   pip install -r requirements.txt
+
+   # or if you run in production
+   pip install -r requirements/prod.txt
+   ```
+
+4. Migrate to database with:
+   ```sh
+   python manage.py migrate
+   python manage.py createcachetable
+   ```
+
+5. Choose either:
+   * Run on development (`DEBUG=True`), open two terminal windows and each type different commands:
+     ```sh
+     python manage.py tailwind start
+     python manage.py runserver 0.0.0.0:8000
+     ```
+   * Run on production (`DEBUG=False`), run the following commands,
+     ```sh
+     python manage.py collectstatic
+     python manage.py runserver 0.0.0.0:8000
+     ```
 
 # Project Documents
 * [Wiki Home](https://github.com/WongNung/WongNung/wiki)
