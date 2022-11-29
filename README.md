@@ -1,6 +1,9 @@
 # WongNung - a Group-based Film Review and Discovery Web Application
 
-<!-- Section for putting badges for later -->
+[![Website status](https://img.shields.io/website?down_message=maintenance&style=flat&up_message=online&url=https%3A%2F%2Fwongnung.com)](https://wongnung.com)
+[![Code linting](https://github.com/WongNung/WongNung/actions/workflows/linting.yml/badge.svg)](https://github.com/WongNung/WongNung/actions/workflows/linting.yml)
+[![Unit testing](https://github.com/WongNung/WongNung/actions/workflows/testing.yml/badge.svg)](https://github.com/WongNung/WongNung/actions/workflows/testing.yml)
+[![codecov](https://codecov.io/gh/WongNung/WongNung/branch/master/graph/badge.svg?token=XICO479LGZ)](https://codecov.io/gh/WongNung/WongNung)
 
 ## What is WongNung?
 **TL;DR: It's IMDB + Reddit**
