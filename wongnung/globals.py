@@ -1,3 +1,4 @@
+import logging
 from functools import wraps
 
 from django.core.cache import caches
@@ -6,6 +7,7 @@ from django_htmx.http import HttpResponseClientRedirect
 
 SEARCH_CACHE = caches["searches"]  # Cache for search results
 
+logger = logging.getLogger(__name__)
 
 def htmx_endpoint(function, required_auth=False):
     """
@@ -18,6 +20,7 @@ def htmx_endpoint(function, required_auth=False):
     def wrap(request, *args, **kwargs):
         if request.htmx:
             if required_auth and (not request.user.is_authenticated):
+                logger.warning(f"Unauthenticated user tried to access HTMX endpoint: {function.__name__}")
                 return HttpResponseClientRedirect("/accounts/login")
             return function(request, *args, **kwargs)
         raise Http404()

@@ -1,3 +1,4 @@
+import logging
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.http import HttpRequest
@@ -8,6 +9,7 @@ from ..globals import htmx_endpoint
 from ..models.review import Review
 from wongnung.models.bookmark import Bookmark
 
+logger = logging.getLogger(__name__)
 
 def _color_by_bg(color_hex: str) -> str:
     """
