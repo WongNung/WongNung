@@ -1,4 +1,5 @@
 from abc import abstractmethod
+from types import NoneType
 from typing import Dict, List, Optional
 
 from django.contrib.auth.models import User
@@ -18,7 +19,7 @@ class UserActivity:
     fandom: Optional[Fandom]
 
     @abstractmethod
-    def accepts(self):
+    def accepts(self) -> Q | NoneType:
         pass
 
     @abstractmethod

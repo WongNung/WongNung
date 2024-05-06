@@ -1,2 +1,4 @@
 -r common.txt
 psycopg2-binary~=2.9.3
+django-browser-reload
+django-axes

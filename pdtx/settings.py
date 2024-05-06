@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 import os
 import json
 from pathlib import Path
+from datetime import timedelta
 
 import tmdbsimple as tmdb
 from decouple import Csv, config
@@ -60,6 +61,7 @@ INSTALLED_APPS = [
     "allauth.socialaccount.providers.google",
     "allauth.socialaccount.providers.github",
     "allauth.socialaccount.providers.discord",
+    "axes",
     "tailwind",
     "theme",
     "django_htmx",
@@ -87,8 +89,10 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "django_htmx.middleware.HtmxMiddleware",
+    "allauth.account.middleware.AccountMiddleware",
     "wongnung.middlewares.LocalTimeMiddleware",
     "wongnung.middlewares.EnsureUserProfileMiddleware",
+    "axes.middleware.AxesMiddleware",
 ]
 
 if DEBUG:
@@ -130,6 +134,12 @@ DATABASES = {
     }
 }
 
+# AXES configuration
+AXES_HANDLER = "axes.handlers.cache.AxesCacheHandler"
+
+AXES_FAILURE_LIMIT = 9
+AXES_COOLOFF_TIME = timedelta(minutes=10)
+
 # Caching
 CACHES = {
     "default": {
@@ -140,7 +150,13 @@ CACHES = {
         "BACKEND": "pdtx.UnsafeKeyDatabaseCache",
         "LOCATION": "wongnung_search_cache",
     },
+    "axes": {
+        "BACKEND": "django.core.cache.backends.memcached.PyMemcacheCache",
+        "LOCATION": "127.0.0.1:11211"
+    }
 }
+
+AXES_CACHE = "axes"
 
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
@@ -191,9 +207,17 @@ MEDIA_URL = "media/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTHENTICATION_BACKENDS = [
-    "django.contrib.auth.backends.ModelBackend",
+    "axes.backends.AxesStandaloneBackend",
     "allauth.account.auth_backends.AuthenticationBackend",
 ]
+
+# Email backend & settings
+if DEBUG:
+    EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+    EMAIL_FILE_PATH = BASE_DIR / "test-mails"
+else:
+    # Make this an SMTP-based backend configuration or smth
+    pass
 
 SITE_ID = 4
 LOGIN_REDIRECT_URL = "/"
