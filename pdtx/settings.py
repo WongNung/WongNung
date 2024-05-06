@@ -196,6 +196,8 @@ AUTHENTICATION_BACKENDS = [
     "allauth.account.auth_backends.AuthenticationBackend",
 ]
 
+EMAIL_BACKEND = config("EMAIL_BACKEND", default="django.core.mail.backends.console.EmailBackend")
+
 SITE_ID = 4
 LOGIN_REDIRECT_URL = "/"
 ACCOUNT_UNIQUE_EMAIL = False
