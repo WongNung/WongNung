@@ -89,6 +89,7 @@ MIDDLEWARE = [
     "django_htmx.middleware.HtmxMiddleware",
     "wongnung.middlewares.LocalTimeMiddleware",
     "wongnung.middlewares.EnsureUserProfileMiddleware",
+    "allauth.account.middleware.AccountMiddleware",
 ]
 
 if DEBUG:
