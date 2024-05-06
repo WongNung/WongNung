@@ -197,10 +197,16 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 EMAIL_BACKEND = config("EMAIL_BACKEND", default="django.core.mail.backends.console.EmailBackend")
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = config("EMAIL_HOST_USER", default="wongnung.test@gmail.com")
+EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", default="wongnung4321")
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 SITE_ID = 4
 LOGIN_REDIRECT_URL = "/"
-ACCOUNT_UNIQUE_EMAIL = False
+ACCOUNT_UNIQUE_EMAIL = True
 
 SOCIALACCOUNT_PROVIDERS = {
     "google": {

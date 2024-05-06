@@ -29,6 +29,11 @@ Sign In
             <div class="self-center">
                 <form method="post" action="{% url 'account_login' %}">
                     {% csrf_token %}
+                    {% if form.non_field_errors %}
+                        {% for error in form.non_field_errors %}
+                            <div class="w-80 text-red-700 text-lg">{{ error }}</div>
+                        {% endfor %}
+                    {% endif %}
                     <div class="flex flex-col">
                         <label for="id_login" class="font-primary text-lg text-black">Username</label>
                         <input type="text" name="login" autofocus required class="h-10 w-80 m-2 px-3 bg-white text-black
@@ -45,7 +50,7 @@ Sign In
                                     alt="" class="w-4">
                             </button>
                         </div>
-                        <a href="{% url 'account_reset_password' %}" class="flex text-sm text-header-grey justify-end m-2">Forgot password?</a>
+                        <a href="{% url 'account_reset_password' %}" class="flex text-sm text-header-grey justify-end m-2 hover:underline">Forgot password?</a>
                     </div>
                     <input id="id_remember" type="hidden"/>
                     <!--Submit form-->
@@ -54,7 +59,7 @@ Sign In
                         <input type="submit" value="Sign in" class="h-10 w-80 m-2 px-3 bg-component-red text-white font-primary text-lg text-center rounded-xl hover:drop-shadow-md p-2"/>
                     </button>
                 </form>
-                <div class="flex justify-center">Not Registerd?<a class="pl-1 text-amber-300" href="{% url 'account_signup' %}">Create an account</a></div>
+                <div class="flex justify-center">Not Registerd?<a class="pl-1 text-amber-300 hover:underline" href="{% url 'account_signup' %}">Create an account</a></div>
             </div>
             <div class="relative flex py-5 items-center">
                 <div class="flex-grow border-t border-tag-yellow"></div>
