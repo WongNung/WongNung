@@ -29,10 +29,9 @@ Sign In
             <div class="self-center">
                 <form method="post" id="loginForm" action="{% url 'account_login' %}">
                     {% csrf_token %}
-                    
                     <div class="flex flex-col">
                         <label for="id_login" class="font-primary text-lg text-black">Username</label>
-                        <input type="text" name="username" autofocus required class="h-10 w-80 m-2 px-3 bg-white text-black
+                        <input type="text" name="login" autofocus required class="h-10 w-80 m-2 px-3 bg-white text-black
                         font-primary text-lg rounded-xl hover:drop-shadow-md" id="id_login"/>
                     </div>
                     <div class="flex flex-col">
