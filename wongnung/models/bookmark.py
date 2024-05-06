@@ -5,6 +5,7 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.db.models import QuerySet
+from django.conf import settings
 
 
 def get_bookmark_set(ct: ContentType, owner: User) -> QuerySet[Bookmark]:
@@ -25,7 +26,7 @@ class Bookmark(models.Model):
     for later visit.
     """
 
-    owner = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
     content_type = models.ForeignKey(
         ContentType, on_delete=models.CASCADE, null=True
     )

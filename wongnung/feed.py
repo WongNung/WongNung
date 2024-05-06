@@ -3,7 +3,7 @@ import logging
 import datetime
 from typing import Any, Dict, List, Optional
 
-from django.contrib.auth.models import User
+from .models import CustomUser as User
 from django.db.models import Q
 from django.utils import timezone
 

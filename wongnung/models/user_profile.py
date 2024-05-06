@@ -1,6 +1,7 @@
 from __future__ import annotations
 from django.contrib.auth.models import User
 from django.db import models
+from django.conf import settings
 
 
 class UserProfile(models.Model):
@@ -9,7 +10,7 @@ class UserProfile(models.Model):
     """
 
     user = models.OneToOneField(
-        User, on_delete=models.CASCADE, primary_key=True
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, primary_key=True
     )
     display_name = models.CharField(max_length=32, blank=True)
     _color = models.CharField(max_length=6, default="D9D9D9")
