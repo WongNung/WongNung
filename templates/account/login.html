@@ -27,7 +27,7 @@ Sign In
             </div>
             <!--Log in with username / password-->
             <div class="self-center">
-                <form method="post" id="loginForm" action="{% url 'account_login' %}">
+                <form method="post" action="{% url 'account_login' %}">
                     {% csrf_token %}
                     <div class="flex flex-col">
                         <label for="id_login" class="font-primary text-lg text-black">Username</label>
@@ -123,7 +123,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 'password' ? 'text' : 'password';
         passIn.setAttribute('type', type);
     });
-    const loginForm = document.getElementById('loginForm');
 });
 </script>
 {% endblock content %}
