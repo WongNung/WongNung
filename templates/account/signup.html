@@ -48,7 +48,7 @@ Sign Up
                         <label for="id_username" class="font-primary text-lg text-black">Username</label>
                         {% if form.username.errors %}
                             {% for error in form.username.errors %}
-                                <p class="font-primary text-base text-red-700">{{ error }}</p>
+                                <p class="w-80 font-primary text-base text-red-700">{{ error }}</p>
                             {% endfor %}
                         {% endif %}
                         <input type="text" name="username" autocomplete="username" minlength="1" maxlength="150" required="" id="id_username" class="h-10 w-80 m-2 px-3 bg-white text-black
@@ -58,7 +58,7 @@ Sign Up
                         <label for="id_email" class="font-primary text-lg text-black">Email</label>
                         {% if form.email.errors %}
                             {% for error in form.email.errors %}
-                                <p class="font-primary text-base text-red-700">{{ error }}</p>
+                                <p class="w-80 font-primary text-base text-red-700">{{ error }}</p>
                             {% endfor %}
                         {% endif %}
                         <input type="email" name="email" autocomplete="email" required="" id="id_email" class="h-10 w-80 m-2 px-3 bg-white text-black font-primary text-lg rounded-xl hover:drop-shadow-md">
@@ -67,7 +67,7 @@ Sign Up
                         <label for="id_password1" class="font-primary text-lg text-black">Password</label>
                         {% if form.password1.errors %}
                             {% for error in form.password1.errors %}
-                                <p class="font-primary text-base text-red-700">{{ error }}</p>
+                                <p class="w-80 font-primary text-base text-red-700">{{ error }}</p>
                             {% endfor %}
                         {% endif %}
                         <div class="flex flex-row">
@@ -82,7 +82,7 @@ Sign Up
                         <label for="id_password2" class="font-primary text-lg text-black">Password (again)</label>
                         {% if form.password2.errors %}
                             {% for error in form.password2.errors %}
-                                <p class="font-primary text-base text-red-700">{{ error }}</p>
+                                <p class="w-80 font-primary text-base text-red-700">{{ error }}</p>
                             {% endfor %}
                         {% endif %}
                         <div class="flex flex-row">
