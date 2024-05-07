@@ -1,4 +1,5 @@
 import re
+import logging
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -15,6 +16,7 @@ from ..models.fandom import Fandom
 from . import user_insights
 from ..models.bookmark import Bookmark
 
+logger = logging.getLogger(__name__)
 
 def get_fandom(name: str) -> Fandom:
     """Gets a fandom object from the name, if doesn't exist, create a new one."""
@@ -24,6 +26,7 @@ def get_fandom(name: str) -> Fandom:
     try:
         return Fandom.objects.get(name__iexact=name)
     except Fandom.DoesNotExist:
+        logger.info(f"Created a fandom {name}")
         return Fandom.objects.create(name=name)
 
 
@@ -83,6 +86,8 @@ def join_fandom(request, name):
     fandom.add_member(user)
     fandom.save()
     user_insights.push(user, UserJoinsFandom(fandom))
+
+    logger.info(f"User {user.username} joined fandom {name}.")
     return HttpResponseRedirect(reverse("wongnung:fandom", args=(fandom.pk,)))
 
 
@@ -93,4 +98,6 @@ def leave_fandom(request, name):
     user = request.user
     fandom.remove_member(user)
     fandom.save()
+
+    logger.info(f"User {user.username} left fandom {name}.")
     return HttpResponseRedirect(reverse("wongnung:fandom", args=(fandom.pk,)))

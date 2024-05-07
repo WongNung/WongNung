@@ -14,6 +14,7 @@ import os
 import json
 from pathlib import Path
 from datetime import timedelta
+import re
 
 import tmdbsimple as tmdb
 from decouple import Csv, config
@@ -280,3 +281,43 @@ SOCIALACCOUNT_ADAPTER = "wongnung.adapter.CancellableAccountAdapter"
 if not DEBUG and config("HTTPS", cast=bool, default=False):
     CSRF_TRUSTED_ORIGINS = [f"https://{address}" for address in ALLOWED_HOSTS]
     ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"
+
+# Logging
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "root": {"level": "INFO", "handlers": ["file"]},
+    "handlers": {
+        "file": {
+            "level": "INFO",
+            "class": "logging.FileHandler",
+            'filename': os.path.join(BASE_DIR, 'debug.log'),
+            "formatter": "app",
+        },
+    },
+    "loggers": {
+        'django.server': {
+            'filters': ['skip_static_and_homepage_requests'],
+        },
+        "django": {
+            "handlers": ["file"],
+            "level": "INFO",
+            "propagate": True
+        },
+    },
+    'filters': {
+        'skip_static_and_homepage_requests': {
+            '()': 'django.utils.log.CallbackFilter',
+            'callback': lambda record: not re.match(r'.*GET /static/.*|.*GET / HTTP/.*', record.getMessage()),
+        },
+    },
+    "formatters": {
+        "app": {
+            "format": (
+                u"%(asctime)s [%(levelname)-8s] "
+                "(%(module)s.%(funcName)s) %(message)s"
+            ),
+            "datefmt": "%Y-%m-%d %H:%M:%S",
+        },
+    },
+}

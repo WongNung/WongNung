@@ -1,3 +1,4 @@
+import logging
 from re import findall
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
@@ -9,6 +10,7 @@ from ..models.film import Film
 from ..models.review import Review
 from . import user_insights
 
+logger = logging.getLogger(__name__)
 
 @login_required
 def post_review_page(request, filmid):
@@ -41,9 +43,11 @@ def post_review(request, filmid):
     if review:
         review.content = content
         review.save()
+        logger.info(f"Updated review with id {review.id} for film {filmid} by user {request.user.username}.")
     else:
         review = Review.objects.create(
             film=film, content=content, author=author
         )
+        logger.info(f"Created review with id {review.id} for film {filmid} by user {request.user.username}.")
     user_insights.push(author, UserWritesReview(film, review))
     return redirect("wongnung:film-details", filmid=filmid)

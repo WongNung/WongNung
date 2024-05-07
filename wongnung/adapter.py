@@ -1,8 +1,11 @@
+import logging
+
 from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
 from allauth.exceptions import ImmediateHttpResponse
 from django.shortcuts import HttpResponseRedirect
 from django.urls import reverse
 
+logger = logging.getLogger(__name__)
 
 class CancellableAccountAdapter(DefaultSocialAccountAdapter):
     """
@@ -18,6 +21,7 @@ class CancellableAccountAdapter(DefaultSocialAccountAdapter):
         exception=None,
         extra_context=None,
     ):
+        logger.warning(f"Authentication error occurred for provider {provider_id}: {str(error)}")
         raise ImmediateHttpResponse(
             HttpResponseRedirect(reverse("account_login"))
         )
