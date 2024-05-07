@@ -10,3 +10,4 @@ whitenoise>=6.2.0
 selenium>=4.6.0
 django-axes
 django-pgcrypto-fields
+pymemcache
