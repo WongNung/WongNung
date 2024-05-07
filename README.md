@@ -58,7 +58,7 @@ Before you install, see the [Preparing the installation](#preparing-the-installa
    }
    ```
 
-## Install with Docker (recommended)
+## Install with Docker Compose (recommended)
 **We do not distribute our own Docker images.**
 
 0. Make sure you have installed [Docker](https://www.docker.com/) and [docker-compose](https://docs.docker.com/compose/).
@@ -90,9 +90,18 @@ Before you install, see the [Preparing the installation](#preparing-the-installa
 0. Make sure you have the following software/tools installed:
    * `Python` version 3.9 or greater
    * `Node.js` version 16 or greater
-   * `PostgreSQL` server and client version 14
+   * `PostgreSQL` server version 14
+      * **Recommended Way!** Use Docker and launch a Docker instance with,
+      ```
+      docker run -d -e POSTGRES_DB=wongnung -e POSTGRES_USER=wongnung -e POSTGRES_PASSWORD=password -p 5432:5432 postgres:14
+      ```
       * For Windows and Mac, the server and client is already bundled together.
       * For Linux, install `postgresql` and `postgresql-client`.
+   * `memcached` server
+      * **Recommended Way!** Use Docker and launch a Docker instance with,
+      ```
+      docker run -d -p 11211:11211 memcached:alpine
+      ```
 
    If you will be running on production (`DEBUG=False`), there are additional tools required:
    * `gcc`

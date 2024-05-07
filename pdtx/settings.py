@@ -155,7 +155,7 @@ CACHES = {
     },
     "axes": {
         "BACKEND": "django.core.cache.backends.memcached.PyMemcacheCache",
-        "LOCATION": "127.0.0.1:11211"
+        "LOCATION": f'{config("MEMCACHED_HOST", default="localhost")}:{config("MEMCACHED_PORT", default="11211")}'
     }
 }
 
@@ -216,15 +216,15 @@ AUTHENTICATION_BACKENDS = [
 
 # Email backend & settings
 EMAIL_BACKEND = config("EMAIL_BACKEND", default="django.core.mail.backends.console.EmailBackend")
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
+EMAIL_HOST = config("EMAIL_HOST", default="smtp.example.com")
+EMAIL_PORT = config("EMAIL_PORT", default="587")
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = config("EMAIL_HOST_USER", default="wongnung.test@gmail.com")
-EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", default="wongnung4321")
+EMAIL_HOST_USER = config("EMAIL_HOST_USER", default="wongnung@example.com")
+EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", default="password")
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 if EMAIL_BACKEND == "django.core.mail.backends.filebased.EmailBackend":
-    EMAIL_FILE_PATH = config("FILEBASED_EMAIL_PATH", default=BASE_DIR / "test-mails")
+    EMAIL_FILE_PATH = BASE_DIR / str(config("FILEBASED_EMAIL_PATH", default="test-mails"))
 
 SITE_ID = 4
 LOGIN_REDIRECT_URL = "/"
