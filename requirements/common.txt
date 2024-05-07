@@ -11,3 +11,4 @@ selenium>=4.6.0
 django-axes
 django-pgcrypto-fields
 pymemcache
+django_recaptcha
