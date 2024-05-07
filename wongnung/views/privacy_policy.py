@@ -15,3 +15,7 @@ def privacy_policy_confirm(request):
             return render(request, 'wongnung/privacy_policy_confirm.html', {'error': 'Please agree to the privacy policy'})
 
     return render(request, 'wongnung/privacy_policy_confirm.html')
+
+@login_required
+def show_privacy_policy(request):
+    return render(request, "wongnung/privacy_policy.html")

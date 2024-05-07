@@ -11,6 +11,13 @@
     <title>{% block title %}{% endblock title %}</title>
     <script type="text/javascript" src="{% static 'js/htmx.min.js' %}"></script>
     {% django_htmx_script %}
+    <style>
+      #bullet-points li {
+          list-style-type: circle; /* Use circle bullets */
+          margin-left: 20px; /* Space between the bullet and the text */
+      }
+  </style>
+  
   </head>
 
   <body class="bg-back-grey scrollbar">

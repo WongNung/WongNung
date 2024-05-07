@@ -6,4 +6,4 @@ class CustomSignupView(SignupView):
         # Call the parent form_valid method
         super().form_valid(form)
         # Redirect to the privacy policy confirmation page
-        return redirect("wongnung:privacy-policy")
+        return redirect("wongnung:privacy-policy-confirm")

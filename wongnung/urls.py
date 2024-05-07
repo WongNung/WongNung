@@ -14,7 +14,7 @@ from .views.bookmark import add_bookmark_view, delete_bookmark_view
 from .views.landing import show_landing_page
 from .views.bookmark_set import show_bookmarks, get_bookmarks_set
 from .views.about_us import about_us
-from .views.privacy_policy import privacy_policy_confirm
+from .views.privacy_policy import privacy_policy_confirm, show_privacy_policy
 from wongnung.views.profile import (
     profile_page,
     profile_settings_component,
@@ -36,7 +36,7 @@ urlpatterns = [
     path("save_profile", save_profile, name="save-profile"),
     path("bookmarks", show_bookmarks, name="bookmarks"),
     path("not_found", error_404_view, name="404"),
-    path("privacy_policy", privacy_policy_confirm, name="privacy-policy"),
+    path("privacy_policy_confirm", privacy_policy_confirm, name="privacy-policy-confirm"),
 ]
 
 # Use this array to store paths that should be called using htmx
@@ -72,6 +72,7 @@ htmx_paths = [
         "profile_settings", profile_settings_component, name="profile-settings"
     ),
     path("about_us", about_us, name="about-us"),
+    path("privacy_policy", show_privacy_policy, name="privacy-policy")
 ]
 
 urlpatterns += htmx_paths
