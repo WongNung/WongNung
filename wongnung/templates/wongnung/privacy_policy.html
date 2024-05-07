@@ -1,0 +1,26 @@
+<div class="p-5">
+    <div id="privacy-policy" class="w-full"></div>
+</div>
+<script>
+    const data = {
+        "Introduction": "This Privacy Notification Document and Consent Form (the 'Document') outlines how WongNung (the 'Platform') collects, uses, discloses, and manages personal data in compliance with the General Data Protection Regulation (GDPR) and the Personal Data Protection Act (PDPA).",
+        "Collection of Personal Data": "The Platform collects personal data from users for the following purposes:<ul><li>User registration and account management</li><li>Providing personalized film recommendations and content</li><li>Facilitating communication between users (e.g., through fandoms and reviews)</li><li>Improving the Platform's services and user experience</li><li>Complying with legal obligations</li><ul>",
+        "Types of Personal Data Collected": "The Platform may collect the following types of personal data:<ul><li>Personal Identification Information: Username and your email address on registration.</li><li>Interactions with Films and Reviews: Reviews and ratings submitted by you on the Platform.</li><li>Usage Data: Your film preferences and behavior on the Platform.</li></ul>",
+        "Use of Personal Data": "The Platform may use personal data for the following purposes:<ul><li>Provide personalized film recommendations.</li><li>Allow you to post and manage reviews.</li><li>Improve our services through user feedback and usage patterns.</li></ul>",
+        "Disclosure of Personal Data": "The Platform may disclose personal data to the following parties:<ul><li>Other users, as necessary for communication and collaboration within the Platform</li><li>Service providers who assist in providing the Platform's services</li><li>Legal authorities, if required by law or to protect the Platform's legal rights</li></ul>",
+        "Storage and Security of Personal Data": "The Platform stores and secures personal data in accordance with GDPR and PDPA requirements. Personal data is kept confidential and protected against unauthorized access, use, or disclosure. The Platform has the following security measures to protect your data:<ul><li>Encryption of your personal data during transmission and at rest.</li><li>Strict access controls to your data, limiting access to only those who need to know.</li></ul>",
+        "User Rights": "Users have the following rights regarding their personal data:<ul><li>Right to access: Users can request access to their personal data held by the Platform.</li><li>Right to rectification: Users can request the correction of inaccurate or incomplete personal data.</li><li>Right to erasure: Users can request the deletion of their personal data, subject to legal obligations.</li><li>Right to data portability: Users can request the transfer of their personal data to another service provider.</li></ul>",
+        "Consent": "By using the Platform, users consent to the collection, use, and disclosure of their personal data as outlined in this Document. Users also consent to the use of cookies and similar technologies for analytics and personalized content.",
+        "Contact Information": "If you have any questions or concerns about this Document or the Platform's privacy practices, please contact us at wongnung.test@gmail.com"
+    };
+
+    const container = document.getElementById('privacy-policy');
+    for (const key in data) {
+        if (data.hasOwnProperty(key)) {
+            const value = data[key];
+            container.innerHTML += `<h1 class="text-xl font-bold text-tag-yellow">${key}</h1>`;
+            container.innerHTML += `<div class="flex-grow border-t border-post-grey my-1"></div>`;
+            container.innerHTML += `<div id="bullet-points" class="text-base mb-5 text-white">${value}</div>`;
+        }
+    }
+</script>

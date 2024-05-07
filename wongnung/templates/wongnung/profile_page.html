@@ -41,13 +41,23 @@
                </span>
           </div>
           <div class="font-primary text-white text-xl py-3">
+               <span class="hover:cursor-pointer"
+                    hx-get='{% url "wongnung:privacy-policy" %}'
+                    hx-target="#ShowComponent"
+                    hx-swap="innerHTML"
+                    hx-trigger="click"
+                    title="Click here to view WongNung privacy policy">
+               Privacy Policy
+               </span>
+          </div>
+          <div class="font-primary text-white text-xl py-3">
                <form action='{% url "account_logout" %}' method="post">
                     {% csrf_token %}
                     <button title="Click here to log out">Log out</button>
                </form>
           </div>
      </div>
-     <div class="bg-feed-grey mx-6 w-full h-screen">
+     <div class="bg-feed-grey mx-6 w-full h-screen overflow-y-scroll">
           <div class="flex flow-col" id="ShowComponent">
           </div>
      </div>
