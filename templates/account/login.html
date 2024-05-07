@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load allauth account %}
 {% load socialaccount %}
 {% block title %}
 Sign In
@@ -18,14 +19,55 @@ Sign In
             <path d="M179.661 60.7267C170.631 60.7267 163.312 68.0242 163.312 77.026C163.313 80.0913 164.183 83.0939 165.819 85.689C165.399 88.1381 165.144 89.4529 164.951 90.7331C164.845 91.4304 165.13 91.8124 165.813 91.6381L171.211 90.975C173.76 92.5112 176.682 93.3238 179.661 93.3251C188.69 93.3252 196.01 86.0278 196.01 77.026C196.01 68.0241 188.69 60.7266 179.661 60.7267Z" fill="white"/>
         </svg>
     </div>
-    <div class="flex items-center justify-center w-full pt-10">
+    <div class="flex items-center justify-center w-full pt-5">
         <!--Sign in box-->
-        <div class="box-content w-[450px] h-[450px] bg-regis-grey rounded-2xl flex flex-col pl-5">
+        <div class="box-content w-[450px] h-fit bg-regis-grey rounded-2xl flex flex-col">
             <div class="font-primary text-4xl text-black mt-10 mb-2 drop-shadow-lg self-center">
                 SIGN IN
             </div>
+            <!--Log in with username / password-->
+            <div class="self-center">
+                <form method="post" action="{% url 'account_login' %}">
+                    {% csrf_token %}
+                    {% if form.non_field_errors %}
+                        {% for error in form.non_field_errors %}
+                            <div class="w-80 text-red-700 text-lg">{{ error }}</div>
+                        {% endfor %}
+                    {% endif %}
+                    <div class="flex flex-col">
+                        <label for="id_login" class="font-primary text-lg text-black">Username</label>
+                        <input type="text" name="login" autofocus required class="h-10 w-80 m-2 px-3 bg-white text-black
+                        font-primary text-lg rounded-xl hover:drop-shadow-md" id="id_login"/>
+                    </div>
+                    <div class="flex flex-col">
+                        <label for="id_password" class="font-primary text-lg text-black">Password</label>
+                        <div class="flex flex-row">
+                            <input type="password" name="password" required class="h-10 w-80 m-2 px-3 bg-white text-black
+                            font-primary text-lg rounded-xl hover:drop-shadow-md" id="id_password" />
+                            <button type="button" id="togglePassword"
+                                    class="focus:outline-none -ml-8 z-10">
+                                <img src="https://media.geeksforgeeks.org/wp-content/uploads/20240227164304/visible.png"
+                                    alt="" class="w-4">
+                            </button>
+                        </div>
+                        <a href="{% url 'account_reset_password' %}" class="flex text-sm text-header-grey justify-end m-2 hover:underline">Forgot password?</a>
+                    </div>
+                    <input id="id_remember" type="hidden"/>
+                    <!--Submit form-->
+                    <input type="hidden" name="next" value="{{ next }}">
+                    <button>
+                        <input type="submit" value="Sign in" class="h-10 w-80 m-2 px-3 bg-component-red text-white font-primary text-lg text-center rounded-xl hover:drop-shadow-md p-2"/>
+                    </button>
+                </form>
+                <div class="flex justify-center">Not Registerd?<a class="pl-1 text-amber-300 hover:underline" href="{% url 'account_signup' %}">Create an account</a></div>
+            </div>
+            <div class="relative flex py-5 items-center">
+                <div class="flex-grow border-t border-tag-yellow"></div>
+                <span class="flex-shrink mx-4 text-white">OR</span>
+                <div class="flex-grow border-t border-tag-yellow"></div>
+            </div>
             <!--Log in with Google-->
-            <div class="self-center pt-5">
+            <div class="self-center pt-2">
                 <form action="{% provider_login_url 'google' %}" method="post">
                     {% csrf_token %}
                     <button class="flex flex-row h-16 w-70 m-2 mr-6 px-7 bg-component-red text-white
@@ -41,7 +83,7 @@ Sign In
                 </form>
             </div>
             <!--Log in with GitHub-->
-            <div class="self-center pt-5">
+            <div class="self-center pt-2">
                 <form action="{% provider_login_url 'github' method='js_sdk' %}?next=https://github.com" method="post">
                     {% csrf_token %}
                     <button class="flex flex-row h-16 w-70 m-2 mr-6 px-7 bg-black text-white
@@ -57,7 +99,7 @@ Sign In
                 </form>
             </div>
             <!--Log in with Discord-->
-            <div class="self-center pt-5">
+            <div class="self-center pt-2 pb-5">
                 <form action="{% provider_login_url 'discord' %}" method="post">
                     {% csrf_token %}
                     <button class="flex flex-row h-16 w-70 m-2 mr-6 px-7 bg-[#7289da] text-white
@@ -75,4 +117,17 @@ Sign In
         </div>
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const passIn = document.getElementById('id_password');
+    const btn = document.getElementById('togglePassword');
+    btn.addEventListener('click', function () {
+        const type =
+            passIn.getAttribute('type') ===
+                'password' ? 'text' : 'password';
+        passIn.setAttribute('type', type);
+    });
+});
+</script>
 {% endblock content %}
