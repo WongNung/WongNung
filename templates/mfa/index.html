@@ -1,0 +1,68 @@
+{% extends "wongnung/wongnung_page.html" %}
+{% load allauth %}
+{% block t %}Two-Factor Authentication Settings{% endblock t %}
+{% block c %}
+<div class="flex items-center justify-center w-full pt-5">
+    <div class="box-content w-[450px] h-fit bg-regis-grey rounded-2xl flex flex-col py-10">
+            <div class="font-primary text-4xl text-black mb-2 drop-shadow-lg self-center">
+                2FA Protection
+            </div>
+            <div class="self-center">
+                <div class="flex flex-col items-center">
+                    {% if authenticators.totp %}
+                        <p>Your 2FA is currently active.</p>
+                    {% else %}
+                        <p>Your 2FA is not active.</p>
+                    {% endif %}
+                </div>
+
+                {% url 'mfa_deactivate_totp' as deactivate_url %}
+                {% url 'mfa_activate_totp' as activate_url %}
+                <div class="flex flex-col mt-4">
+                {% if authenticators.totp %}
+                    <a href={{deactivate_url}} class="h-10 w-80 m-2 px-3 bg-component-red text-white font-primary text-lg text-center rounded-xl hover:drop-shadow-md p-2">
+                        Deactivate
+                    </a>
+                {% else %}
+                    <a href={{activate_url}} class="h-10 w-80 m-2 px-3 bg-component-red text-white font-primary text-lg text-center rounded-xl hover:drop-shadow-md p-2">
+                        Activate
+                    </a>
+                {% endif %}
+                </div>
+            </div>
+
+        {% if "recovery_codes" in MFA_SUPPORTED_TYPES and authenticators.totp %}
+        <div class="relative flex py-5 items-center">
+            <div class="flex-grow border-t border-tag-yellow"></div>
+        </div>
+
+        {% with unused_count=authenticators.recovery_codes.get_unused_codes|length %}
+            <div class="font-primary text-2xl text-black mb-2 drop-shadow-lg self-center">
+                Recovery Codes
+            </div>
+            <div class="self-center">
+                <div class="flex flex-col items-center">
+                    {% if authenticators.recovery_codes %}
+                        <p>You have {{unused_count}} unused recovery code(s).</p>
+                    {% else %}
+                        <p>You have no recovery codes setup.</p>
+                    {% endif %}
+                </div>
+
+                {% url 'mfa_view_recovery_codes' as view_url %}
+                {% url 'mfa_generate_recovery_codes' as generate_url %}
+                <div class="flex flex-col mt-4">
+                    <a href={{view_url}} class="h-10 w-80 m-2 px-3 bg-component-red text-white font-primary text-lg text-center rounded-xl hover:drop-shadow-md p-2">
+                        View
+                    </a>
+                    <a href={{generate_url}} class="h-10 w-80 m-2 px-3 bg-component-red text-white font-primary text-lg text-center rounded-xl hover:drop-shadow-md p-2">
+                        Regenerate
+                    </a>
+                </div>
+            </div>
+        {% endwith %}
+        {% endif %}
+
+    </div>
+</div>
+{% endblock c %}
