@@ -15,10 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+from wongnung.views.landing import show_landing_page
 
 urlpatterns = [
     path("__reload__/", include("django_browser_reload.urls")),
-    path("admin/", admin.site.urls),
+    path('admin/', admin.site.urls),
     path("accounts/", include("allauth.urls")),
     path("", include("wongnung.urls")),
 ]

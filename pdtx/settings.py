@@ -97,6 +97,7 @@ MIDDLEWARE = [
     "wongnung.middlewares.LocalTimeMiddleware",
     "wongnung.middlewares.EnsureUserProfileMiddleware",
     "axes.middleware.AxesMiddleware",
+    'wongnung.middlewares.AdminOnlyMiddleware',
 ]
 
 if DEBUG:
