@@ -68,6 +68,8 @@ INSTALLED_APPS = [
     "theme",
     "django_htmx",
     'pgcrypto',
+
+    'django_recaptcha',
 ]
 
 if DEBUG:
@@ -329,3 +331,6 @@ LOGGING = {
 }
 
 AUTH_USER_MODEL = 'wongnung.CustomUser'
+
+RECAPTCHA_PUBLIC_KEY = config("RECAPTCHA_PUBLIC_KEY")
+RECAPTCHA_PRIVATE_KEY = config("RECAPTCHA_PRIVATE_KEY")
