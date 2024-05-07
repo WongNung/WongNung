@@ -44,6 +44,7 @@ ALLOWED_HOSTS = config(
     "ALLOWED_HOSTS", cast=Csv(), default="127.0.0.1,localhost"
 )
 
+PGCRYPTO_KEY = config("PGCRYPTO_KEY", default="your_pgcrypto_key")
 
 # Application definition
 INSTALLED_APPS = [
@@ -66,6 +67,7 @@ INSTALLED_APPS = [
     "tailwind",
     "theme",
     "django_htmx",
+    'pgcrypto',
 ]
 
 if DEBUG:
@@ -321,3 +323,5 @@ LOGGING = {
         },
     },
 }
+
+AUTH_USER_MODEL = 'wongnung.CustomUser'

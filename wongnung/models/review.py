@@ -5,6 +5,7 @@ from typing import List
 from django.contrib.auth.models import User
 from django.db import models
 from django.utils import timezone
+from django.conf import settings
 
 from .film import Film
 
@@ -26,9 +27,9 @@ class Review(models.Model):
     film = models.ForeignKey(Film, on_delete=models.CASCADE)
     pub_date = models.DateTimeField(default=timezone.now)
     content = models.CharField(max_length=1024)
-    author = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
-    upvotes = models.ManyToManyField(User, related_name="upvotes")
-    downvotes = models.ManyToManyField(User, related_name="downvotes")
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.SET_NULL)
+    upvotes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="upvotes")
+    downvotes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="downvotes")
 
     def __str__(self) -> str:
         string = f"Review for {self.film} @ {self.pub_date}"
