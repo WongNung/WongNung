@@ -1,0 +1,28 @@
+{% extends "wongnung/wongnung_page.html" %}
+{% load i18n %}
+{% load allauth %}
+{% block t %}Two-Factor Authentication Deactivation{% endblock t %}
+{% block c %}
+<div class="flex items-center justify-center w-full pt-5">
+    <div class="box-content w-[450px] h-fit bg-regis-grey rounded-2xl flex flex-col py-10">
+            <div class="font-primary text-4xl text-black mb-2 drop-shadow-lg self-center">
+                2FA Deactivation
+            </div>
+            <div class="self-center">
+                <div class="flex flex-col items-center">
+                    <p class="w-5/6 text-center">
+                        You are about to deactivate authenticator app based authentication. Are you sure?
+                    </p>
+                    {% url 'mfa_deactivate_totp' as action_url %}
+                    <form method="POST" action={{ action_url }} class="mt-4 flex flex-col items-center">
+                        {% csrf_token %}
+                        <button type="submit"
+                                class="h-10 w-80 m-2 px-3 bg-component-red text-white font-primary text-lg text-center rounded-xl hover:drop-shadow-md p-2">
+                            Deactivate!
+                        </button>
+                    </form>
+                </div>
+            </div>
+    </div>
+</div>
+{% endblock c %}

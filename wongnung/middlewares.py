@@ -7,6 +7,10 @@ from django.utils import timezone
 
 from .models.user_profile import UserProfile
 
+from django.shortcuts import redirect
+from django.urls import reverse
+from django.utils.deprecation import MiddlewareMixin
+
 logger = logging.getLogger(__name__)
 
 class LocalTimeMiddleware:
@@ -44,3 +48,11 @@ class EnsureUserProfileMiddleware:
                 logger.error(f"Error creating UserProfile for user {request.user.id}: {str(e)}")
 
         return self.get_response(request)
+
+class AdminOnlyMiddleware(MiddlewareMixin):
+    """If not authenticated or not a superuser, redirect to the landing page"""
+    
+    def process_request(self, request):
+        if request.path.startswith('/admin/'):
+            if not (request.user.is_authenticated and request.user.is_superuser):
+                return redirect("wongnung:landing")

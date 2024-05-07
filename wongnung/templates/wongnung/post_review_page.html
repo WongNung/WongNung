@@ -13,7 +13,7 @@
                           >{% if review %}{{ review.content }}{% endif %}</textarea>
             </div>
             <div class="flex items-center justify-between px-10 mt-5">
-                <div class="g-recaptcha" data-sitekey="6LfYadIpAAAAABtbCQqpEPAgmWiLPYnMca6of3d7"></div>
+                <div class="g-recaptcha" data-sitekey={{captcha_key}}></div>
                 <input type="submit" name="submit" class="bg-component-red h-10 w-16 mt-5 rounded-lg text-white flex items-center justify-center self-end float-right mr-10" value="Post" />
             </div>
         </form>

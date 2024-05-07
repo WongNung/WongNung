@@ -63,11 +63,14 @@ INSTALLED_APPS = [
     "allauth.socialaccount.providers.google",
     "allauth.socialaccount.providers.github",
     "allauth.socialaccount.providers.discord",
+    'allauth.mfa',
     "axes",
     "tailwind",
     "theme",
     "django_htmx",
     'pgcrypto',
+
+    'django_recaptcha',
 ]
 
 if DEBUG:
@@ -96,6 +99,7 @@ MIDDLEWARE = [
     "wongnung.middlewares.LocalTimeMiddleware",
     "wongnung.middlewares.EnsureUserProfileMiddleware",
     "axes.middleware.AxesMiddleware",
+    'wongnung.middlewares.AdminOnlyMiddleware',
 ]
 
 if DEBUG:
@@ -329,3 +333,6 @@ LOGGING = {
 }
 
 AUTH_USER_MODEL = 'wongnung.CustomUser'
+
+RECAPTCHA_PUBLIC_KEY = config("RECAPTCHA_PUBLIC_KEY")
+RECAPTCHA_PRIVATE_KEY = config("RECAPTCHA_PRIVATE_KEY")
