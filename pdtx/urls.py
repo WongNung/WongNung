@@ -15,14 +15,17 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+from django.conf import settings
 from wongnung.views.custom_signup import CustomSignupView
 
 urlpatterns = [
-    path("__reload__/", include("django_browser_reload.urls")),
     path("admin/", admin.site.urls),
     path("accounts/signup/", CustomSignupView.as_view(), name="account_signup"),
     path("accounts/", include("allauth.urls")),
     path("", include("wongnung.urls")),
 ]
+
+if settings.DEBUG:
+    urlpatterns += [path("__reload__/", include("django_browser_reload.urls"))]
 
 handler404 = "wongnung.views.error_handler.error_404_view"
