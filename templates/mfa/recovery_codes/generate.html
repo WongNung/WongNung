@@ -1,0 +1,32 @@
+{% extends "wongnung/wongnung_page.html" %}
+{% load i18n %}
+{% load allauth %}
+{% block t %}Two-Factor Authentication Recovery Codes{% endblock t %}
+{% block c %}
+<div class="flex items-center justify-center w-full pt-5">
+    <div class="box-content w-[450px] h-fit bg-regis-grey rounded-2xl flex flex-col py-10">
+            <div class="font-primary text-2xl text-black mb-2 drop-shadow-lg self-center">
+                Code Regeneration
+            </div>
+            <div class="self-center">
+                <div class="flex flex-col items-center">
+                    <p class="w-3/5 text-center">
+                        You are about to regenerate all the recovery codes, this will invalidate all of your code, proceed?
+                    </p>
+                    {% url 'mfa_generate_recovery_codes' as action_url %}
+                    {% url 'mfa_index' as back %}
+                    <form method="POST" action={{ action_url }} class="mt-4">
+                        {% csrf_token %}
+                        <button type="submit"
+                                class="h-10 w-80 m-2 px-3 bg-component-red text-white font-primary text-lg text-center rounded-xl hover:drop-shadow-md p-2">
+                            Regenerate
+                        </button>
+                    </form>
+                    <a href={{ back }} class="h-10 w-80 m-2 px-3 bg-component-red text-white font-primary text-lg text-center rounded-xl hover:drop-shadow-md p-2">
+                        Go Back
+                    </a>
+                </div>
+            </div>
+    </div>
+</div>
+{% endblock c %}

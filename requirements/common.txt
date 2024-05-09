@@ -4,7 +4,10 @@ django-tailwind>=3.4.0
 django-htmx>=1.12.2
 django-types~=0.16.0
 tmdbsimple
-django-allauth
+django-allauth[socialaccount,mfa]
 pytz
 whitenoise>=6.2.0
 selenium>=4.6.0
+django-axes
+django-pgcrypto-fields
+pymemcache

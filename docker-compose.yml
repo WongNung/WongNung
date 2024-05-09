@@ -21,6 +21,22 @@ services:
       resources:
         limits:
           memory: 1gb
+  cache:
+    image: memcached:alpine
+    restart: always
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "echo 'stats' | nc 127.0.0.1 11211 || exit 1"
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    deploy:
+      resources:
+        limits:
+          memory: 1gb
   app:
     build: .
     image: wongnung
@@ -35,13 +51,19 @@ services:
     depends_on:
       db:
         condition: service_healthy
+      cache:
+        condition: service_healthy
     env_file:
       - .env
     environment:
       NPM_BIN_PATH: /usr/bin/npm
       DATABASE_HOST: db
+      DATABASE_PORT: 5432
+      MEMCACHED_HOST: cache
+      MEMCACHED_PORT: 11211
     links:
       - db
+      - cache
     ports:
       - '8000:8000'
     deploy:

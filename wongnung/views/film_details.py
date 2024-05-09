@@ -1,3 +1,4 @@
+import logging
 from django.http import Http404, HttpResponseNotFound
 from django.shortcuts import render
 from django.contrib.auth.models import User
@@ -10,6 +11,7 @@ from ..models.film import Film
 from ..models.review import Review
 from ..models.bookmark import Bookmark
 
+logger = logging.getLogger(__name__)
 
 def film_details_page(request, filmid):
     """Renders a film details page."""
@@ -37,6 +39,8 @@ def show_film_component(request, filmid):
 
     film = Film.get_film(film_id=filmid)
     if not film:
+        username = request.user.username if request.user.is_authenticated else "Anonymous"
+        logger.warning("Film not found for user %s with filmid: %s", username, filmid)
         return HttpResponseClientRedirect("/not_found")
 
     reviews = Review.objects.filter(film=film).order_by("-pub_date")

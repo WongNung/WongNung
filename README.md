@@ -36,17 +36,20 @@ Before you install, see the [Preparing the installation](#preparing-the-installa
    | :-------------: | :------------------------------------------------------------------------------------------------------------------------------------------------ |
    |  `SECRET_KEY`   | Secret key for Django (See `.env` on how to get it)                                                                                               |
    | `TMDB_API_KEY`  | TMDB API key, you can have it easily by going to their [site](https://www.themoviedb.org/documentation/api).                                      |
+   | `PGCRYPTO_KEY`  | A symmetric key for encrypting/decrypting data from Postgres database. |
+   | `RECAPTCHA_*`   | Mostly are variables regarding Google ReCaptcha, see the example environment file for more information. |
    |     `DEBUG`     | You can either set this to True or False, True will run the server in development, False will be suitable for production.                         |
    | `ALLOWED_HOSTS` | **This is important when DEBUG=False.** When running server on production, you can control which hosts are allowed to visit endpoints of the app. |
    |    `APP_TZ`     | Sets the timezone of the application. **Recommended to leave as UTC.**                                                                            |
    |  `DATABASE_*`   | Settings for your PostgreSQL connection. **If you're installing with Docker, you should change only the PASSWORD.**                               |
+   | `MEMCACHED_*`   | Settings for your Memcached connection. **If you're installing with Docker, there's no need to change anything.** |
    | `NPM_BIN_PATH`  | The full path to `npm`. **If you're installing from source, you need to change this.**                                                            |
    |     `HTTPS`     | **This is ignored when DEBUG=True.** If you're running the server on HTTPS, this should be changed.                                               |
 
 3. Copy the `oauth-credentials.json.example` to `oauth-credentials.json` and edit add values to the file.
    
    For each OAuth key and secret you have, add them to the respective lines.
-   It is not required to have every OAuth provider filled.
+   It is not required to have every OAuth provider filled, but do not leave blank.
    
     Example:
    ```json
@@ -58,8 +61,10 @@ Before you install, see the [Preparing the installation](#preparing-the-installa
    }
    ```
 
-## Install with Docker (recommended)
+## Install with Docker Compose (recommended)
 **We do not distribute our own Docker images.**
+
+**Installing this way will always run the application in DEBUG=False. (production mode)**
 
 0. Make sure you have installed [Docker](https://www.docker.com/) and [docker-compose](https://docs.docker.com/compose/).
    
@@ -90,9 +95,18 @@ Before you install, see the [Preparing the installation](#preparing-the-installa
 0. Make sure you have the following software/tools installed:
    * `Python` version 3.9 or greater
    * `Node.js` version 16 or greater
-   * `PostgreSQL` server and client version 14
+   * `PostgreSQL` server version 14
+      * **Recommended Way!** Use Docker and launch a Docker instance with,
+      ```
+      docker run -d -e POSTGRES_DB=wongnung -e POSTGRES_USER=wongnung -e POSTGRES_PASSWORD=password -p 5432:5432 postgres:14
+      ```
       * For Windows and Mac, the server and client is already bundled together.
       * For Linux, install `postgresql` and `postgresql-client`.
+   * `memcached` server
+      * **Recommended Way!** Use Docker and launch a Docker instance with,
+      ```
+      docker run -d -p 11211:11211 memcached:alpine
+      ```
 
    If you will be running on production (`DEBUG=False`), there are additional tools required:
    * `gcc`
@@ -134,12 +148,12 @@ Before you install, see the [Preparing the installation](#preparing-the-installa
    * Run on development (`DEBUG=True`), open two terminal windows and each type different commands:
      ```sh
      python manage.py tailwind start
-     python manage.py runserver 0.0.0.0:8000
+     python manage.py runserver
      ```
    * Run on production (`DEBUG=False`), run the following commands,
      ```sh
      python manage.py collectstatic
-     python manage.py runserver 0.0.0.0:8000
+     python manage.py runserver
      ```
 
 # Project Documents

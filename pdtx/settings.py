@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 import os
 import json
 from pathlib import Path
+from datetime import timedelta
+import re
 
 import tmdbsimple as tmdb
 from decouple import Csv, config
@@ -42,6 +44,7 @@ ALLOWED_HOSTS = config(
     "ALLOWED_HOSTS", cast=Csv(), default="127.0.0.1,localhost"
 )
 
+PGCRYPTO_KEY = config("PGCRYPTO_KEY", default="your_pgcrypto_key")
 
 # Application definition
 INSTALLED_APPS = [
@@ -60,9 +63,12 @@ INSTALLED_APPS = [
     "allauth.socialaccount.providers.google",
     "allauth.socialaccount.providers.github",
     "allauth.socialaccount.providers.discord",
+    'allauth.mfa',
+    "axes",
     "tailwind",
     "theme",
     "django_htmx",
+    'pgcrypto',
 ]
 
 if DEBUG:
@@ -87,8 +93,11 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "django_htmx.middleware.HtmxMiddleware",
+    "allauth.account.middleware.AccountMiddleware",
     "wongnung.middlewares.LocalTimeMiddleware",
     "wongnung.middlewares.EnsureUserProfileMiddleware",
+    "axes.middleware.AxesMiddleware",
+    'wongnung.middlewares.AdminOnlyMiddleware',
 ]
 
 if DEBUG:
@@ -130,6 +139,12 @@ DATABASES = {
     }
 }
 
+# AXES configuration
+AXES_HANDLER = "axes.handlers.cache.AxesCacheHandler"
+
+AXES_FAILURE_LIMIT = 9
+AXES_COOLOFF_TIME = timedelta(minutes=10)
+
 # Caching
 CACHES = {
     "default": {
@@ -140,7 +155,13 @@ CACHES = {
         "BACKEND": "pdtx.UnsafeKeyDatabaseCache",
         "LOCATION": "wongnung_search_cache",
     },
+    "axes": {
+        "BACKEND": "django.core.cache.backends.memcached.PyMemcacheCache",
+        "LOCATION": f'{config("MEMCACHED_HOST", default="localhost")}:{config("MEMCACHED_PORT", default="11211")}'
+    }
 }
+
+AXES_CACHE = "axes"
 
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
@@ -191,13 +212,25 @@ MEDIA_URL = "media/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTHENTICATION_BACKENDS = [
-    "django.contrib.auth.backends.ModelBackend",
+    "axes.backends.AxesStandaloneBackend",
     "allauth.account.auth_backends.AuthenticationBackend",
 ]
 
+# Email backend & settings
+EMAIL_BACKEND = config("EMAIL_BACKEND", default="django.core.mail.backends.console.EmailBackend")
+EMAIL_HOST = config("EMAIL_HOST", default="smtp.example.com")
+EMAIL_PORT = config("EMAIL_PORT", default="587")
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = config("EMAIL_HOST_USER", default="wongnung@example.com")
+EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", default="password")
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+if EMAIL_BACKEND == "django.core.mail.backends.filebased.EmailBackend":
+    EMAIL_FILE_PATH = BASE_DIR / str(config("FILEBASED_EMAIL_PATH", default="test-mails"))
+
 SITE_ID = 4
 LOGIN_REDIRECT_URL = "/"
-ACCOUNT_UNIQUE_EMAIL = False
+ACCOUNT_UNIQUE_EMAIL = True
 
 SOCIALACCOUNT_PROVIDERS = {
     "google": {
@@ -256,3 +289,48 @@ SOCIALACCOUNT_ADAPTER = "wongnung.adapter.CancellableAccountAdapter"
 if not DEBUG and config("HTTPS", cast=bool, default=False):
     CSRF_TRUSTED_ORIGINS = [f"https://{address}" for address in ALLOWED_HOSTS]
     ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"
+
+# Logging
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "root": {"level": "INFO", "handlers": ["file"]},
+    "handlers": {
+        "file": {
+            "level": "INFO",
+            "class": "logging.FileHandler",
+            'filename': os.path.join(BASE_DIR, 'debug.log'),
+            "formatter": "app",
+        },
+    },
+    "loggers": {
+        'django.server': {
+            'filters': ['skip_static_and_homepage_requests'],
+        },
+        "django": {
+            "handlers": ["file"],
+            "level": "INFO",
+            "propagate": True
+        },
+    },
+    'filters': {
+        'skip_static_and_homepage_requests': {
+            '()': 'django.utils.log.CallbackFilter',
+            'callback': lambda record: not re.match(r'.*GET /static/.*|.*GET / HTTP/.*', record.getMessage()),
+        },
+    },
+    "formatters": {
+        "app": {
+            "format": (
+                u"%(asctime)s [%(levelname)-8s] "
+                "(%(module)s.%(funcName)s) %(message)s"
+            ),
+            "datefmt": "%Y-%m-%d %H:%M:%S",
+        },
+    },
+}
+
+AUTH_USER_MODEL = 'wongnung.CustomUser'
+
+RECAPTCHA_PUBLIC_KEY = config("RECAPTCHA_PUBLIC_KEY")
+RECAPTCHA_PRIVATE_KEY = config("RECAPTCHA_PRIVATE_KEY")
