@@ -69,8 +69,6 @@ INSTALLED_APPS = [
     "theme",
     "django_htmx",
     'pgcrypto',
-
-    'django_recaptcha',
 ]
 
 if DEBUG:
